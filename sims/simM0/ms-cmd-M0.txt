@@ -1,0 +1,4 @@
+# M0 - simple one population model with 16 individuals and theta = 0.001
+#
+ms 16 5000 -T -r 0.1 1000 -t 0.001 
+
