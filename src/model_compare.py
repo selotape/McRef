@@ -24,7 +24,7 @@ flat_coalescence_stats =     pd.read_csv        ('C:\\Users\\ronvis\\Dropbox\\Th
 flat_coalescence_stats = flat_coalescence_stats[['logPrior','coalStatFlat', 'numCoalFlat', 'root_theta', 'genealogyLogLikelihood' ]]
 flat_coalescence_stats.columns = ['logPrior','time_stats', 'num_coal', 'root_ϴ', 'P_Z_ϴM' ]
 
-printFactor = 1000.0
+printFactor = 10000.0
 flat_coalescence_stats['root_ϴ'] = flat_coalescence_stats[['root_ϴ']].apply(lambda x:x/printFactor)
 
 
@@ -68,4 +68,5 @@ E_P_Z_ϴM = flat_coalescence_stats['P_Z_ϴM'].mean()
 E_P_Z_ϴM0 = flat_coalescence_stats['P_Z_ϴM0'].mean()
 
 result = E_P_Z_ϴM - E_P_Z_ϴM0
-print(result)
+print("E_P_Z_ϴM0 " + str(E_P_Z_ϴM0))
+print("E_P_Z_ϴM " + str(E_P_Z_ϴM))

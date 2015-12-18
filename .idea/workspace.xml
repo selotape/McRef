@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/model_compare.py" line="26" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="03c91087-59b0-4c4f-a2f8-34deb4f397b3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sample_data/sample-data.flatStats.tsv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model_comparison.ipynb" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/model_compare/model_comparison.ipynb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/model_compare/model_comparison.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sims/ms-cmd-template.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sims/simM0/ms-cmd-M0.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sims/simM0/ms-trees.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sims/simM0/seqs-M0.txt.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sims/simM1/ms-cmd-M1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sims/simM1/ms-trees.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sims/simM1/seqs-M1.txt.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simtools/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simtools/ms" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simtools/seq-gen" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simtools/seqgen-to-gphocs.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simtools/simulate-poptree.sh" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/model_compare/__init__.py" afterPath="$PROJECT_DIR$/src/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/model_compare/model_comparison.html" afterPath="$PROJECT_DIR$/src/model_comparison.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simulations/simM0/gphocs/M0-control-file.ctl" afterPath="$PROJECT_DIR$/simulations/simM0/gphocs/M0-control-file.ctl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model_compare.py" afterPath="$PROJECT_DIR$/src/model_compare.py" />
     </list>
     <ignored path="ModelCompare.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,12 +26,12 @@
     <favorites_list name="ModelCompare" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file leaf-file-name="model_compare.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/model_compare.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7312391">
-              <caret line="69" column="17" selection-start-line="69" selection-start-column="9" selection-end-line="69" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.34729493">
+              <caret line="27" column="7" selection-start-line="27" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="e#29#47#0" expanded="true" />
               </folding>
@@ -103,7 +90,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -125,6 +111,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -336,14 +323,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="0" width="1292" height="1036" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25039247" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25039247" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32890365" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32890365" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -380,6 +367,16 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/model_compare.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#29#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/model_compare.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -429,14 +426,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.4153576">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model_compare.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7312391">
-          <caret line="69" column="17" selection-start-line="69" selection-start-column="9" selection-end-line="69" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.34729493">
+          <caret line="27" column="7" selection-start-line="27" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
             <element signature="e#29#47#0" expanded="true" />
           </folding>
