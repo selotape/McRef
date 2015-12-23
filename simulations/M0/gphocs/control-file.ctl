@@ -7,7 +7,7 @@ GENERAL-INFO-START
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations	  	500
+	mcmc-iterations	  	50
 	iterations-per-log  5
 	logs-per-line       10
 
@@ -35,12 +35,12 @@ CURRENT-POPS-START
 
 	POP-START
 		name		A
-		samples		1 d 2 d 3 d 4 d 5 d 6 d 7 d 8 d 9 d 10 d 11 d 12 d 13 d 14 d 15 d
+		samples		1 d 2 d 3 d 4 d 5 d 6 d 7 d 8 d 9 d 10 d 11 d 12 d 13 d 14 d 15 d 16 d
 	POP-END
 	
 	POP-START
 		name		B
-		samples		16 d
+		samples		17 d
 	POP-END
 
 CURRENT-POPS-END

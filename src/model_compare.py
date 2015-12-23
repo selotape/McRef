@@ -4,10 +4,7 @@
 # In[13]:
 
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
-from numpy import exp
-from pandas.core.series import Series
 
 pd.set_option('display.mpl_style', 'default')
 pd.set_option('display.width', 5000) 
@@ -16,7 +13,10 @@ pd.set_option('display.max_columns', 60)
 
 # In[17]:
 
-flat_coalescence_stats =     pd.read_csv        ('C:\\Users\\ronvis\\Dropbox\\Thesis\\ModelCompare\\code\\ModelCompare\\sample_data\\sample-data.flatStats.tsv', sep='\t')
+#M0
+flat_coalescence_stats = pd.read_csv('C:\\Users\\ronvis\\Dropbox\\Thesis\\ModelCompare\\code\\ModelCompare\\simulations\\M0\\gphocs\\data.flatStats.tsv', sep='\t')
+#M1 flat_coalescence_stats = pd.read_csv('C:\\Users\\ronvis\\Dropbox\\Thesis\\ModelCompare\\code\\ModelCompare\\simulations\\M1\\gphocs\\data.flatStats.tsv', sep='\t')
+#sample flat_coalescence_stats = pd.read_csv('C:\\Users\\ronvis\\Dropbox\\Thesis\\ModelCompare\\code\\ModelCompare\\simulations\\sample\\gphocs\\data.flatStats.tsv', sep='\t')
 
 
 # In[18]:
@@ -68,5 +68,5 @@ E_P_Z_ϴM = flat_coalescence_stats['P_Z_ϴM'].mean()
 E_P_Z_ϴM0 = flat_coalescence_stats['P_Z_ϴM0'].mean()
 
 result = E_P_Z_ϴM - E_P_Z_ϴM0
-print("E_P_Z_ϴM0 " + str(E_P_Z_ϴM0))
-print("E_P_Z_ϴM " + str(E_P_Z_ϴM))
+print("E_P_Z_ϴM:\t" + str(E_P_Z_ϴM))
+print("E_P_Z_ϴM0:\t" + str(E_P_Z_ϴM0))
