@@ -7,7 +7,7 @@ GENERAL-INFO-START
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations	  	50
+	mcmc-iterations	  	100
 	iterations-per-log  5
 	logs-per-line       10
 
@@ -15,9 +15,9 @@ GENERAL-INFO-START
 	find-finetunes		FALSE
 	finetune-coal-time	0.01		
 	finetune-mig-time	0.3		
-	finetune-theta		0.04
+	finetune-theta		0.00
 	finetune-mig-rate	0.02
-	finetune-tau		0.0000008
+	finetune-tau		0.00
 	finetune-mixing		0.003
 #	finetune-locus-rate 0.3
 	
@@ -50,9 +50,9 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			root
 		children		A B
-		tau-initial		0.00005
+		tau-initial		1.0000
 		tau-beta		20000.0	
-		finetune-tau	0.00000286
+		finetune-tau	0.00000
 	POP-END
 
 ANCESTRAL-POPS-END
