@@ -14,10 +14,10 @@ def main():
     print_factor = config.getfloat('Simulation','print_factor')
 
 
-    flat_stats_path = '..\\simulations\\' + simulation_name + '\\gphocs\\2-data.flatStats.tsv'
+    flat_stats_path = '..\\simulations\\' + simulation_name + '\\gphocs\\data.flatStats.tsv'
     flat_stats = pd.read_csv(flat_stats_path, sep='\t')
 
-    trace_path = '..\\simulations\\' + simulation_name + '\\gphocs\\2-data.trace.tsv'
+    trace_path = '..\\simulations\\' + simulation_name + '\\gphocs\\data.trace.tsv'
     trace = pd.read_csv(trace_path, sep='\t')
 
     flat_stats[theta_column_name] = trace[theta_column_name]
@@ -36,7 +36,7 @@ def main():
 
 
     # print to make sense
-    flat_stats[600:][['P_Z_ϴM0', 'P_Z_ϴM']].plot()
+    flat_stats[['P_Z_ϴM0', 'P_Z_ϴM']].plot()
     print(flat_stats.head())
 
 

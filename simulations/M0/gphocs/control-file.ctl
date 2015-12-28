@@ -35,12 +35,12 @@ CURRENT-POPS-START
 
 	POP-START
 		name		A
-		samples		1 h 2 h 3 h 4 h 5 h 6 h 7 h 8 h 9 h 10 h 11 h 12 h 13 h 14 h 15 h 16 h
+		samples		1 h 2 h 3 h 4 h 5 h 6 h 7 h 8 h 9 h 10 h 11 h 12 h 13 h 14 h 15 h
 	POP-END
 	
 	POP-START
 		name		B
-		samples		17 h
+		samples		16 h
 	POP-END
 
 CURRENT-POPS-END
@@ -50,7 +50,7 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			root
 		children		A B
-		tau-initial		1.0
+		tau-initial		0.0000000001
 		tau-beta		20000.0	
 		finetune-tau	0.000001
 	POP-END
