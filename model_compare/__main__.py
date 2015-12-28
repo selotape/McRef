@@ -11,13 +11,13 @@ def main():
     config.read('config.ini')
     simulation_name = config.get('Simulation', 'name')
     theta_column_name = config.get('Simulation','theta_column')
-    print_factor = config.getint('Simulation','print_factor')
+    print_factor = config.getfloat('Simulation','print_factor')
 
 
-    flat_stats_path = '..\\simulations\\' + simulation_name + '\\gphocs\\data.flatStats.tsv'
+    flat_stats_path = '..\\simulations\\' + simulation_name + '\\gphocs\\2-data.flatStats.tsv'
     flat_stats = pd.read_csv(flat_stats_path, sep='\t')
 
-    trace_path = '..\\simulations\\' + simulation_name + '\\gphocs\\data.trace.tsv'
+    trace_path = '..\\simulations\\' + simulation_name + '\\gphocs\\2-data.trace.tsv'
     trace = pd.read_csv(trace_path, sep='\t')
 
     flat_stats[theta_column_name] = trace[theta_column_name]
@@ -26,9 +26,7 @@ def main():
     flat_stats = flat_stats[['logPrior', 'coalStatFlat', 'numCoalFlat', theta_column_name, 'genealogyLogLikelihood']]
     flat_stats.columns = ['logPrior', 'time_stats', 'num_coal', theta_column_name, 'P_Z_ϴM']
 
-
-    flat_stats[theta_column_name] = flat_stats[[theta_column_name]].apply(lambda x: x / print_factor)
-
+    flat_stats[theta_column_name] /= print_factor
 
     thetas = flat_stats[theta_column_name]
     num_coal = flat_stats['num_coal']
@@ -38,8 +36,7 @@ def main():
 
 
     # print to make sense
-    flat_stats['P_Z_ϴM0'] += + 194000
-    flat_stats[['P_Z_ϴM0', 'P_Z_ϴM']].plot()
+    flat_stats[600:][['P_Z_ϴM0', 'P_Z_ϴM']].plot()
     print(flat_stats.head())
 
 
@@ -53,10 +50,9 @@ def set_pandas():
     pd.set_option('display.max_columns', 60)
 
 def P_Z_ϴM0(theta, num_coal, time_stats):
-    result = num_coal*np.log(2.0/theta) -(time_stats/theta)
+    result = num_coal*np.log(2.0/theta) - (time_stats/theta)
     return result
 
 
 if __name__ == "__main__":
     main()
-

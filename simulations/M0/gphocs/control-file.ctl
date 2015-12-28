@@ -1,13 +1,13 @@
 GENERAL-INFO-START
 
 	seq-file            M0\sequences\sequences.seqs
-	trace-file          M0\gphocs\data.trace.tsv		
-	coal-stats-file		M0\gphocs\data.flatStats.tsv
+	trace-file          M0\gphocs\2-data.trace.tsv
+	coal-stats-file		M0\gphocs\2-data.flatStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations	  	100
+	mcmc-iterations	  	4000
 	iterations-per-log  5
 	logs-per-line       10
 
@@ -15,11 +15,11 @@ GENERAL-INFO-START
 	find-finetunes		FALSE
 	finetune-coal-time	0.01		
 	finetune-mig-time	0.3		
-	finetune-theta		0.00
+	finetune-theta		0.04
 	finetune-mig-rate	0.02
-	finetune-tau		0.00
+	finetune-tau		0.0000008
 	finetune-mixing		0.003
-#	finetune-locus-rate 0.3
+#   finetune-locus-rate 0.3
 	
 	tau-theta-print		10000.0
 	tau-theta-alpha		1.0			# for STD/mean ratio of 100%
@@ -50,9 +50,9 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			root
 		children		A B
-		tau-initial		1.0000
+		tau-initial		1.0
 		tau-beta		20000.0	
-		finetune-tau	0.00000
+		finetune-tau	0.000001
 	POP-END
 
 ANCESTRAL-POPS-END

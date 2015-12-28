@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/model_compare/__main__.py" line="28" />
+    <bookmark url="file://$PROJECT_DIR$/model_compare/__main__.py" line="26" />
+    <bookmark url="file://$PROJECT_DIR$/model_compare/__main__.py" line="10" />
+    <bookmark url="file://$PROJECT_DIR$/model_compare/__main__.py" line="31" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03c91087-59b0-4c4f-a2f8-34deb4f397b3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model_compare/__main__.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simulation_tools/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simulation_tools/ms" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simulation_tools/seq-gen" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simulation_tools/seqgen-to-gphocs.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simulation_tools/simulate-poptree.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/model_compare.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/model_comparison.html" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/.ipynb_checkpoints/model_comparison-checkpoint.ipynb" afterPath="$PROJECT_DIR$/model_compare/.ipynb_checkpoints/model_comparison-checkpoint.ipynb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/__init__.py" afterPath="$PROJECT_DIR$/model_compare/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model_comparison.ipynb" afterPath="$PROJECT_DIR$/model_compare/model_comparison.ipynb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/simulations/M0/gphocs/data.flatStats.tsv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/simulations/M0/gphocs/data.trace.tsv" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/__main__.py" afterPath="$PROJECT_DIR$/model_compare/__main__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simulations/M0/gphocs/control-file.ctl" afterPath="$PROJECT_DIR$/simulations/M0/gphocs/control-file.ctl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simulations/M0/gphocs/data.flatStats.tsv" afterPath="$PROJECT_DIR$/simulations/M0/gphocs/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simulations/M0/gphocs/data.trace.tsv" afterPath="$PROJECT_DIR$/simulations/M0/gphocs/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simulations/run_simulation.sh" afterPath="$PROJECT_DIR$/simulations/run_simulation.sh" />
     </list>
     <ignored path="ModelCompare.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,7 +36,7 @@
         <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -56,11 +45,9 @@
       <file leaf-file-name="__main__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model_compare/__main__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3295238">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.5921986">
+              <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -86,8 +73,8 @@
         <option value="$PROJECT_DIR$/src/__init__.py" />
         <option value="$PROJECT_DIR$/src/.ipynb_checkpoints/config.py" />
         <option value="$PROJECT_DIR$/src/model_compare.py" />
-        <option value="$PROJECT_DIR$/model_compare/config.ini" />
         <option value="$PROJECT_DIR$/model_compare/helper_functions.py" />
+        <option value="$PROJECT_DIR$/model_compare/config.ini" />
         <option value="$PROJECT_DIR$/model_compare/__main__.py" />
       </list>
     </option>
@@ -95,8 +82,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
-    <option name="width" value="1298" />
-    <option name="height" value="994" />
+    <option name="width" value="1938" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -403,31 +390,43 @@
       <option name="project" value="LOCAL" />
       <updated>1449942304338</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="rewrote model_compare module.&#10;&#10;it's now prettier and still doesn't work.">
+      <created>1451080354977</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1451080354977</updated>
+    </task>
+    <task id="LOCAL-00004" summary="reorganized and reexecuted experiment">
+      <created>1451084403534</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1451084403534</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1298" height="994" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2484375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.165625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37166086" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329849" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.348964" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35191637" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38822246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="91" y="90" width="1738" height="850" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -445,11 +444,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="turend folder to a pycharm project" />
     <MESSAGE value="added 3 py files from GPhoCS project" />
-    <option name="LAST_COMMIT_MESSAGE" value="added 3 py files from GPhoCS project" />
+    <MESSAGE value="rewrote model_compare module.&#10;&#10;it's now prettier and still doesn't work." />
+    <MESSAGE value="reorganized and reexecuted experiment" />
+    <option name="LAST_COMMIT_MESSAGE" value="reorganized and reexecuted experiment" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -466,9 +467,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -482,18 +481,16 @@
     <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/__main__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3295238">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.5921986">
+          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
