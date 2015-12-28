@@ -35,12 +35,12 @@ CURRENT-POPS-START
 
 	POP-START
 		name		A
-		samples		1 d 2 d 3 d 4 d 5 d 6 d 7 d 8 d 9 d 10 d 11 d 12 d 13 d 14 d 15 d 16 d
+		samples		1 h 2 h 3 h 4 h 5 h 6 h 7 h 8 h 9 h 10 h 11 h 12 h 13 h 14 h 15 h 16 h
 	POP-END
 	
 	POP-START
 		name		B
-		samples		17 d
+		samples		17 h
 	POP-END
 
 CURRENT-POPS-END
