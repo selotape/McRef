@@ -1,13 +1,13 @@
 GENERAL-INFO-START
 
-	seq-file            M0\sequences\sequences.seqs
-	trace-file          M0\gphocs\data.trace.tsv
-	coal-stats-file		M0\gphocs\data.flatStats.tsv
+	seq-file            sequences\M0\sequences.seqs
+	trace-file          simulations\seq_M0_mod_M1\data.trace.tsv
+	coal-stats-file		simulations\seq_M0_mod_M1\data.flatStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations	  	4000
+	mcmc-iterations	  	5000
 	iterations-per-log  5
 	logs-per-line       10
 
@@ -35,12 +35,12 @@ CURRENT-POPS-START
 
 	POP-START
 		name		A
-		samples		1 h 2 h 3 h 4 h 5 h 6 h 7 h 8 h 9 h 10 h 11 h 12 h 13 h 14 h 15 h
+		samples		1 h 2 h 3 h 4 h 5 h 6 h 7 h 8 h
 	POP-END
 	
 	POP-START
 		name		B
-		samples		16 h
+		samples		9 h 10 h 11 h 12 h 13 h 14 h 15 h 16 h
 	POP-END
 
 CURRENT-POPS-END
@@ -50,9 +50,9 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			root
 		children		A B
-		tau-initial		0.0000000001
+		tau-initial		0.0001
 		tau-beta		20000.0	
-		finetune-tau	0.000001
+		finetune-tau	0.00000286
 	POP-END
 
 ANCESTRAL-POPS-END
