@@ -19,10 +19,18 @@ def main():
 
     simulations_path = config.get('Simulation','simulations_path')
     trace_file_name = config.get('Simulation','trace_file_name')
-    flat_stats_file_name = config.get('Simulation','flat_stats_file_name')
+    flat_stats_name = config.get('Simulation','flat_stats_file_name')
 
+    results_name = config.get('Simulation','results_name')
+    results_path = simulations_path + '\\' + simulation_name + '\\' + results_name
 
-    flat_stats_path = simulations_path + '\\' + simulation_name + '\\' + flat_stats_file_name
+    summary_name = config.get('Simulation','summary_name')
+    summary_path = simulations_path + '\\' + simulation_name + '\\' + summary_name
+
+    figure_name = config.get('Simulation','figure_name')
+    figure_path = simulations_path + '\\' + simulation_name + '\\' + figure_name
+
+    flat_stats_path = simulations_path + '\\' + simulation_name + '\\' + flat_stats_name
     flat_stats = pd.read_csv(flat_stats_path, sep='\t')
 
     trace_path = simulations_path + '\\' + simulation_name + '\\' + trace_file_name
@@ -43,12 +51,22 @@ def main():
 
     flat_stats['P_Z_M0'] = P_Z_M0(thetas, num_coal, time_stats)
 
-    flat_stats[['P_Z_M0', 'P_Z_M']].plot(title=simulation_name)
+
 
     E_P_Z_M = E_P_Z(flat_stats['P_Z_M'][-100:])
     E_P_Z_M0 = E_P_Z(flat_stats['P_Z_M0'][-100:])
 
-    print("E_P_Z_M={0},E_P_Z_M0={1}, E/E={2}".format(E_P_Z_M, E_P_Z_M0, E_P_Z_M/E_P_Z_M0))
+
+    results_plot = flat_stats[['P_Z_M0', 'P_Z_M']].plot(title=simulation_name)
+    results_figure = results_plot.get_figure()
+    results_figure.savefig(figure_path)
+
+    flat_stats.to_csv(results_path)
+
+    f = open(summary_path, 'w')
+    f.write("E_P_Z_M={0},E_P_Z_M0={1}, E/E0={2}".format(E_P_Z_M, E_P_Z_M0, E_P_Z_M/E_P_Z_M0))
+
+
 
 def set_pandas():
     pd.set_option('display.mpl_style', 'default')
