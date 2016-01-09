@@ -12,7 +12,7 @@ GENERAL-INFO-START
 	logs-per-line       10
 
 
-	find-finetunes		FALSE
+	find-finetunes		TRUE
 	finetune-coal-time	0.01		
 	finetune-mig-time	0.3		
 	finetune-theta		0.04

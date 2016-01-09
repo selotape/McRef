@@ -1,11 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 gphocs_exe=/c/Users/ronvis/Dropbox/Thesis/G-PhoCS/code/G-PhoCS/bin/G-PhoCS-1-2-3.exe
 
-function run_gphocs{
-	echo "Running G-PhoCS.";
-	echo "Control file:"$CTL_FILE;
-	$gphocs_exe $CTL_FILE;
+function run_gphocs {
+	echo "Running G-PhoCS. Control file:"$1;
+	$gphocs_exe $1;
 }
 
 for var;
