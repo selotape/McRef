@@ -12,7 +12,7 @@ def model_compare(simulation='sample'):
     set_pandas()
 
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read(get_config_path())
 
     simulations_path = config.get('Input','simulations_path')
     simulation_path = simulations_path + '\\' + simulation
@@ -65,6 +65,10 @@ def model_compare(simulation='sample'):
     save_results(expectation_tail_length, likelihoods_plot_path, expectation_plot_path, flat_stats, trace_results_path, simulation, summary_path)
 
 
+def get_config_path():
+    return os.path.dirname(os.path.realpath(__file__)) + '\\' + 'config.ini'
+
+
 def save_results(expectation_tail_length, likelihoods_plot_path, expectation_plot_path, flat_stats, results_path, simulation_name, summary_path):
 
     flat_stats_tail = flat_stats[-expectation_tail_length:]
@@ -103,6 +107,7 @@ def save_plot(data_frame, plot_save_path, plot_name=''):
 
 
 def validate_simulation(simulation_path):
+    #TODO - add validations for existence of simulation directory and data files
     pass
 
 if __name__ == "__main__":

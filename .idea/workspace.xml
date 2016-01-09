@@ -6,29 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03c91087-59b0-4c4f-a2f8-34deb4f397b3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/sample/gphocs/data.flatStats.tsv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/sample/gphocs/data.trace.tsv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/sample/gphocs/sample-control-file.ctl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/sample/gphocs/sample-data.flatStats.tsv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/sample/gphocs/sample-data.trace.tsv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/expectance_plot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/likelihoods_plot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/model_compare_results.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/model_compare_summary.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/model_compare_plot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/model_compare_results" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/model_compare_results.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/model_compare_summary.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/control-file.ctl.stdout" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/model_compare_plot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/model_compare_results" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/model_compare_results.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/model_compare_summary.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/model_compare_plot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/model_compare_results.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/model_compare_summary.txt" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/model_compare/__main__.py" afterPath="$PROJECT_DIR$/model_compare/model_compare.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/config.ini" afterPath="$PROJECT_DIR$/model_compare/config.ini" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/run_simulation.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/model_compare.py" afterPath="$PROJECT_DIR$/model_compare/model_compare.py" />
     </list>
     <ignored path="ModelCompare.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,23 +43,23 @@
       <file leaf-file-name="model_compare.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.74319065">
-              <caret line="109" column="39" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.37548637">
+              <caret line="68" column="57" selection-start-line="68" selection-start-column="57" selection-end-line="68" selection-end-column="57" />
               <folding>
-                <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#2985#3116#0" expanded="false" />
-                <element signature="e#3163#3237#0" expanded="false" />
-                <marker date="1452359242215" expanded="true" signature="146:1471" placeholder="..." />
+                <element signature="e#3092#3223#0" expanded="false" />
+                <element signature="e#3270#3344#0" expanded="false" />
+                <element signature="e#3375#3522#0" expanded="false" />
+                <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test__main__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model_compare/test__main__.py">
+      <file leaf-file-name="configparser.py" pinned="false" current-in-tab="false">
+        <entry file="file://F:/python/Anaconda3/Lib/configparser.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+              <caret line="681" column="54" selection-start-line="681" selection-start-column="8" selection-end-line="681" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -100,7 +81,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/model_compare/model_comparison.ipynb" />
-        <option value="$PROJECT_DIR$/model_compare/model_compare.py" />
         <option value="$PROJECT_DIR$/src/helper_functions.py" />
         <option value="$PROJECT_DIR$/src/__init__.py" />
         <option value="$PROJECT_DIR$/src/.ipynb_checkpoints/config.py" />
@@ -109,6 +89,7 @@
         <option value="$PROJECT_DIR$/model_compare/test__main__.py" />
         <option value="$PROJECT_DIR$/model_compare/config.ini" />
         <option value="$PROJECT_DIR$/model_compare/__main__.py" />
+        <option value="$PROJECT_DIR$/model_compare/model_compare.py" />
       </list>
     </option>
   </component>
@@ -191,6 +172,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ModelCompare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ModelCompare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ModelCompare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model_compare" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -433,9 +428,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.165625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.165625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -515,10 +510,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="78" column="49" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#2985#3116#0" expanded="false" />
-            <element signature="e#3163#3237#0" expanded="false" />
-            <marker date="1452359242215" expanded="true" signature="146:1471" placeholder="..." />
+            <element signature="e#3092#3223#0" expanded="false" />
+            <element signature="e#3270#3344#0" expanded="false" />
+            <element signature="e#3375#3522#0" expanded="false" />
+            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -536,10 +531,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#2985#3116#0" expanded="false" />
-            <element signature="e#3163#3237#0" expanded="false" />
-            <marker date="1452359242215" expanded="true" signature="146:1471" placeholder="..." />
+            <element signature="e#3092#3223#0" expanded="false" />
+            <element signature="e#3270#3344#0" expanded="false" />
+            <element signature="e#3375#3522#0" expanded="false" />
+            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -557,10 +552,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#2985#3116#0" expanded="false" />
-            <element signature="e#3163#3237#0" expanded="false" />
-            <marker date="1452359242215" expanded="true" signature="146:1471" placeholder="..." />
+            <element signature="e#3092#3223#0" expanded="false" />
+            <element signature="e#3270#3344#0" expanded="false" />
+            <element signature="e#3375#3522#0" expanded="false" />
+            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1824,7 +1819,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/test__main__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.25680932">
           <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
           <folding />
         </state>
@@ -1838,15 +1833,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://F:/python/Anaconda3/Lib/configparser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="681" column="54" selection-start-line="681" selection-start-column="8" selection-end-line="681" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74319065">
-          <caret line="109" column="39" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.37548637">
+          <caret line="68" column="57" selection-start-line="68" selection-start-column="57" selection-end-line="68" selection-end-column="57" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#2985#3116#0" expanded="false" />
-            <element signature="e#3163#3237#0" expanded="false" />
-            <marker date="1452359242215" expanded="true" signature="146:1471" placeholder="..." />
+            <element signature="e#3092#3223#0" expanded="false" />
+            <element signature="e#3270#3344#0" expanded="false" />
+            <element signature="e#3375#3522#0" expanded="false" />
+            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
           </folding>
         </state>
       </provider>
