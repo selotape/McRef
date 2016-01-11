@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="14" />
-    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="48" />
+    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="9" />
+    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="27" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03c91087-59b0-4c4f-a2f8-34deb4f397b3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/run_simulation.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model_compare/probability_functions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/expectation_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/likelihoods_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/expectation_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/likelihoods_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/expectation_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/likelihoods_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/expectation_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/likelihoods_plot.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/run_simulation.sh" afterPath="$PROJECT_DIR$/experiments/run_simulation.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_summary.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.flatStats.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.trace.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_summary.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.flatStats.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.trace.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_results.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_summary.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.flatStats.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.trace.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_results.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_summary.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.flatStats.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.trace.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_results.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_summary.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/config.ini" afterPath="$PROJECT_DIR$/model_compare/config.ini" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/model_compare.py" afterPath="$PROJECT_DIR$/model_compare/model_compare.py" />
     </list>
     <ignored path="ModelCompare.iws" />
@@ -34,8 +66,20 @@
         <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+              <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -43,23 +87,24 @@
       <file leaf-file-name="model_compare.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37548637">
-              <caret line="68" column="57" selection-start-line="68" selection-start-column="57" selection-end-line="68" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.2857143">
+              <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
               <folding>
-                <element signature="e#3092#3223#0" expanded="false" />
-                <element signature="e#3270#3344#0" expanded="false" />
-                <element signature="e#3375#3522#0" expanded="false" />
-                <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
+                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#2545#2617#0" expanded="false" />
+                <element signature="e#2766#3044#0" expanded="false" />
+                <element signature="e#3262#3347#0" expanded="false" />
+                <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="configparser.py" pinned="false" current-in-tab="false">
-        <entry file="file://F:/python/Anaconda3/Lib/configparser.py">
+      <file leaf-file-name="probability_functions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model_compare/probability_functions.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="681" column="54" selection-start-line="681" selection-start-column="8" selection-end-line="681" selection-end-column="54" />
+              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -87,8 +132,11 @@
         <option value="$PROJECT_DIR$/src/model_compare.py" />
         <option value="$PROJECT_DIR$/model_compare/helper_functions.py" />
         <option value="$PROJECT_DIR$/model_compare/test__main__.py" />
-        <option value="$PROJECT_DIR$/model_compare/config.ini" />
         <option value="$PROJECT_DIR$/model_compare/__main__.py" />
+        <option value="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/model_compare/config.ini" />
+        <option value="$PROJECT_DIR$/model_compare/probability_functions.py" />
         <option value="$PROJECT_DIR$/model_compare/model_compare.py" />
       </list>
     </option>
@@ -194,7 +242,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/model_compare/probability_functions.py" />
     <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
@@ -216,13 +264,13 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model_compare" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ModelCompare" />
-      <option name="SCRIPT_NAME" value="C:\Users\ronvis\Dropbox\Thesis\ModelCompare\model_compare\model_compare.py" />
-      <option name="PARAMETERS" value="seq_M0_mod_M0 seq_M0_mod_M1 seq_M1_mod_M0 seq_M1_mod_M1" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="sample" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -231,7 +279,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model_compare" />
+      <option name="WORKING_DIRECTORY" value="model_compare" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -430,13 +478,13 @@
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.165625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28072917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3478735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40348965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2082879" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -492,7 +540,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -510,10 +558,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="78" column="49" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
           <folding>
-            <element signature="e#3092#3223#0" expanded="false" />
-            <element signature="e#3270#3344#0" expanded="false" />
-            <element signature="e#3375#3522#0" expanded="false" />
-            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#2545#2617#0" expanded="false" />
+            <element signature="e#2766#3044#0" expanded="false" />
+            <element signature="e#3262#3347#0" expanded="false" />
+            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -531,10 +580,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3092#3223#0" expanded="false" />
-            <element signature="e#3270#3344#0" expanded="false" />
-            <element signature="e#3375#3522#0" expanded="false" />
-            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#2545#2617#0" expanded="false" />
+            <element signature="e#2766#3044#0" expanded="false" />
+            <element signature="e#3262#3347#0" expanded="false" />
+            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -552,10 +602,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
-            <element signature="e#3092#3223#0" expanded="false" />
-            <element signature="e#3270#3344#0" expanded="false" />
-            <element signature="e#3375#3522#0" expanded="false" />
-            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#2545#2617#0" expanded="false" />
+            <element signature="e#2766#3044#0" expanded="false" />
+            <element signature="e#3262#3347#0" expanded="false" />
+            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1825,14 +1876,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://F:/python/Anaconda3/Lib/configparser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1841,15 +1884,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_summary.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_results.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5001" column="0" selection-start-line="5001" selection-start-column="0" selection-end-line="5001" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://F:/python/Anaconda3/Lib/site-packages/numpy/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.229572">
+          <caret line="12" column="23" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model_compare/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model_compare/probability_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37548637">
-          <caret line="68" column="57" selection-start-line="68" selection-start-column="57" selection-end-line="68" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.2857143">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
           <folding>
-            <element signature="e#3092#3223#0" expanded="false" />
-            <element signature="e#3270#3344#0" expanded="false" />
-            <element signature="e#3375#3522#0" expanded="false" />
-            <marker date="1452360556936" expanded="true" signature="146:1476" placeholder="..." />
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#2545#2617#0" expanded="false" />
+            <element signature="e#2766#3044#0" expanded="false" />
+            <element signature="e#3262#3347#0" expanded="false" />
+            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
           </folding>
         </state>
       </provider>

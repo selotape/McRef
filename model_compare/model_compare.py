@@ -1,15 +1,10 @@
-from math import log
-import sys
-import numpy as np
-import pandas as pd
 import configparser
 import os
-
+import pandas as pd
+from .probability_functions import P_Z_M0, E_P_Z
 
 
 def model_compare(simulation='sample'):
-
-    set_pandas()
 
     config = configparser.ConfigParser()
     config.read(get_config_path())
@@ -62,43 +57,28 @@ def model_compare(simulation='sample'):
 
     flat_stats['E_ratio'] = flat_stats['P_Z_M'] - flat_stats['P_Z_M0'] # since likelihoods are stored in log-space, ratio is calculated using subtraction
 
-    save_results(expectation_tail_length, likelihoods_plot_path, expectation_plot_path, flat_stats, trace_results_path, simulation, summary_path)
+    flat_stats_tail = flat_stats[-expectation_tail_length:]
+    E = E_P_Z(flat_stats_tail['E_ratio'])
+
+
+
+    save_results(likelihoods_plot_path, expectation_plot_path, flat_stats, flat_stats_tail, trace_results_path, simulation, summary_path, E)
 
 
 def get_config_path():
     return os.path.dirname(os.path.realpath(__file__)) + '\\' + 'config.ini'
 
 
-def save_results(expectation_tail_length, likelihoods_plot_path, expectation_plot_path, flat_stats, results_path, simulation_name, summary_path):
+def save_results(likelihoods_plot_path, expectation_plot_path, flat_stats, flat_stats_tail, results_path, simulation_name, summary_path, E):
 
-    flat_stats_tail = flat_stats[-expectation_tail_length:]
     save_plot(flat_stats_tail[['P_Z_M0', 'P_Z_M']], likelihoods_plot_path, simulation_name)
     save_plot(flat_stats_tail[['E_ratio']], expectation_plot_path, simulation_name)
+
     flat_stats.to_csv(results_path)
-    E = E_P_Z(flat_stats_tail['E_ratio'])
 
     f = open(summary_path, 'w')
-    f.write("E={0}\n".format(E))
+    f.write("E_P_Z={0}\n".format(E))
 
-
-def set_pandas():
-    pd.set_option('display.mpl_style', 'default')
-    pd.set_option('display.width', 5000)
-    pd.set_option('display.max_columns', 60)
-
-def P_Z_M0(theta, num_coal, time_stats):
-    result = num_coal*np.log(2.0/theta) - (time_stats/theta)
-    return result
-
-def E_P_Z(likelihoods):
-
-    a_max = max(likelihoods)
-    b = likelihoods - a_max
-    n = len(likelihoods)
-
-    result = a_max + log(sum(np.exp(b))) - log(n)
-
-    return result
 
 def save_plot(data_frame, plot_save_path, plot_name=''):
     plot = data_frame.plot(title=plot_name)
@@ -110,7 +90,3 @@ def validate_simulation(simulation_path):
     #TODO - add validations for existence of simulation directory and data files
     pass
 
-if __name__ == "__main__":
-    simulation_names = sys.argv[1:]
-    for simulation in simulation_names:
-        model_compare(simulation)
