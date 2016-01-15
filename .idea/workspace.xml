@@ -2,12 +2,10 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="9" />
-    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="27" />
+    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="29" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03c91087-59b0-4c4f-a2f8-34deb4f397b3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model_compare/probability_functions.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/expectation_plot.png" />
@@ -20,6 +18,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/likelihoods_plot.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/run_simulation.sh" afterPath="$PROJECT_DIR$/experiments/run_simulation.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" />
@@ -62,11 +61,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="config.ini" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.ini" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.50793654">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -76,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+              <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -84,17 +83,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model_compare.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="model_compare.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2857143">
-              <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="47" column="59" selection-start-line="47" selection-start-column="59" selection-end-line="47" selection-end-column="59" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#2545#2617#0" expanded="false" />
-                <element signature="e#2766#3044#0" expanded="false" />
-                <element signature="e#3262#3347#0" expanded="false" />
-                <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
+                <element signature="e#2759#3037#0" expanded="false" />
+                <element signature="e#3255#3340#0" expanded="false" />
+                <marker date="1452552262487" expanded="true" signature="142:926" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -135,8 +133,8 @@
         <option value="$PROJECT_DIR$/model_compare/__main__.py" />
         <option value="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/model_compare/config.ini" />
         <option value="$PROJECT_DIR$/model_compare/probability_functions.py" />
+        <option value="$PROJECT_DIR$/model_compare/config.ini" />
         <option value="$PROJECT_DIR$/model_compare/model_compare.py" />
       </list>
     </option>
@@ -223,20 +221,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ModelCompare" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ModelCompare" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model_compare" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -270,7 +254,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ModelCompare" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="sample" />
+      <option name="PARAMETERS" value="seq_M0_mod_M0 seq_M0_mod_M1 seq_M1_mod_M0 seq_M1_mod_M1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -559,10 +543,9 @@
           <caret line="78" column="49" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#2545#2617#0" expanded="false" />
-            <element signature="e#2766#3044#0" expanded="false" />
-            <element signature="e#3262#3347#0" expanded="false" />
-            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
+            <element signature="e#2759#3037#0" expanded="false" />
+            <element signature="e#3255#3340#0" expanded="false" />
+            <marker date="1452552262487" expanded="true" signature="142:926" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -581,10 +564,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#2545#2617#0" expanded="false" />
-            <element signature="e#2766#3044#0" expanded="false" />
-            <element signature="e#3262#3347#0" expanded="false" />
-            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
+            <element signature="e#2759#3037#0" expanded="false" />
+            <element signature="e#3255#3340#0" expanded="false" />
+            <marker date="1452552262487" expanded="true" signature="142:926" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -603,10 +585,9 @@
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#2545#2617#0" expanded="false" />
-            <element signature="e#2766#3044#0" expanded="false" />
-            <element signature="e#3262#3347#0" expanded="false" />
-            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
+            <element signature="e#2759#3037#0" expanded="false" />
+            <element signature="e#3255#3340#0" expanded="false" />
+            <marker date="1452552262487" expanded="true" signature="142:926" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1935,32 +1916,31 @@
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
+    <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-          <folding />
+          <caret line="47" column="59" selection-start-line="47" selection-start-column="59" selection-end-line="47" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#2759#3037#0" expanded="false" />
+            <element signature="e#3255#3340#0" expanded="false" />
+            <marker date="1452552262487" expanded="true" signature="142:926" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
+    <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2857143">
-          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#2545#2617#0" expanded="false" />
-            <element signature="e#2766#3044#0" expanded="false" />
-            <element signature="e#3262#3347#0" expanded="false" />
-            <marker date="1452551317426" expanded="true" signature="142:927" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="0.50793654">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -1,7 +1,10 @@
 #!/bin/bash
+set -o nounset
+set -o errexit
+
 
 GPHOCS_EXE="/c/Users/ronvis/Dropbox/Thesis/G-PhoCS/code/G-PhoCS/bin/G-PhoCS-1-2-3.exe"
-MODEL_COMPARE_PY="/C/Users/ronvis/Dropbox/Thesis/ModelCompare/model_compare/model_compare.py"
+MODEL_COMPARE_PY="/C/Users/ronvis/Dropbox/Thesis/ModelCompare/main.py"
 
 
 # $1 - control-file path
@@ -25,6 +28,7 @@ main() {
 			run_gphocs $ctl_file &
 		else
 			echo "ERROR: Target control-file " $ctl_file " is not a valid file"  >&2
+			exit 1
 		fi;
 	done
 

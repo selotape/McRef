@@ -7,7 +7,7 @@ GENERAL-INFO-START
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations	  	5000
+	mcmc-iterations	  	50000
 	iterations-per-log  5
 	logs-per-line       10
 

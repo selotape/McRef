@@ -9,36 +9,38 @@ def model_compare(simulation='sample'):
     config = configparser.ConfigParser()
     config.read(get_config_path())
 
+
+
     simulations_path = config.get('Input','simulations_path')
-    simulation_path = simulations_path + '\\' + simulation
+    simulation_path = simulations_path + '/' + simulation
 
     validate_simulation(simulation_path)
 
     flat_stats_name = config.get('Input','flat_stats_file_name')
-    flat_stats_path = simulation_path + '\\' + flat_stats_name
+    flat_stats_path = simulation_path + '/' + flat_stats_name
     flat_stats = pd.read_csv(flat_stats_path, sep='\t')
 
     trace_file_name = config.get('Input','trace_file_name')
-    trace_path = simulation_path + '\\' + trace_file_name
+    trace_path = simulation_path + '/' + trace_file_name
     trace = pd.read_csv(trace_path, sep='\t')
 
     theta_column_name = config.get('Data','theta_column')
     print_factor = config.getfloat('Data','print_factor')
     expectation_tail_length = config.getint('Data','expectation_tail_length')
 
-    results_directory_path = simulation_path + '\\' + config.get('Output','results_directory')
+    results_directory_path = simulation_path + '/' + config.get('Output','results_directory')
 
     trace_results_name = config.get('Output','trace_results_name')
-    trace_results_path = results_directory_path + '\\' + trace_results_name
+    trace_results_path = results_directory_path + '/' + trace_results_name
 
     summary_name = config.get('Output','summary_name')
-    summary_path = results_directory_path + '\\' + summary_name
+    summary_path = results_directory_path + '/' + summary_name
 
     likelihoods_plot_name = config.get('Output','likelihoods_plot_name')
-    likelihoods_plot_path = results_directory_path + '\\' + likelihoods_plot_name
+    likelihoods_plot_path = results_directory_path + '/' + likelihoods_plot_name
 
     expectation_plot_name = config.get('Output','expectation_plot_name')
-    expectation_plot_path = results_directory_path + '\\' + expectation_plot_name
+    expectation_plot_path = results_directory_path + '/' + expectation_plot_name
 
 
 
@@ -66,7 +68,7 @@ def model_compare(simulation='sample'):
 
 
 def get_config_path():
-    return os.path.dirname(os.path.realpath(__file__)) + '\\' + 'config.ini'
+    return os.path.dirname(os.path.realpath(__file__)) + '/' + 'config.ini'
 
 
 def save_results(likelihoods_plot_path, expectation_plot_path, flat_stats, flat_stats_tail, results_path, simulation_name, summary_path, E):
