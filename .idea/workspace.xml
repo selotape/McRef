@@ -6,41 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03c91087-59b0-4c4f-a2f8-34deb4f397b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/likelihoods_plot.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/run_simulation.sh" afterPath="$PROJECT_DIR$/experiments/run_simulation.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M1/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M0/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/config.ini" afterPath="$PROJECT_DIR$/model_compare/config.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/model_compare.py" afterPath="$PROJECT_DIR$/model_compare/model_compare.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/seq_M1_mod_M1/control-file.ctl" />
     </list>
     <ignored path="ModelCompare.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,7 +31,7 @@
       <file leaf-file-name="config.ini" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50793654">
+            <state vertical-scroll-proportion="0.55259025">
               <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
@@ -142,8 +109,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1050" />
+    <option name="width" value="1298" />
+    <option name="height" value="994" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -459,16 +426,16 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
+    <frame x="-9" y="-9" width="1298" height="994" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28072917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42109376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3478735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2082879" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22183508" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1938,7 +1905,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50793654">
+        <state vertical-scroll-proportion="0.55259025">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
