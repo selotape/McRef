@@ -61,3 +61,6 @@ target/
 # Sequence Simulation Data Files
 *.seqs
 *.data
+
+# Others
+*.tmp
