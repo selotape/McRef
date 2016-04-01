@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def P_G_M0(theta, num_coal, time_stats):
+def P_G_Mroot(theta, num_coal, time_stats):
     result = num_coal*np.log(2.0/theta) - (time_stats/theta)
     return result
 
