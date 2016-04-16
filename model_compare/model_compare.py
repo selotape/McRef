@@ -48,7 +48,7 @@ def model_compare(simulation='sample'):
 
     flat_stats[theta_column_name] = trace[theta_column_name]
     flat_stats = flat_stats[['logPrior', 'coalStatFlat', 'numCoalFlat', theta_column_name, 'genealogyLogLikelihood']]
-    flat_stats.columns = ['logPrior', 'time_stats', 'num_coal', theta_column_name, 'P_G_M']
+    flat_stats.columns = ['logPrior', 'time_stats', 'num_coal', theta_column_name, 'P_G_Mgphocs']
 
     flat_stats[theta_column_name] /= print_factor
 
@@ -58,7 +58,7 @@ def model_compare(simulation='sample'):
 
     flat_stats['P_G_Mref'] = P_G_Mroot(thetas, num_coal, time_stats)
 
-    flat_stats['E_ratio'] = flat_stats['P_G_Mref'] - flat_stats['P_G_M'] # since likelihoods are stored in log-space, ratio is calculated using subtraction
+    flat_stats['E_ratio'] = flat_stats['P_G_Mref'] - flat_stats['P_G_Mgphocs'] # since likelihoods are stored in log-space, ratio is calculated using subtraction
 
     flat_stats_tail = flat_stats[-expectation_tail_length:]
     RBF = E_P_G(flat_stats_tail['E_ratio'])
@@ -72,7 +72,7 @@ def get_config_path():
 
 def save_results(likelihoods_plot_path, expectation_plot_path, flat_stats, flat_stats_tail, results_path, simulation_name, summary_path, RBF):
 
-    save_plot(flat_stats_tail[['P_G_Mref', 'P_G_M']], likelihoods_plot_path, simulation_name)
+    save_plot(flat_stats_tail[['P_G_Mref', 'P_G_Mgphocs']], likelihoods_plot_path, simulation_name)
     save_plot(flat_stats_tail[['E_ratio']], expectation_plot_path, simulation_name)
 
     flat_stats.to_csv(results_path)
