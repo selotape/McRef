@@ -3,8 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python
@@ -49,14 +47,10 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
+# Pycharm user-specific files
+.idea/workspace.xml
+.idea/tasks.xml
 
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
 
 # Sequence Simulation Data Files
 *.seqs
