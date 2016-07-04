@@ -9,7 +9,7 @@ def model_compare(simulation='sample'):
 
     clade_stats, trace = conf.get_data_frames()
     pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix = conf.get_prefixes()
-    clades, pops = conf.get_clades_and_pops()
+    clades, pops, mig_bands = conf.get_clades_pops_and_migs()
     print_factor, tail_length = conf.get_data_config()
 
     thetas = trace[[theta_prefix + p for p in pops] + [theta_prefix + c for c in clades]].divide(print_factor)

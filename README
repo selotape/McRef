@@ -1,8 +1,12 @@
 Relative Bayesian model comparison framework through post-processing of G-PhoCS traces
 
-Usage:
+<b>Usage:</b>
 >>> .\main.py .\path\to\gphocs\results [..]
 
-Todo:
+<b>Requirements:</b>
+- Anaconda3 (in your environment PATH)
+
+<b>Todo:</b>
 - Add migStats
 - Write ProbabilityFunction Tests
+- Move the "Todos" to "Issues"

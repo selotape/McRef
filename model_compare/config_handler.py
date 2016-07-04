@@ -12,15 +12,17 @@ class ConfigHandler:
         simulations_path = self.config.get('Input', 'simulations_path')
         return simulations_path + '\\' + self.simulation
 
-    def get_clades_and_pops(self):
+    def get_clades_pops_and_migs(self):
         clades = self.config.get('Clade','clades').split(',')
         pops = self.config.get('Clade', 'pops').split(',')
+        mig_bands = self.config.get('Clade', 'mig_bands').split(',')
 
         #remove empty strings
         clades = list(filter(None, clades))
         pops = list(filter(None, pops))
+        mig_bands = list(filter(None, mig_bands))
 
-        return clades, pops
+        return clades, pops, mig_bands
 
     def get_data_frames(self):
         simulation_path = self.get_simulation_path()

@@ -85,13 +85,13 @@ ANCESTRAL-POPS-START
 ANCESTRAL-POPS-END
 
 
-#MIG-BANDS-START	
-#
-#	BAND-START		
-#	   name    D->B
-#       source  D
-#       target  B
-#       mig-rate-print 0.1
-#	BAND-END
-#
-#MIG-BANDS-END
+MIG-BANDS-START	
+
+	BAND-START		
+	   name    D->B
+       source  D
+       target  B
+       mig-rate-print 0.1
+	BAND-END
+
+MIG-BANDS-END
