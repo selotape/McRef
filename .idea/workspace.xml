@@ -1,50 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="67" />
-    <bookmark url="file://$PROJECT_DIR$/model_compare/clade_utils.py" line="34" />
-    <bookmark url="file://$PROJECT_DIR$/model_compare/model_compare.py" line="14" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="03c91087-59b0-4c4f-a2f8-34deb4f397b3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model_compare/clade_utils.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/research draft/parameter mappings.docx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/research draft/Parameter Mapping.pdf" afterPath="$PROJECT_DIR$/docs/research draft/Parameter Mapping.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/research draft/Parameter Mapping.synctex.gz" afterPath="$PROJECT_DIR$/docs/research draft/Parameter Mapping.synctex.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/expectation_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/likelihoods_plot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ModelCompare.iml" afterPath="$PROJECT_DIR$/.idea/ModelCompare.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model_compare/config_handler.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/data.trace.xlsx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model_compare/clade_utils.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/model_compare/test__main__.py" afterPath="$PROJECT_DIR$/model_compare/test_probability_functions_.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/expectation_plot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/likelihoods_plot.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/research draft/Parameter Mapping.tex" afterPath="$PROJECT_DIR$/docs/research draft/Parameter Mapping.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/run_simulation.sh" afterPath="$PROJECT_DIR$/experiments/run_simulation.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README" afterPath="$PROJECT_DIR$/README" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/sample/control-file.ctl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/control-file.ctl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M0/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/control-file.ctl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X0_mod_M1/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/control-file.ctl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M0/results/model_compare_summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/control-file.ctl" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/control-file.ctl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/data.flatStats.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/data.trace.tsv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/model_compare_results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/seq_X1_mod_M1/results/model_compare_summary.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.flatStats.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/data.trace.tsv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_results.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_summary.txt" afterPath="$PROJECT_DIR$/experiments/simulations/sample/results/model_compare_summary.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/config.ini" afterPath="$PROJECT_DIR$/model_compare/config.ini" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model_compare/model_compare.py" afterPath="$PROJECT_DIR$/model_compare/model_compare.py" />
@@ -68,69 +38,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_pydev_execfile.py" pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="clade_utils.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model_compare/clade_utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="31" selection-start-line="63" selection-start-column="19" selection-end-line="63" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.ini" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="model_compare.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="model_compare.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3920792">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#1777#1883#0" expanded="false" />
-                <element signature="e#1923#2149#0" expanded="false" />
-                <element signature="e#2196#2640#0" expanded="false" />
-                <element signature="e#2689#3311#0" expanded="false" />
-                <element signature="e#3343#3639#0" expanded="false" />
-                <element signature="e#3685#4176#0" expanded="false" />
+                <element signature="e#0#54#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parsers.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/pandas/io/parsers.py">
+      <file leaf-file-name="config.ini" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.06626506">
+              <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1118" column="0" selection-start-line="1118" selection-start-column="0" selection-end-line="1118" selection-end-column="0" />
+              <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config_handler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model_compare/config_handler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_probability_functions_.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model_compare/test_probability_functions_.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -161,10 +117,13 @@
         <option value="$PROJECT_DIR$/model_compare/__main__.py" />
         <option value="$PROJECT_DIR$/experiments/simulations/seq_M0_mod_M0/results/model_compare_results.csv" />
         <option value="$PROJECT_DIR$/model_compare/probability_functions.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/model_compare/clade_utils.py" />
-        <option value="$PROJECT_DIR$/model_compare/config.ini" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/model_compare/test_probability_functions_.py" />
+        <option value="$PROJECT_DIR$/README" />
+        <option value="$PROJECT_DIR$/model_compare/config_handler.py" />
         <option value="$PROJECT_DIR$/model_compare/model_compare.py" />
+        <option value="$PROJECT_DIR$/model_compare/config.ini" />
       </list>
     </option>
   </component>
@@ -280,7 +239,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ModelCompare" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="seq_X0_mod_M0  seq_X0_mod_M1 seq_X1_mod_M0 seq_X1_mod_M1" />
+      <option name="PARAMETERS" value="sample" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -311,7 +270,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ModelCompare" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_compare/test__main__.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\ronvis\Dropbox\Thesis\ModelCompare\model_compare\test_probability_functions_.py" />
       <option name="CLASS_NAME" value="TestStringMethods" />
       <option name="METHOD_NAME" value="" />
       <option name="FOLDER_NAME" value="" />
@@ -510,9 +469,10 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19947916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3478735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44248706" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2777202" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -524,7 +484,6 @@
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="91" y="90" width="1738" height="850" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -558,31 +517,17 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="24" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -607,7 +552,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -616,13 +563,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -639,7 +580,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -648,13 +591,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="58" column="34" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -679,7 +616,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -695,7 +634,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -704,13 +645,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -723,7 +658,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/test__main__.py">
+    <entry file="file://$PROJECT_DIR$/model_compare/test_probability_functions_.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
@@ -742,7 +677,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -751,13 +688,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -770,7 +701,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/test__main__.py">
+    <entry file="file://$PROJECT_DIR$/model_compare/test_probability_functions_.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
@@ -789,7 +720,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -798,13 +731,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -821,7 +748,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -830,13 +759,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -861,7 +784,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -870,13 +795,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="47" column="59" selection-start-line="47" selection-start-column="59" selection-end-line="47" selection-end-column="59" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -902,13 +821,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="78" column="49" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -926,13 +839,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -950,13 +857,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -978,14 +879,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/test__main__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3304721">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/probability_functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2832618">
@@ -996,24 +889,24 @@
     </entry>
     <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/pandas/io/parsers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1118" column="0" selection-start-line="1118" selection-start-column="0" selection-end-line="1118" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.9698795">
+          <caret line="1118" column="19" selection-start-line="1118" selection-start-column="19" selection-end-line="1118" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/clade_utils.py">
+    <entry file="file://$PROJECT_DIR$/model_compare/test_probability_functions_.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="31" selection-start-line="63" selection-start-column="19" selection-end-line="63" selection-end-column="31" />
+          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.40128756">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1021,32 +914,46 @@
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+    <entry file="file://$PROJECT_DIR$/model_compare/config_handler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model_compare/model_compare.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3920792">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1777#1883#0" expanded="false" />
-            <element signature="e#1923#2149#0" expanded="false" />
-            <element signature="e#2196#2640#0" expanded="false" />
-            <element signature="e#2689#3311#0" expanded="false" />
-            <element signature="e#3343#3639#0" expanded="false" />
-            <element signature="e#3685#4176#0" expanded="false" />
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model_compare/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06626506">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>

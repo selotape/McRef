@@ -1,6 +1,8 @@
-Bayesian model comparison framework through post-processing of G-PhoCS traces
+Relative Bayesian model comparison framework through post-processing of G-PhoCS traces
 
 Usage:
 >>> .\main.py .\path\to\gphocs\results [..]
 
-G-PhoCS Github:
+Todo:
+- Add migStats
+- Write ProbabilityFunction Tests
