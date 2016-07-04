@@ -2,10 +2,11 @@
 set -o nounset
 set -o errexit
 
+export PATH="/c/Users/ronvis/Anaconda3:/c/Users/ronvis/Anaconda3/Scripts:$PATH"
+
 
 GPHOCS_EXE="/c/Users/ronvis/Dropbox/Thesis/G-PhoCS/code/G-PhoCS/bin/G-PhoCS-1-2-3.exe"
 MODEL_COMPARE_PY="/C/Users/ronvis/Dropbox/Thesis/ModelCompare/main.py"
-
 
 # $1 - control-file path
 function run_gphocs {

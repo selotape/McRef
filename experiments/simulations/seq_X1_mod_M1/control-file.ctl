@@ -1,18 +1,19 @@
 GENERAL-INFO-START
 
 	seq-file            sequences\M1\sequences.seqs
-	trace-file          simulations\seq_M1_mod_M1\data.trace.tsv
-	coal-stats-file		simulations\seq_M1_mod_M1\data.flatStats.tsv
+	trace-file          simulations\seq_X1_mod_M1\data.trace.tsv
+	coal-stats-file		simulations\seq_X1_mod_M1\data.flatStats.tsv
+	clade-stats-file	simulations\seq_X1_mod_M1\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations	  	50000
+	mcmc-iterations	  	5000
 	iterations-per-log  5
 	logs-per-line       10
 
 
-	find-finetunes		TRUE
+	find-finetunes		FALSE
 	finetune-coal-time	0.01		
 	finetune-mig-time	0.3		
 	finetune-theta		0.04

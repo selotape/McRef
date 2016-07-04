@@ -3,6 +3,7 @@ GENERAL-INFO-START
 	seq-file            sequences\sample\seqs-sample.txt
 	trace-file          simulations\sample\data.trace.tsv
 	coal-stats-file		simulations\sample\data.flatStats.tsv
+	clade-stats-file	simulations\sample\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
@@ -87,6 +88,7 @@ ANCESTRAL-POPS-END
 MIG-BANDS-START	
 
 	BAND-START		
+	   name    D->B
        source  D
        target  B
        mig-rate-print 0.1

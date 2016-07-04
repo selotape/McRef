@@ -1,13 +1,14 @@
 GENERAL-INFO-START
 
 	seq-file            sequences\M0\sequences.seqs
-	trace-file          simulations\seq_M0_mod_M0\data.trace.tsv
-	coal-stats-file		simulations\seq_M0_mod_M0\data.flatStats.tsv
+	trace-file          simulations\seq_X0_mod_M0\data.trace.tsv
+	coal-stats-file		simulations\seq_X0_mod_M0\data.flatStats.tsv
+	clade-stats-file	simulations\seq_X0_mod_M0\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations	  	50000
+	mcmc-iterations	  	5000
 	iterations-per-log  5
 	logs-per-line       10
 
