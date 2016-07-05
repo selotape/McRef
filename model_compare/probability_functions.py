@@ -1,8 +1,12 @@
 import numpy as np
 
 
-def P_G_Mroot(theta, num_coal, time_stats):
+def kingman_coalescent(theta, num_coal, time_stats):
     result = num_coal*np.log(2.0/theta) - (time_stats/theta)
+    return result
+
+def kingman_migration(mig_rate, num_migs, mig_stats):
+    result = num_migs*np.log(mig_rate) - mig_stats*mig_rate;
     return result
 
 

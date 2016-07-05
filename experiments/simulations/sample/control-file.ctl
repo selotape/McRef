@@ -2,12 +2,12 @@ GENERAL-INFO-START
 
 	seq-file            sequences\sample\seqs-sample.txt
 	trace-file          simulations\sample\data.trace.tsv
-	coal-stats-file		simulations\sample\data.flatStats.tsv
+#	coal-stats-file		simulations\sample\data.flatStats.tsv
 	clade-stats-file	simulations\sample\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	mcmc-iterations		5000
+	mcmc-iterations		500
 	iterations-per-log  5
 	logs-per-line       10
 

@@ -6,7 +6,7 @@ class ConfigHandler:
     def __init__(self, simulation):
         self.simulation = simulation
         self.config = configparser.ConfigParser()
-        self.config.read(os.path.dirname(os.path.realpath(__file__)) + '\\' + 'config.ini')
+        self.config.read('config.ini')
 
     def get_simulation_path(self):
         simulations_path = self.config.get('Input', 'simulations_path')
@@ -41,21 +41,26 @@ class ConfigHandler:
         simulation_path = self.get_simulation_path()
 
         results_directory_path = simulation_path + '\\' + self.config.get('Output','results_directory')
-        results_path = results_directory_path + '\\' + self.config.get('Output','results_name')
-        summary_path = results_directory_path + '\\' + self.config.get('Output','summary_name')
+        results_path =          results_directory_path + '\\' + self.config.get('Output','results_name')
+        summary_path =          results_directory_path + '\\' + self.config.get('Output','summary_name')
         likelihoods_plot_path = results_directory_path + '\\' + self.config.get('Output','likelihoods_plot_name')
         expectation_plot_path = results_directory_path + '\\' + self.config.get('Output','expectation_plot_name')
 
         return results_path, likelihoods_plot_path, expectation_plot_path, summary_path
 
     def get_prefixes(self):
-        pop_infix = self.config.get('Clade','pop_inffix')
-        theta_prefix = self.config.get('Clade','theta_prefix')
-        num_coals_suffix = self.config.get('Clade','num_coals_suffix')
+        pop_infix =         self.config.get('Clade','pop_inffix')
+        theta_prefix =      self.config.get('Clade','theta_prefix')
+        num_coals_suffix =  self.config.get('Clade','num_coals_suffix')
         coal_stats_suffix = self.config.get('Clade','coal_stats_suffix')
-        return pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix
+        mig_rate_prefix =   self.config.get('Clade','mig_rate_prefix')
+        num_migs_suffix =   self.config.get('Clade','num_migs_suffix')
+        mig_stats_suffix =  self.config.get('Clade','mig_stats_suffix')
+        result = (pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix, mig_rate_prefix, num_migs_suffix, mig_stats_suffix)
+        return result
 
     def get_data_config(self):
-        print_factor = self.config.getfloat('Data','print_factor')
+        theta_print_factor = self.config.getfloat('Data','theta_print_factor')
+        mig_rate_print_factor = self.config.getfloat('Data', 'mig_rate_print_factor')
         tail_length = self.config.getint('Data','expectation_tail_length')
-        return print_factor, tail_length
+        return theta_print_factor, mig_rate_print_factor, tail_length
