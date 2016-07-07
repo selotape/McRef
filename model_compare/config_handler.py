@@ -45,8 +45,9 @@ class ConfigHandler:
         summary_path =          results_directory_path + '\\' + self.config.get('Output','summary_name')
         likelihoods_plot_path = results_directory_path + '\\' + self.config.get('Output','likelihoods_plot_name')
         expectation_plot_path = results_directory_path + '\\' + self.config.get('Output','expectation_plot_name')
+        harmonic_mean_plot_path= results_directory_path + '\\' + self.config.get('Output','harmonic_mean_plot_name')
 
-        return results_path, likelihoods_plot_path, expectation_plot_path, summary_path
+        return results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path
 
     def get_prefixes(self):
         pop_infix =         self.config.get('Clade','pop_inffix')

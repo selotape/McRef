@@ -1,7 +1,7 @@
 from model_compare.config_handler import ConfigHandler
 import os
 import pandas as pd
-from model_compare.probability_functions import kingman_coalescent, E_P_G, kingman_migration
+from model_compare.probability_functions import kingman_coalescent, kingman_migration, statistify
 
 
 def model_compare(simulation='sample'):
@@ -26,7 +26,8 @@ def model_compare(simulation='sample'):
 
     results = pd.DataFrame()
 
-    results['hypothesis'] = trace['Gene-ld-ln']
+    results['hm_data_likelihood'] = 1/trace['Data-ld-ln']
+    results['hyp_gene_likelihood'] = trace['Gene-ld-ln']
 
     for pop in populations:
         results[pop + pop_infix] = kingman_coalescent(thetas[theta_prefix + pop], num_coal[pop + pop_infix + num_coals_suffix], coal_stats[pop + pop_infix + coal_stats_suffix])
@@ -37,10 +38,10 @@ def model_compare(simulation='sample'):
 
     columns_to_sum = clades + [pop + pop_infix for pop in populations] + migration_bands
 
-    results['reference'] = results[columns_to_sum].sum(axis=1)
-    results['E_ratio'] = results['reference'] - results['hypothesis']
-    results.rbf = E_P_G(results['E_ratio'][-tail_length:])
-
+    results['ref_gene_likelihood'] = results[columns_to_sum].sum(axis=1)
+    results['rbf_ratio'] = results['ref_gene_likelihood'] - results['hyp_gene_likelihood']
+    results.rbf = statistify(results['rbf_ratio'])
+    results.hm = statistify(results['hm_data_likelihood'])
     save_results(conf, results)
 
 
@@ -52,15 +53,17 @@ def save_results(conf, results):
 
     tail_length = conf.get_data_config()[2]
 
-    results_path, likelihoods_plot_path, expectation_plot_path, summary_path = conf.get_results_paths()
+    results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
 
-    save_plot(results[-tail_length:][['reference', 'hypothesis']], likelihoods_plot_path, conf.simulation)
-    save_plot(results[-tail_length:][['E_ratio']], expectation_plot_path, conf.simulation)
+    save_plot(results[-tail_length:][['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, conf.simulation)
+    save_plot(results[-tail_length:][['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation)
+    save_plot(results[-tail_length:][['rbf_ratio']], expectation_plot_path, conf.simulation)
 
     results.to_csv(results_path)
 
     with open(summary_path, 'w') as f:
-        f.write("RBF={0}\n".format(results.rbf))
+        f.write("Relative Bayes Factor  : Mean={0}, Variance={1}, Standard Deviation={2}\n".format(results.rbf[0], results.rbf[1], results.rbf[2]))
+        f.write("Harmonic Mean Estimator: Mean={0}, Variance={1}, Standard Deviation={2}\n".format(results.hm[0], results.hm[1], results.hm[2]))
 
 
 def save_plot(data_frame, plot_save_path, plot_name=''):

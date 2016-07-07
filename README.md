@@ -18,5 +18,10 @@ Relative Bayesian model comparison framework through post-processing of G-PhoCS 
 	* The main user mandated configurations are 'clades', 'pops' and 'mig_bands'. For further explanation see config file
 * For G-PhoCS configuration and execution see the [G-PhoCS Homepage](http://compgen.cshl.edu/GPhoCS/) and the [G-PhoCS Manual](http://compgen.cshl.edu/GPhoCS/GPhoCS_Manual.pdf)
 
+## Todo:
+    * add integration tests
+    * fix mig_rate
+    * add default option to read pops and mig_bands from gphocs ctl file
+    * create three seperate algorithms: flat, clade and harmonic_mean
 
 For any question or suggestion feel free to contact me - Ron dot Visbord at Gmail dot com
