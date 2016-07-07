@@ -1,0 +1,8 @@
+# M2 - three population model with 24 individuals (8 per pop), theta = 0.001, tau_AB = 0.00005 (perturb this) tau_ABC=0.0003
+#  individuals  loci trees  recombi locusize    populations    parameters pop   size                  join at time  between      more params
+ms     24       5000   -T   -r 0.1   1000         -I 3 8 8 8      
+    -n 1 0.001  -n 2 0.001  -n 3 0.001
+    -ej 0.00005    2 1  -en 0.00005 1 0.001
+    -ej 0.0003    3 1  -en 0.0003 1 0.001
+
+
