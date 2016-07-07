@@ -1,0 +1,6 @@
+directory with tools and scripts for simulation
+
+- simulate-poptrees.sh - main script for running a simulation given an ms command line file
+- seqgen-to-gphocs.sh  - script for converting the seq-gen output file to a G-PhoCS sequence input file
+- ms                   - program for generating data (genealogies or sequences) under the coalescent (with recombination)
+- seq-gen              - program for simulating site-substitution models along phylogenies (genealogies)
