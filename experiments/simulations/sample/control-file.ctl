@@ -61,25 +61,25 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			AB
 		children		A		B
-		tau-initial	0.000005
+		tau-initial		0.000005
 		tau-beta		20000.0	
-		finetune-tau			0.0000008
+		finetune-tau	0.0000008
 	POP-END
 
 	POP-START
 		name			ABC
 		children		AB		C
-		tau-initial	0.00001
+		tau-initial		0.00001
 		tau-beta		20000.0	
-		finetune-tau			0.0000008
+		finetune-tau	0.0000008
 	POP-END
 
 	POP-START
 		name			root
 		children		ABC	D
-		tau-initial	0.00005
+		tau-initial		0.00005
 		tau-beta		20000.0	
-		finetune-tau			0.00000286
+		finetune-tau	0.00000286
 	POP-END
 
 ANCESTRAL-POPS-END

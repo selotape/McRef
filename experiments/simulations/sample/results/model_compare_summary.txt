@@ -1,2 +1,2 @@
-Relative Bayes Factor  : Mean=0.014146800407377036, Variance=0.10149332796824605, Standard Deviation=0.31858017510235326
-Harmonic Mean Estimator: Mean=-0.0007416885362134806, Variance=7.829481242235118e-13, Standard Deviation=8.848435591806677e-07
+Relative Bayes Factor  : Log Mean=-5.498588251384717e-10, Variance=-8.881784197001252e-15
+Harmonic Mean Estimator: Log Mean=1401849.4047422684, Variance=nan

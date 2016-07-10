@@ -10,26 +10,35 @@ def kingman_migration(mig_rate, num_migs, mig_stats):
     return result
 
 def statistify(log_likelihoods): #TODO - rename
-    likelihoods = np.exp(log_likelihoods)
-    mean = logarithmic_expectation(log_likelihoods)
-    variance = likelihoods.var()
-    std = likelihoods.std()
-    return mean, variance, std
+    log_mean = log_expectation(log_likelihoods)
+    variance = log_variance(log_likelihoods)
+    return log_mean, variance
 
-def logarithmic_expectation(log_likelihoods):
 
+
+def log_expectation(log_likelihoods):
     """
     :param log_likelihoods: a series of tiny probabilities, with ln applied to them
-    :return: mean of probabilities, with ln applied
+    :return: ln of mean of probabilities
     """
 
     a_max = max(log_likelihoods)
     b = log_likelihoods - a_max
     n = len(log_likelihoods)
 
-    result = a_max + np.log(sum(np.exp(b))) - np.log(n)
+    log_mean = a_max + np.log(sum(np.exp(b))) - np.log(n)
 
-    return result
+    return log_mean
 
+def log_variance(log_likelihoods):
+    mean = np.exp(log_expectation(log_likelihoods))
+    mean_sqrd = np.exp(log_expectation(2*log_likelihoods))
+    variance = mean_sqrd - mean**2
+    return variance
 
+def log_variance2(log_likelihoods):
+    return 0
 
+def log_variance3(log_likelihoods):
+    likelihoods = np.exp(log_likelihoods)
+    return likelihoods.var()
