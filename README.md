@@ -19,7 +19,8 @@ Relative Bayesian model comparison framework through post-processing of G-PhoCS 
 * For G-PhoCS configuration and execution see the [G-PhoCS Homepage](http://compgen.cshl.edu/GPhoCS/) and the [G-PhoCS Manual](http://compgen.cshl.edu/GPhoCS/GPhoCS_Manual.pdf)
 
 ## Todo:
-    * add integration tests
+    * get "config.ini" from simulation directory
+	* add integration tests
     * fix mig_rate
     * add default option to read pops and mig_bands from gphocs ctl file
     * create three seperate algorithms: flat, clade and harmonic_mean

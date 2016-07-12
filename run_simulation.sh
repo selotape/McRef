@@ -4,9 +4,9 @@ set -o errexit
 
 export PATH="/c/Users/ronvis/Anaconda3:/c/Users/ronvis/Anaconda3/Scripts:$PATH"
 
+GPHOCS_EXE=			"/g/Users/ronvis/Dropbox/Thesis/G-PhoCS/code/G-PhoCS/bin/G-PhoCS-1-2-3.exe"
+MODEL_COMPARE_PY=	"/g/Users/ronvis/Dropbox/Thesis/ModelCompare/main.py"
 
-GPHOCS_EXE="/c/Users/ronvis/Dropbox/Thesis/G-PhoCS/code/G-PhoCS/bin/G-PhoCS-1-2-3.exe"
-MODEL_COMPARE_PY="/C/Users/ronvis/Dropbox/Thesis/ModelCompare/main.py"
 
 # $1 - control-file path
 function run_gphocs {
@@ -24,7 +24,7 @@ function run_model_compare {
 main() {
 	for var;
 	do
-		ctl_file="./simulations/$var/control-file.ctl"
+		ctl_file="./experiments/simulations/$var/control-file.ctl"
 		if [ -f $ctl_file ]; then
 			run_gphocs $ctl_file &
 		else

@@ -1,6 +1,6 @@
 GENERAL-INFO-START
 
-	seq-file            sequences\M1\sequences.seqs
+	seq-file            sims\M1\sequences.seqs
 	trace-file          simulations\seq_X1_mod_M0\data.trace.tsv
 	coal-stats-file		simulations\seq_X1_mod_M0\data.flatStats.tsv
 	clade-stats-file	simulations\seq_X1_mod_M0\data.cladeStats.tsv

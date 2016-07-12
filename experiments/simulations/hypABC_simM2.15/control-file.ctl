@@ -1,14 +1,14 @@
 GENERAL-INFO-START
 
-	seq-file            sims\sample\seqs-sample.txt
-	trace-file          experiments\simulations\sample\data.trace.tsv
-#	coal-stats-file		experiments\simulations\sample\data.flatStats.tsv
-	clade-stats-file	experiments\simulations\sample\data.cladeStats.tsv
+	seq-file            sims\simM2.15\data.seqs
+	trace-file          experiments\simulations\hypABC_simM2.15\data.trace.tsv
+#	coal-stats-file		experiments\simulations\hypABC_simM2.15\data.flatStats.tsv
+	clade-stats-file	experiments\simulations\hypABC_simM2.15\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
 	num-loci 			10
-	mcmc-iterations		500
+	mcmc-iterations		5000
 	iterations-per-log  5
 	logs-per-line       10
 
@@ -36,22 +36,17 @@ CURRENT-POPS-START
 
 	POP-START
 		name		A
-		samples		one d
+		samples		1 d 2 d 3 d 4 d 5 d 6 d 7 d 8 d
 	POP-END
 
 	POP-START
 		name		B
-		samples		two d
+		samples		9 d 10 d 11 d 12 d 13 d 14 d 15 d
 	POP-END
 
 	POP-START
 		name		C
-		samples		three d
-	POP-END
-
-	POP-START
-		name		D
-		samples		five d
+		samples		17 d 18 d 19 d 20 d 21 d 22 d 23 d 24 d
 	POP-END
 	
 CURRENT-POPS-END
@@ -62,37 +57,28 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			AB
 		children		A		B
-		tau-initial		0.000005
-		tau-beta		20000.0	
-		finetune-tau	0.0000008
-	POP-END
-
-	POP-START
-		name			ABC
-		children		AB		C
-		tau-initial		0.00001
+		tau-initial		0.00005
 		tau-beta		20000.0	
 		finetune-tau	0.0000008
 	POP-END
 
 	POP-START
 		name			root
-		children		ABC	D
-		tau-initial		0.00005
+		children		AB	C
+		tau-initial		0.0003
 		tau-beta		20000.0	
 		finetune-tau	0.00000286
 	POP-END
 
 ANCESTRAL-POPS-END
 
-
-MIG-BANDS-START	
-
-	BAND-START		
-	   name    D->B
-       source  D
-       target  B
-       mig-rate-print 0.1
-	BAND-END
-
-MIG-BANDS-END
+#MIG-BANDS-START	
+#
+#	BAND-START		
+#		name    C->B
+#		source  C
+#		target  B
+#		mig-rate-print 0.1
+#	BAND-END
+#
+#MIG-BANDS-END

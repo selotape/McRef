@@ -1,4 +1,6 @@
 import numpy as np
+from numpy import exp
+from numpy import log
 
 
 def kingman_coalescent(theta, num_coal, time_stats):
@@ -11,34 +13,25 @@ def kingman_migration(mig_rate, num_migs, mig_stats):
 
 def statistify(log_likelihoods): #TODO - rename
     log_mean = log_expectation(log_likelihoods)
-    variance = log_variance(log_likelihoods)
-    return log_mean, variance
+    log_var = log_variance(log_likelihoods)
+    return log_mean, log_var
 
 
-
-def log_expectation(log_likelihoods):
+def log_expectation(ln_samples):
     """
-    :param log_likelihoods: a series of tiny probabilities, with ln applied to them
+    :param ln_samples: a series of tiny probabilities, with ln applied to them
     :return: ln of mean of probabilities
     """
+    ln_C = max(ln_samples)
+    n = len(ln_samples)
 
-    a_max = max(log_likelihoods)
-    b = log_likelihoods - a_max
-    n = len(log_likelihoods)
-
-    log_mean = a_max + np.log(sum(np.exp(b))) - np.log(n)
+    log_mean = ln_C + log(sum(exp(ln_samples - ln_C))) - log(n)
 
     return log_mean
 
-def log_variance(log_likelihoods):
-    mean = np.exp(log_expectation(log_likelihoods))
-    mean_sqrd = np.exp(log_expectation(2*log_likelihoods))
-    variance = mean_sqrd - mean**2
-    return variance
+def log_variance(ln_samples):
+    ln_C = max(ln_samples)
 
-def log_variance2(log_likelihoods):
-    return 0
+    log_var = log(exp(ln_samples - ln_C).var()) + 2*ln_C
 
-def log_variance3(log_likelihoods):
-    likelihoods = np.exp(log_likelihoods)
-    return likelihoods.var()
+    return log_var
