@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 from model_compare.config_handler import ConfigHandler
 from model_compare.probability_functions import kingman_coalescent, kingman_migration, statistify
 
@@ -56,7 +57,9 @@ def save_results(conf, results):
 
     tail_length = conf.get_data_config()[2]
 
-    results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
+    results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
+
+    os.makedirs(results_directory)
 
     save_plot(results[-tail_length:][['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, conf.simulation)
     save_plot(results[-tail_length:][['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation)

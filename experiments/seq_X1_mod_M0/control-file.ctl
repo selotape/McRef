@@ -1,9 +1,9 @@
 GENERAL-INFO-START
 
-	seq-file            sims\M0\sequences.seqs
-	trace-file          simulations\seq_X0_mod_M1\data.trace.tsv
-	coal-stats-file		simulations\seq_X0_mod_M1\data.flatStats.tsv
-	clade-stats-file	simulations\seq_X0_mod_M1\data.cladeStats.tsv
+	seq-file            sims\M1\sequences.seqs
+	trace-file          experiments\seq_X1_mod_M0\data.trace.tsv
+	coal-stats-file		experiments\seq_X1_mod_M0\data.flatStats.tsv
+	clade-stats-file	experiments\seq_X1_mod_M0\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
@@ -20,7 +20,7 @@ GENERAL-INFO-START
 	finetune-mig-rate	0.02
 	finetune-tau		0.0000008
 	finetune-mixing		0.003
-#   finetune-locus-rate 0.3
+#	finetune-locus-rate 0.3
 	
 	tau-theta-print		10000.0
 	tau-theta-alpha		1.0			# for STD/mean ratio of 100%
@@ -36,12 +36,12 @@ CURRENT-POPS-START
 
 	POP-START
 		name		A
-		samples		1 h 2 h 3 h 4 h 5 h 6 h 7 h 8 h
+		samples		1 h 2 h 3 h 4 h 5 h 6 h 7 h 8 h 9 h 10 h 11 h 12 h 13 h 14 h 15 h
 	POP-END
 	
 	POP-START
 		name		B
-		samples		9 h 10 h 11 h 12 h 13 h 14 h 15 h 16 h
+		samples		16 h
 	POP-END
 
 CURRENT-POPS-END
@@ -51,7 +51,7 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			root
 		children		A B
-		tau-initial		0.0001
+		tau-initial		0.000000000001
 		tau-beta		20000.0	
 		finetune-tau	0.00000286
 	POP-END

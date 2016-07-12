@@ -1,9 +1,9 @@
 GENERAL-INFO-START
 
-	seq-file            sims\M1\sequences.seqs
-	trace-file          simulations\seq_X1_mod_M1\data.trace.tsv
-	coal-stats-file		simulations\seq_X1_mod_M1\data.flatStats.tsv
-	clade-stats-file	simulations\seq_X1_mod_M1\data.cladeStats.tsv
+	seq-file            sims\M0\sequences.seqs
+	trace-file          experiments\seq_X0_mod_M1\data.trace.tsv
+	coal-stats-file		experiments\seq_X0_mod_M1\data.flatStats.tsv
+	clade-stats-file	experiments\seq_X0_mod_M1\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
@@ -20,7 +20,7 @@ GENERAL-INFO-START
 	finetune-mig-rate	0.02
 	finetune-tau		0.0000008
 	finetune-mixing		0.003
-#	finetune-locus-rate 0.3
+#   finetune-locus-rate 0.3
 	
 	tau-theta-print		10000.0
 	tau-theta-alpha		1.0			# for STD/mean ratio of 100%

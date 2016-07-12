@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import configparser
 import pandas as pd
@@ -39,15 +40,16 @@ class ConfigHandler:
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
+        timestamp = datetime.now().strftime("%H.%M_%d.%m.%Y")
 
-        results_directory_path = simulation_path + '\\' + self.config.get('Output','results_directory')
-        results_path =          results_directory_path + '\\' + self.config.get('Output','results_name')
-        summary_path =          results_directory_path + '\\' + self.config.get('Output','summary_name')
-        likelihoods_plot_path = results_directory_path + '\\' + self.config.get('Output','likelihoods_plot_name')
-        expectation_plot_path = results_directory_path + '\\' + self.config.get('Output','expectation_plot_name')
-        harmonic_mean_plot_path= results_directory_path + '\\' + self.config.get('Output','harmonic_mean_plot_name')
+        results_directory = simulation_path + '\\' + self.config.get('Output','results_directory') + '\\' + timestamp
+        results_path =          results_directory + '\\' + self.config.get('Output','results_name')
+        summary_path =          results_directory + '\\' + self.config.get('Output','summary_name')
+        likelihoods_plot_path = results_directory + '\\' + self.config.get('Output','likelihoods_plot_name')
+        expectation_plot_path = results_directory + '\\' + self.config.get('Output','expectation_plot_name')
+        harmonic_mean_plot_path= results_directory + '\\' + self.config.get('Output','harmonic_mean_plot_name')
 
-        return results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path
+        return results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path
 
     def get_prefixes(self):
         pop_infix =         self.config.get('Clade','pop_inffix')

@@ -24,7 +24,7 @@ function run_model_compare {
 main() {
 	for var;
 	do
-		ctl_file="./experiments/simulations/$var/control-file.ctl"
+		ctl_file="./experiments/$var/control-file.ctl"
 		if [ -f $ctl_file ]; then
 			run_gphocs $ctl_file &
 		else
