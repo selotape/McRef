@@ -1,9 +1,9 @@
 GENERAL-INFO-START
 
-	seq-file            sims\simM2.15\data.seqs
-	trace-file          experiments\hypABC_simM2.15\data.trace.tsv
-#	flat-stats-file		experiments\hypABC_simM2.15\data.flatStats.tsv
-	clade-stats-file	experiments\hypABC_simM2.15\data.cladeStats.tsv
+	seq-file            sims/simM2.15/data.seqs
+	trace-file          experiments/hypABC_simM2.15/data.trace.tsv
+#	flat-stats-file		experiments/hypABC_simM2.15/data.flatStats.tsv
+	clade-stats-file	experiments/hypABC_simM2.15/data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 

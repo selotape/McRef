@@ -1,9 +1,9 @@
 GENERAL-INFO-START
 
-	seq-file            sims\sample\seqs-sample.txt
-	trace-file          experiments\sample\data.trace.tsv
-#	flat-stats-file		experiments\sample\data.flatStats.tsv
-	clade-stats-file	experiments\sample\data.cladeStats.tsv
+	seq-file            sims/sample/seqs-sample.txt
+	trace-file          experiments/sample/data.trace.tsv
+#	flat-stats-file		experiments/sample/data.flatStats.tsv
+	clade-stats-file	experiments/sample/data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 

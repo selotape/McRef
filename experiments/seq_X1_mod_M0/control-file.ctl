@@ -1,9 +1,9 @@
 GENERAL-INFO-START
 
-	seq-file            sims\M1\sequences.seqs
-	trace-file          experiments\seq_X1_mod_M0\data.trace.tsv
-	flat-stats-file		experiments\seq_X1_mod_M0\data.flatStats.tsv
-	clade-stats-file	experiments\seq_X1_mod_M0\data.cladeStats.tsv
+	seq-file            sims/M1/sequences.seqs
+	trace-file          experiments/seq_X1_mod_M0/data.trace.tsv
+	flat-stats-file		experiments/seq_X1_mod_M0/data.flatStats.tsv
+	clade-stats-file	experiments/seq_X1_mod_M0/data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
