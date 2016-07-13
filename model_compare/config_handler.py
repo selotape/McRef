@@ -10,8 +10,8 @@ class ConfigHandler:
         self.config.read('config.ini')
 
     def get_simulation_path(self):
-        simulations_path = self.config.get('Input', 'simulations_path')
-        return simulations_path + '/' + self.simulation
+        return self.simulation
+
 
     def get_clades_pops_and_migs(self):
         clades = self.config.get('Clade','clades').split(',')
@@ -24,6 +24,7 @@ class ConfigHandler:
         mig_bands = list(filter(None, mig_bands))
 
         return clades, pops, mig_bands
+
 
     def get_data_frames(self):
         simulation_path = self.get_simulation_path()
@@ -38,6 +39,7 @@ class ConfigHandler:
 
         return clade_stats, trace
 
+
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
         timestamp = datetime.now().strftime("%H.%M_%d.%m.%Y")
@@ -51,6 +53,7 @@ class ConfigHandler:
 
         return results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path
 
+
     def get_prefixes(self):
         pop_infix =         self.config.get('Clade','pop_inffix')
         theta_prefix =      self.config.get('Clade','theta_prefix')
@@ -59,11 +62,13 @@ class ConfigHandler:
         mig_rate_prefix =   self.config.get('Clade','mig_rate_prefix')
         num_migs_suffix =   self.config.get('Clade','num_migs_suffix')
         mig_stats_suffix =  self.config.get('Clade','mig_stats_suffix')
-        result = (pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix, mig_rate_prefix, num_migs_suffix, mig_stats_suffix)
-        return result
+
+        return pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix, mig_rate_prefix, num_migs_suffix, mig_stats_suffix
+
 
     def get_data_config(self):
         theta_print_factor = self.config.getfloat('Data','theta_print_factor')
         mig_rate_print_factor = self.config.getfloat('Data', 'mig_rate_print_factor')
         tail_length = self.config.getint('Data','expectation_tail_length')
+
         return theta_print_factor, mig_rate_print_factor, tail_length

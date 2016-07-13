@@ -4,12 +4,11 @@ Relative Bayesian model comparison framework through post-processing of G-PhoCS 
 
 > \>\>\> .\main.py .\path\to\gphocs\results
 
-
 ## Requirements:
 
 1. Anaconda3 (in your environment PATH)
-2. Precomputed G-PhoCS Trace and CladeStats files
-
+2. G-PhoCS executable in your PATH
+3. Precomputed G-PhoCS Trace and CladeStats files
 
 ## Configuration:
 
@@ -19,10 +18,8 @@ Relative Bayesian model comparison framework through post-processing of G-PhoCS 
 * For G-PhoCS configuration and execution see the [G-PhoCS Homepage](http://compgen.cshl.edu/GPhoCS/) and the [G-PhoCS Manual](http://compgen.cshl.edu/GPhoCS/GPhoCS_Manual.pdf)
 
 ## Todo:
-    * get "config.ini" from simulation directory
-	* add integration tests
-    * fix mig_rate
-    * add default option to read pops and mig_bands from gphocs ctl file
-    * create three seperate algorithms: flat, clade and harmonic_mean
+	* add default option to read pops and mig_bands from gphocs ctl file
+	* create three seperate algorithms: flat, clade and harmonic_mean
+	* get "config.ini" from simulation directory
 
 For any question or suggestion feel free to contact me - Ron dot Visbord at Gmail dot com

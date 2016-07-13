@@ -1,2 +1,0 @@
-Relative Bayes Factor  : Log Mean=-21.620705593361293, Variance=-37.64278438167696
-Harmonic Mean Estimator: Log Mean=14084.59636016512, Variance=28175.40732842866

@@ -9,8 +9,7 @@ def model_compare(simulation='sample'):
     conf = ConfigHandler(simulation)
 
     clade_stats, trace = conf.get_data_frames()
-    pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix, mig_rate_prefix, num_migs_suffix, mig_stats_suffix =\
-        conf.get_prefixes()
+    pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix, mig_rate_prefix, num_migs_suffix, mig_stats_suffix = conf.get_prefixes()
     clades, populations, migration_bands = conf.get_clades_pops_and_migs()
     theta_print_factor, mig_rate_print_factor, tail_length = conf.get_data_config()
 
@@ -41,11 +40,10 @@ def model_compare(simulation='sample'):
 
     results['rbf_ratio'] = results['ref_gene_likelihood'] - results['hyp_gene_likelihood']
 
-
-
     results.rbf = statistify(results['rbf_ratio'][-tail_length:])
     results.hm = statistify(results['hm_data_likelihood'][-tail_length:])
 
+    print(summarize(results))
     save_results(conf, results)
 
 
@@ -56,21 +54,23 @@ def rename_df_columns(data_frames, column_names):
 def save_results(conf, results):
 
     tail_length = conf.get_data_config()[2]
-
     results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
 
-    os.makedirs(results_directory)
+    if not os.path.exists(results_directory):
+        os.makedirs(results_directory)
 
     save_plot(results[-tail_length:][['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, conf.simulation)
     save_plot(results[-tail_length:][['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation)
     save_plot(results[-tail_length:][['rbf_ratio']], expectation_plot_path, conf.simulation)
-
     results.to_csv(results_path)
-
     with open(summary_path, 'w') as f:
-        f.write("Relative Bayes Factor  : Log Mean={0}, Variance={1}\n".format(results.rbf[0], results.rbf[1]))
-        f.write("Harmonic Mean Estimator: Log Mean={0}, Variance={1}\n".format(results.hm[0], results.hm[1]))
+        experiment_summary = summarize(results)
+        f.write(experiment_summary)
 
+def summarize(results):
+    return "\tSummary:\n" + \
+           "\tRelative Bayes Factor  : Log Mean={0}, Variance={1}\n".format(results.rbf[0], results.rbf[1]) + \
+           "\tHarmonic Mean Estimator: Log Mean={0}, Variance={1}".format(results.hm[0], results.hm[1])
 
 def save_plot(data_frame, plot_save_path, plot_name=''):
     plot = data_frame.plot(title=plot_name)
