@@ -1,16 +1,16 @@
 GENERAL-INFO-START
 
-	seq-file            sims\simM2.10/data.seqs
-	trace-file          experiments/hypABC_simM2.10/data.trace.tsv
-#	flat-stats-file		experiments/hypABC_simM2.10/data.flatStats.tsv
-	clade-stats-file	experiments/hypABC_simM2.10/data.cladeStats.tsv
+	seq-file			sims/simM2.00/data.seqs
+	trace-file			experiments/hypABC_simM2.00/data.trace.tsv
+#	flat-stats-file		experiments/hypABC_simM2.00/data.flatStats.tsv
+	clade-stats-file	experiments/hypABC_simM2.00/data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	num-loci 			10
-	mcmc-iterations		5000
-	iterations-per-log  5
-	logs-per-line       10
+	num-loci			500
+	mcmc-iterations		50000
+	iterations-per-log	5
+	logs-per-line		10
 
 
 	find-finetunes		FALSE
@@ -57,7 +57,7 @@ ANCESTRAL-POPS-START
 	POP-START
 		name			AB
 		children		A		B
-		tau-initial		0.00005
+		tau-initial		0.00000
 		tau-beta		20000.0	
 		finetune-tau	0.0000008
 	POP-END
@@ -75,9 +75,9 @@ ANCESTRAL-POPS-END
 #MIG-BANDS-START	
 #
 #	BAND-START		
-#		name    C->B
-#		source  C
-#		target  B
+#		name	C->B
+#		source	C
+#		target	B
 #		mig-rate-print 0.1
 #	BAND-END
 #

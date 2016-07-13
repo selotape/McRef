@@ -1,16 +1,16 @@
 GENERAL-INFO-START
 
-	seq-file            sims/simM2.00/data.seqs
-	trace-file          experiments/hypABC_simM2.00/data.trace.tsv
-#	flat-stats-file		experiments/hypABC_simM2.00/data.flatStats.tsv
-	clade-stats-file	experiments/hypABC_simM2.00/data.cladeStats.tsv
+	seq-file            sims/simM2.10/data.seqs
+	trace-file          experiments/hypABC_simM2.10/data.trace.tsv
+#	flat-stats-file		experiments/hypABC_simM2.10/data.flatStats.tsv
+	clade-stats-file	experiments/hypABC_simM2.10/data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	num-loci 			10
-	mcmc-iterations		5000
-	iterations-per-log  5
-	logs-per-line       10
+	num-loci			500
+	mcmc-iterations		50000
+	iterations-per-log	5
+	logs-per-line		10
 
 
 	find-finetunes		FALSE
@@ -33,9 +33,15 @@ GENERAL-INFO-START
 GENERAL-INFO-END
 
 CURRENT-POPS-START	
+
+	POP-START
+		name		A
+		samples		1 d 2 d 3 d 4 d 5 d 6 d 7 d 8 d
+	POP-END
+
 	POP-START
 		name		B
-		samples		1 d 2 d 3 d 4 d 5 d 6 d 7 d 8 d9 d 10 d 11 d 12 d 13 d 14 d 15 d
+		samples		9 d 10 d 11 d 12 d 13 d 14 d 15 d
 	POP-END
 
 	POP-START
@@ -49,8 +55,16 @@ CURRENT-POPS-END
 ANCESTRAL-POPS-START
 
 	POP-START
+		name			AB
+		children		A		B
+		tau-initial		0.00005
+		tau-beta		20000.0	
+		finetune-tau	0.0000008
+	POP-END
+
+	POP-START
 		name			root
-		children		B	C
+		children		AB	C
 		tau-initial		0.0003
 		tau-beta		20000.0	
 		finetune-tau	0.00000286

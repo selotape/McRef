@@ -1,16 +1,16 @@
 GENERAL-INFO-START
 
-	seq-file            sims\simM2.05/data.seqs
+	seq-file            sims/simM2.05/data.seqs
 	trace-file          experiments/hypABC_simM2.05/data.trace.tsv
 #	flat-stats-file		experiments/hypABC_simM2.05/data.flatStats.tsv
 	clade-stats-file	experiments/hypABC_simM2.05/data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	num-loci 			10
-	mcmc-iterations		5000
-	iterations-per-log  5
-	logs-per-line       10
+	num-loci			500
+	mcmc-iterations		50000
+	iterations-per-log	5
+	logs-per-line		10
 
 
 	find-finetunes		FALSE

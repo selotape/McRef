@@ -7,10 +7,10 @@ GENERAL-INFO-START
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	num-loci 			5000
+	num-loci			500
 	mcmc-iterations		50000
-	iterations-per-log  5
-	logs-per-line       10
+	iterations-per-log	5
+	logs-per-line		10
 
 
 	find-finetunes		FALSE
