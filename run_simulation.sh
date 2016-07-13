@@ -3,7 +3,7 @@ set -o nounset
 set -o errexit
 
 
-MODEL_COMPARE_PY=	"./main.py"
+MODEL_COMPARE_PY="./main.py"
 
 
 # $1 - control-file path
