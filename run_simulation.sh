@@ -4,7 +4,7 @@ set -o errexit
 
 
 MODEL_COMPARE_PY="./main.py"
-
+GPHOCS_EXE="G-PhoCS-1-2-3"
 
 # $1 - control-file path
 function run_gphocs {
