@@ -3,8 +3,8 @@ from numpy import exp
 from numpy import log
 
 
-def kingman_coalescent(theta, num_coal, time_stats):
-    result = num_coal*np.log(2.0/theta) - (time_stats/theta)
+def kingman_coalescent(theta, num_coal, coal_stats):
+    result = num_coal*np.log(2.0/theta) - (coal_stats / theta)
     return result
 
 def kingman_migration(mig_rate, num_migs, mig_stats):
