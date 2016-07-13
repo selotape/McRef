@@ -1,14 +1,14 @@
 GENERAL-INFO-START
 
 	seq-file            sims\simM2.15\data.seqs
-	trace-file          experiments\simulations\hypABC_simM2.15\data.trace.tsv
-#	coal-stats-file		experiments\simulations\hypABC_simM2.15\data.flatStats.tsv
-	clade-stats-file	experiments\simulations\hypABC_simM2.15\data.cladeStats.tsv
+	trace-file          experiments\hypABC_simM2.15\data.trace.tsv
+#	flat-stats-file		experiments\hypABC_simM2.15\data.flatStats.tsv
+	clade-stats-file	experiments\hypABC_simM2.15\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	num-loci 			10
-	mcmc-iterations		5000
+	num-loci 			5000
+	mcmc-iterations		50000
 	iterations-per-log  5
 	logs-per-line       10
 

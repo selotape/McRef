@@ -2,7 +2,7 @@ GENERAL-INFO-START
 
 	seq-file            sims\M0\sequences.seqs
 	trace-file          experiments\seq_X0_mod_M1\data.trace.tsv
-	coal-stats-file		experiments\seq_X0_mod_M1\data.flatStats.tsv
+	flat-stats-file		experiments\seq_X0_mod_M1\data.flatStats.tsv
 	clade-stats-file	experiments\seq_X0_mod_M1\data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST

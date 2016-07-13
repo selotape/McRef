@@ -15,5 +15,10 @@ if %errorlevel% neq 0 goto exit /b %errorlevel%
 echo Running Model_Compare on simulation: "%simulation%"
 python main.py %simulation%
 
-echo SUCCESS!
+if %errorlevel% neq 0 (
+	echo Model_Compare Failed :(
+) else (
+	echo SUCCESS! 
+)
+
 sleep 1
