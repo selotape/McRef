@@ -16,13 +16,13 @@ GPHOCS_EXE="G-PhoCS-1-2-3"
 # $1 - control-file path
 function run_gphocs {
 	echo "Running G-PhoCS on Control file: "$1;
-	nohup $GPHOCS_EXE $1 &;
+	$GPHOCS_EXE $1;
 }
 
 # $1 - simulation name
 function run_model_compare {
 	echo "Running Model_Compare on simulation: "$1;
-	nohup python $MODEL_COMPARE_PY $1 &;
+	python $MODEL_COMPARE_PY $1;
 }
 
 # $var - simulation names
