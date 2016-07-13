@@ -11,7 +11,7 @@ class ConfigHandler:
 
     def get_simulation_path(self):
         simulations_path = self.config.get('Input', 'simulations_path')
-        return simulations_path + '\\' + self.simulation
+        return simulations_path + '/' + self.simulation
 
     def get_clades_pops_and_migs(self):
         clades = self.config.get('Clade','clades').split(',')
@@ -29,11 +29,11 @@ class ConfigHandler:
         simulation_path = self.get_simulation_path()
 
         clade_stats_name = self.config.get('Input','clade_stats_file_name')
-        clade_stats_path = simulation_path + '\\' + clade_stats_name
+        clade_stats_path = simulation_path + '/' + clade_stats_name
         clade_stats = pd.read_csv(clade_stats_path, sep='\t')
 
         trace_file_name = self.config.get('Input','trace_file_name')
-        trace_path = simulation_path + '\\' + trace_file_name
+        trace_path = simulation_path + '/' + trace_file_name
         trace = pd.read_csv(trace_path, sep='\t')
 
         return clade_stats, trace
@@ -42,12 +42,12 @@ class ConfigHandler:
         simulation_path = self.get_simulation_path()
         timestamp = datetime.now().strftime("%H.%M_%d.%m.%Y")
 
-        results_directory = simulation_path + '\\' + self.config.get('Output','results_directory') + '\\' + timestamp
-        results_path =          results_directory + '\\' + self.config.get('Output','results_name')
-        summary_path =          results_directory + '\\' + self.config.get('Output','summary_name')
-        likelihoods_plot_path = results_directory + '\\' + self.config.get('Output','likelihoods_plot_name')
-        expectation_plot_path = results_directory + '\\' + self.config.get('Output','expectation_plot_name')
-        harmonic_mean_plot_path= results_directory + '\\' + self.config.get('Output','harmonic_mean_plot_name')
+        results_directory = simulation_path + '/' + self.config.get('Output','results_directory') + '/' + timestamp
+        results_path =          results_directory + '/' + self.config.get('Output','results_name')
+        summary_path =          results_directory + '/' + self.config.get('Output','summary_name')
+        likelihoods_plot_path = results_directory + '/' + self.config.get('Output','likelihoods_plot_name')
+        expectation_plot_path = results_directory + '/' + self.config.get('Output','expectation_plot_name')
+        harmonic_mean_plot_path= results_directory + '/' + self.config.get('Output','harmonic_mean_plot_name')
 
         return results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path
 
