@@ -12,13 +12,12 @@ def kingman_migration(mig_rate, num_migs, mig_stats):
     return result
 
 def statistify(log_likelihoods): #TODO - rename
-    log_mean = log_expectation(log_likelihoods)
-    log_var = log_variance(log_likelihoods)
-    weighted_log_var = log_var - log_mean
-    return log_mean, log_var, weighted_log_var
+    ln_meany = ln_mean(log_likelihoods)
+    ln_var = ln_variance(log_likelihoods)
+    return ln_meany, ln_var, ln_var - ln_meany
 
 
-def log_expectation(ln_samples):
+def ln_mean(ln_samples):
     """
     :param ln_samples: a series of tiny probabilities, with ln applied to them
     :return: ln of mean of probabilities
@@ -26,13 +25,21 @@ def log_expectation(ln_samples):
     ln_C = max(ln_samples)
     n = len(ln_samples)
 
-    log_mean = ln_C + log(sum(exp(ln_samples - ln_C))) - log(n)
+    ln_meany = ln_C + log(sum(exp(ln_samples - ln_C))) - log(n)
 
-    return log_mean
+    return ln_meany
 
-def log_variance(ln_samples):
+
+def ln_variance(ln_samples):
     ln_C = max(ln_samples)
 
-    log_var = log(exp(ln_samples - ln_C).var()) + 2*ln_C
+    ln_var = log(exp(ln_samples - ln_C).var()) + 2*ln_C # ln(var(X))
+    var_ln =  ln_samples.var()                          # var(ln(X))
+    ln_var_norm = log(exp(ln_samples - ln_C).var())     # ln(var(X/C)) ; C:=max(X)
+    var_ln_norm = (ln_samples/ln_C).var()               # var(ln(X)/ln(C)) ; C:=max(X)
+    #todotodotodo                                       # var(logistic/softmax/sigmoid(X))
+    ln_var_over_mean = ln_var - ln_mean(ln_samples)
 
-    return log_var
+    print("ln_var={0}, var_ln={1}, ln_var_norm={2}, var_ln_norm={3}, ln_var_over_mean={4}".format(ln_var, var_ln, ln_var_norm, var_ln_norm, ln_var_over_mean))
+
+    return ln_var

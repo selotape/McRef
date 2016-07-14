@@ -12,14 +12,14 @@ class test_probability_functions(unittest.TestCase):
         data = [1, 2, 3, 4]
         ln_data = pd.Series([np.log(x) for x in data])
         expected = np.log(pd.Series(data).mean())
-        actual = log_expectation(ln_data)
+        actual = ln_mean(ln_data)
 
         self.assertAlmostEqual(expected, actual, delta=self.percision)
 
         data = [112312367666666, 2234987654723423234, 3345345345999888777, 43453453333345, 12345678912345678, 2234987654723423234, 3345345345999888777, 43453453333345, 12345678912345678]
         ln_data = pd.Series([np.log(x) for x in data])
         expected = np.log(pd.Series(data).mean())
-        actual = log_expectation(ln_data)
+        actual = ln_mean(ln_data)
 
         self.assertAlmostEqual(expected, actual, delta=self.percision)
 
@@ -28,14 +28,14 @@ class test_probability_functions(unittest.TestCase):
         data = [1, 2, 3, 4]
         ln_data = pd.Series([np.log(x) for x in data])
         expected = np.log(pd.Series(data).var())
-        actual = log_variance(ln_data)
+        actual = ln_variance(ln_data)
 
         self.assertAlmostEqual(expected, actual, delta=self.percision)
 
         data = [112312367666666, 2234987654723423234, 3345345345999888777, 43453453333345, 12345678912345678, 2234987654723423234, 3345345345999888777, 43453453333345, 12345678912345678]
         ln_data = pd.Series([np.log(x) for x in data])
         expected = np.log(pd.Series(data).var())
-        actual = log_variance(ln_data)
+        actual = ln_variance(ln_data)
 
         self.assertAlmostEqual(expected, actual, delta=self.percision)
 

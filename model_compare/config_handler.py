@@ -55,13 +55,13 @@ class ConfigHandler:
 
 
     def get_prefixes(self):
-        pop_infix =         self.config.get('Clade','pop_inffix')
-        theta_prefix =      self.config.get('Clade','theta_prefix')
-        num_coals_suffix =  self.config.get('Clade','num_coals_suffix')
-        coal_stats_suffix = self.config.get('Clade','coal_stats_suffix')
-        mig_rate_prefix =   self.config.get('Clade','mig_rate_prefix')
-        num_migs_suffix =   self.config.get('Clade','num_migs_suffix')
-        mig_stats_suffix =  self.config.get('Clade','mig_stats_suffix')
+        pop_infix =         self.config.get('Data','pop_inffix')
+        theta_prefix =      self.config.get('Data','theta_prefix')
+        num_coals_suffix =  self.config.get('Data','num_coals_suffix')
+        coal_stats_suffix = self.config.get('Data','coal_stats_suffix')
+        mig_rate_prefix =   self.config.get('Data','mig_rate_prefix')
+        num_migs_suffix =   self.config.get('Data','num_migs_suffix')
+        mig_stats_suffix =  self.config.get('Data','mig_stats_suffix')
 
         return pop_infix, theta_prefix, num_coals_suffix, coal_stats_suffix, mig_rate_prefix, num_migs_suffix, mig_stats_suffix
 

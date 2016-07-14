@@ -17,7 +17,8 @@ def model_compare(simulation='sample'):
     num_coal = clade_stats[[c + num_coals_suffix for c in clades] + [p + pop_infix + num_coals_suffix for p in populations]]
     coal_stats = clade_stats[[c + coal_stats_suffix for c in clades] + [p + pop_infix + coal_stats_suffix for p in populations]]
 
-    mig_rates = trace[[mig_rate_prefix + mig_band for mig_band in migration_bands]].divide(mig_rate_print_factor)
+    mig_rates = trace[[mig_rate_prefix + mig_band for mig_band in migration_bands]] / mig_rate_print_factor
+
     num_migs = clade_stats[[mig_band + num_migs_suffix for mig_band in migration_bands]]
     mig_stats = clade_stats[[mig_band + mig_stats_suffix for mig_band in migration_bands]]
 
@@ -64,14 +65,14 @@ def save_results(conf, results):
     save_plot(results[-tail_length:][['rbf_ratio']], expectation_plot_path, conf.simulation)
     results.to_csv(results_path)
     with open(summary_path, 'w') as f:
-        experiment_summary = summarize(results)
+        experiment_summary = summarize(results, conf)
         f.write(experiment_summary)
 
-def summarize(results):
+def summarize(results, conf):
     return "Summary:\n" + \
-           "Columns: {0}\n".format(results.columns.values) + \
-           "Relative Bayes Factor  : Log Mean={0}, Log Variance={1}, Weighted Log Var={2}\n".format(results.rbf[0], results.rbf[1], results.rbf[2]) + \
-           "Harmonic Mean Estimator: Log Mean={0}, Log Variance={1}, Weighted Log Var={2}".format(results.hm[0], results.hm[1], results.hm[2])
+           "\tSimulation: %s\n" % conf.simulation + \
+           "\tRelative Bayes Factor  : Log Mean={0}, Log Variance={1}, Weighted Log Var={2}\n".format(results.rbf[0], results.rbf[1], results.rbf[2]) + \
+           "\tHarmonic Mean Estimator: Log Mean={0}, Log Variance={1}, Weighted Log Var={2}".format(results.hm[0], results.hm[1], results.hm[2])
 
 def save_plot(data_frame, plot_save_path, plot_name=''):
     plot = data_frame.plot(title=plot_name)
