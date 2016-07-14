@@ -14,7 +14,8 @@ def kingman_migration(mig_rate, num_migs, mig_stats):
 def statistify(log_likelihoods): #TODO - rename
     log_mean = log_expectation(log_likelihoods)
     log_var = log_variance(log_likelihoods)
-    return log_mean, log_var
+    weighted_log_var = log_var - log_mean
+    return log_mean, log_var, weighted_log_var
 
 
 def log_expectation(ln_samples):

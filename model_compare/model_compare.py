@@ -68,9 +68,10 @@ def save_results(conf, results):
         f.write(experiment_summary)
 
 def summarize(results):
-    return "\tSummary:\n" + \
-           "\tRelative Bayes Factor  : Log Mean={0}, Variance={1}\n".format(results.rbf[0], results.rbf[1]) + \
-           "\tHarmonic Mean Estimator: Log Mean={0}, Variance={1}".format(results.hm[0], results.hm[1])
+    return "Summary:\n" + \
+           "Columns: {0}\n".format(results.columns.values) + \
+           "Relative Bayes Factor  : Log Mean={0}, Log Variance={1}, Weighted Log Var={2}\n".format(results.rbf[0], results.rbf[1], results.rbf[2]) + \
+           "Harmonic Mean Estimator: Log Mean={0}, Log Variance={1}, Weighted Log Var={2}".format(results.hm[0], results.hm[1], results.hm[2])
 
 def save_plot(data_frame, plot_save_path, plot_name=''):
     plot = data_frame.plot(title=plot_name)

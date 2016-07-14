@@ -1,5 +1,4 @@
-from datetime import datetime
-import os
+import time
 import configparser
 import pandas as pd
 
@@ -7,7 +6,7 @@ class ConfigHandler:
     def __init__(self, simulation):
         self.simulation = simulation
         self.config = configparser.ConfigParser()
-        self.config.read('config.ini')
+        self.config.read(['config.ini', '%s/config.ini' % simulation]) # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
 
     def get_simulation_path(self):
         return self.simulation
@@ -42,7 +41,8 @@ class ConfigHandler:
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
-        timestamp = datetime.now().strftime("%H.%M_%d.%m.%Y")
+        # timestamp = datetime.now().strftime("%H.%M_%d.%m.%Y")
+        timestamp = str(time.time())
 
         results_directory = simulation_path + '/' + self.config.get('Output','results_directory') + '/' + timestamp
         results_path =          results_directory + '/' + self.config.get('Output','results_name')

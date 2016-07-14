@@ -53,6 +53,7 @@ coverage.xml
 
 # run-time logs
 nohup.out
+experiments/*/results/*
 
 # Sequence Simulation Data Files
 *.seqs
