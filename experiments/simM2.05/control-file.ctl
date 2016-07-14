@@ -7,7 +7,7 @@ GENERAL-INFO-START
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	num-loci			500
+	num-loci			5000
 	mcmc-iterations		50000
 	iterations-per-log	5
 	logs-per-line		10
