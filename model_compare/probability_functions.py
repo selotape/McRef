@@ -34,12 +34,9 @@ def ln_variance(ln_samples):
     ln_C = max(ln_samples)
 
     ln_var = log(exp(ln_samples - ln_C).var()) + 2*ln_C # ln(var(X))
-    var_ln =  ln_samples.var()                          # var(ln(X))
-    ln_var_norm = log(exp(ln_samples - ln_C).var())     # ln(var(X/C)) ; C:=max(X)
-    var_ln_norm = (ln_samples/ln_C).var()               # var(ln(X)/ln(C)) ; C:=max(X)
+    ln_var_norm = log(exp(ln_samples - ln_mean(ln_samples)).var())     # ln(var(X/C)) ; C:=mean(X)
     #todotodotodo                                       # var(logistic/softmax/sigmoid(X))
-    ln_var_over_mean = ln_var - ln_mean(ln_samples)
 
-    print("ln_var={0}, var_ln={1}, ln_var_norm={2}, var_ln_norm={3}, ln_var_over_mean={4}".format(ln_var, var_ln, ln_var_norm, var_ln_norm, ln_var_over_mean))
+    print("ln_var={0}, ln_var_norm={2}".format(ln_var, ln_var_norm))
 
     return ln_var

@@ -44,7 +44,7 @@ def model_compare(simulation='sample'):
     results.rbf = statistify(results['rbf_ratio'][-tail_length:])
     results.hm = statistify(results['hm_data_likelihood'][-tail_length:])
 
-    print(summarize(results))
+    print(summarize(results, conf))
     save_results(conf, results)
 
 
