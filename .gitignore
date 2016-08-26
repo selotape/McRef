@@ -58,6 +58,7 @@ experiments/*/results/*
 # Sequence Simulation Data Files
 *.seqs
 *.data
+*.dwn
 
 # Others
 *.tmp
