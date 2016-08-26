@@ -2,11 +2,18 @@ import time
 import configparser
 import pandas as pd
 
+
+
 class ConfigHandler:
     def __init__(self, simulation):
         self.simulation = simulation
         self.config = configparser.ConfigParser()
         self.config.read(['config.ini', '%s/config.ini' % simulation]) # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
+
+    def get_data_prep_attributes(self):
+        trim_percentile = self.config.getint('Data', 'trim_percentile')
+        dilute_factor = self.config.getint('Data', 'dilute_factor')
+        return trim_percentile, dilute_factor
 
     def get_simulation_path(self):
         return self.simulation
@@ -25,7 +32,7 @@ class ConfigHandler:
         return clades, pops, mig_bands
 
 
-    def get_data_frames(self):
+    def get_data(self):
         simulation_path = self.get_simulation_path()
 
         clade_stats_name = self.config.get('Input','clade_stats_file_name')
@@ -37,7 +44,6 @@ class ConfigHandler:
         trace = pd.read_csv(trace_path, sep='\t')
 
         return clade_stats, trace
-
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()

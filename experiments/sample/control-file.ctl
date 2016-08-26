@@ -1,14 +1,14 @@
 GENERAL-INFO-START
 
 	seq-file            sims/sample/seqs-sample.txt
-	trace-file          experiments/sample/data.trace.tsv
-#	flat-stats-file		experiments/sample/data.flatStats.tsv
-	clade-stats-file	experiments/sample/data.cladeStats.tsv
+	trace-file          experiments/sample/sample-data.trace.tsv
+#	flat-stats-file		experiments/sample/sample-data.flatStats.tsv
+	clade-stats-file	experiments/sample/sample-data.cladeStats.tsv
 #	num-pop-partitions	1
 	locus-mut-rate		CONST
 
-	num-loci 			10
-	mcmc-iterations		500
+	num-loci 			500
+	mcmc-iterations		50000
 	iterations-per-log  5
 	logs-per-line       10
 

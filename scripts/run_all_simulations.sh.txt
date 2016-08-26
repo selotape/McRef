@@ -1,5 +1,0 @@
-nohup ../run_simulation.sh experiments/simM2.00 &
-nohup ../run_simulation.sh experiments/simM2.01 &
-nohup ../run_simulation.sh experiments/simM2.05 &
-nohup ../run_simulation.sh experiments/simM2.10 &
-nohup ../run_simulation.sh experiments/simM2.15 &
