@@ -13,7 +13,8 @@ class ConfigHandler:
     def get_data_prep_attributes(self):
         trim_percentile = self.config.getint('Data', 'trim_percentile')
         dilute_factor = self.config.getint('Data', 'dilute_factor')
-        return trim_percentile, dilute_factor
+        tail_length = self.config.getint('Data', 'expectation_tail_length')
+        return trim_percentile, dilute_factor, tail_length
 
     def get_simulation_path(self):
         return self.simulation
@@ -32,7 +33,7 @@ class ConfigHandler:
         return clades, pops, mig_bands
 
 
-    def get_data(self):
+    def get_gphocs_data(self):
         simulation_path = self.get_simulation_path()
 
         clade_stats_name = self.config.get('Input','clade_stats_file_name')
@@ -75,6 +76,9 @@ class ConfigHandler:
     def get_data_config(self):
         theta_print_factor = self.config.getfloat('Data','theta_print_factor')
         mig_rate_print_factor = self.config.getfloat('Data', 'mig_rate_print_factor')
-        tail_length = self.config.getint('Data','expectation_tail_length')
 
-        return theta_print_factor, mig_rate_print_factor, tail_length
+        return theta_print_factor, mig_rate_print_factor
+
+    def should_save_results(self):
+        result = self.config.getboolean("Output", "save_data")
+        return result

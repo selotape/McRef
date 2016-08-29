@@ -14,8 +14,7 @@ def kingman_migration(mig_rate, num_migs, mig_stats):
 def statistify(log_likelihoods): #TODO - rename
     ln_meany = ln_mean(log_likelihoods)
     ln_var = ln_variance(log_likelihoods)
-    ln_var_normy = ln_var_norm(log_likelihoods)
-    return ln_meany, ln_var, ln_var_normy
+    return ln_meany, ln_var
 
 def ln_mean(ln_samples):
     """
@@ -29,10 +28,42 @@ def ln_mean(ln_samples):
 
 def ln_variance(ln_samples):
     ln_C = max(ln_samples)
-    ln_var = ln(exp(ln_samples - ln_C).var()) + 2*ln_C      # ln(var(X))
+    ln_var = ln(exp(ln_samples - ln_C).var()) + 2*ln_C
     return ln_var
 
 def ln_var_norm(ln_samples):
-    ln_meany = ln_mean(ln_samples)
-    ln_var_normy = ln(exp(ln_samples - ln_meany).var())  # ln(var(X/mean(X)))
+    ln_var_normy = ln(exp(ln_normalize(ln_samples)).var())
     return ln_var_normy
+
+def ln_normalize(ln_samples):
+    ln_meany = ln_mean(ln_samples)
+    result = ln_samples - ln_meany
+    return result
+
+def ln_normalize2(ln_samples):
+#
+# an overly complex way of calculating-
+#     X - min(X)
+#    ----------
+#  max(X) - min(X)
+# when X is given in log-scale and is humongous
+
+    ln_min = min(ln_samples)
+    ln_max = max(ln_samples)
+
+    a = ln_min
+
+    b1 = ln_samples - ln_min
+    b2 = exp(b1)-1
+    b = ln(b2)
+
+
+    c = ln_min
+
+    d1 = ln_max-ln_min
+    d2 = exp(d1)-1
+    d = ln(d2)
+
+    result = a + b - c - d
+
+    return result
