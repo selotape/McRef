@@ -19,7 +19,7 @@ if __name__ == "__main__":
         validate_simulation(simulation)
 
         print("Starting simulation \"%s\"" % simulation)
-        model_compare.model_compare(simulation) # extract is_flat to an experiment method (or atleast a commandline flag!!)
+        model_compare.model_compare(simulation)
         print("Finished \"%s\"" % simulation)
 
     print("Done!")
