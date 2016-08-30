@@ -13,8 +13,8 @@ class ConfigHandler:
     def get_data_prep_attributes(self):
         trim_percentile = self.config.getint('Data', 'trim_percentile')
         dilute_factor = self.config.getint('Data', 'dilute_factor')
-        tail_length = self.config.getint('Data', 'expectation_tail_length')
-        return trim_percentile, dilute_factor, tail_length
+        burn_in = self.config.getint('Data', 'burn_in')
+        return trim_percentile, dilute_factor, burn_in
 
     def get_simulation_path(self):
         return self.simulation

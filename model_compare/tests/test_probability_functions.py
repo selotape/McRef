@@ -11,6 +11,13 @@ class test_probability_functions(unittest.TestCase):
     def test_ln_mean(self): #Test ln_mean by using a different but equal calculation
         pass
 
+    def test_bootstrapping(self):
+
+        input = pd.Series(i for i in range(100))
+        expected = 0.0
+        actual = bootstrap(np.mean, input, 100000, operator.sub, np.mean)
+        self.assertAlmostEqual(expected, actual, delta=0.01)
+
     def test_log_expectation(self):
 
         data = [1, 2, 3, 4]
@@ -64,22 +71,6 @@ class test_probability_functions(unittest.TestCase):
 
         for i in range(len(expected)):
             self.assertAlmostEqual(expected[i], actual[i], delta=self.percision)
-
-    def test_ln_normalize2(self):
-
-        df = pd.DataFrame(np.random.randn(40, 40) * 4000 + 40000)
-
-        expected = df.apply(lambda x: (x - np.min(x)) / (np.max(x) - np.min(x)))
-        print("\nexpected:")
-        print(expected.head())
-
-        ln_df = df.apply(np.log)
-        norm_ln_df = ln_df.apply(ln_normalize2)
-        actual = norm_ln_df.apply(exp)
-        print("\nactual:")
-        print(actual.head())
-
-        assert_frame_equal(actual, expected)
 
 
 if __name__ == '__main__':
