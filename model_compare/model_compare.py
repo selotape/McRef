@@ -5,7 +5,7 @@ from model_compare.data_prep import *
 from model_compare.probability_functions import *
 
 
-def model_compare(simulation='sample', is_flat=False):
+def model_compare(simulation='sample'):
 
     conf = ConfigHandler(simulation)
     clade_stats, trace = conf.get_gphocs_data()
@@ -20,6 +20,7 @@ def model_compare(simulation='sample', is_flat=False):
     results = preprocess_data(results, conf)
     results = normalize_data(results)
     # results = exponent_normalized_data(results)
+
 
     results.rbf = statistify(results['rbf_ratio'])
     results.hm = statistify(results['hm_data_likelihood'])
