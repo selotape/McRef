@@ -1,0 +1,1 @@
+nohup ./scripts/run_simulation.sh experiments/simM2.00/full/ &> ./experiments/simM2.00/full/nohup.out&

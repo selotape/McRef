@@ -10,24 +10,18 @@ def model_compare(simulation='sample'):
     conf = ConfigHandler(simulation)
     clade_stats, trace = conf.get_gphocs_data()
 
-    results = pd.DataFrame()
+    results_data = pd.DataFrame()
 
-    results['ref_gene_likelihood'] = calc_ref_gene_likelihood(clade_stats, trace, conf)
-    results['hyp_gene_likelihood'] = trace['Gene-ld-ln']
-    results['hm_data_likelihood'] = -trace['Full-ld-ln']
-    results['rbf_ratio'] = results['ref_gene_likelihood'] - results['hyp_gene_likelihood']
+    results_data['ref_gene_likelihood'] = calc_ref_gene_likelihood(clade_stats, trace, conf)
+    results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
+    results_data['hm_data_likelihood'] = -trace['Full-ld-ln']
+    results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
 
-    results = preprocess_data(results, conf)
-    results = normalize_data(results)
-    # results = exponent_normalized_data(results)
+    results_data = preprocess_data(results_data, conf)
 
+    results_stats = {column: statistify(results_data[column]) for column in results_data.columns}
 
-    results.rbf = statistify(results['rbf_ratio'])
-    results.hm = statistify(results['hm_data_likelihood'])
-    results.norm_rbf = statistify(results['norm_rbf_ratio'])
-    results.norm_hm = statistify(results['norm_hm_data_likelihood'])
-
-    save_results(conf, results)
+    save_results(results_data, results_stats, conf)
 
 
 def calc_ref_gene_likelihood(clade_stats, trace, conf):
@@ -70,42 +64,43 @@ def calc_ref_gene_likelihood(clade_stats, trace, conf):
     return ref_gene_likelihood
 
 
-def save_results(conf, results):
+def save_results(results_data, results_stats, conf):
 
     results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
 
-    save_plot(results[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, conf.simulation)
-    save_plot(results[['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation)
-    save_plot(results[['rbf_ratio']], expectation_plot_path, conf.simulation)
+    save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, conf.simulation)
+    save_plot(results_data[['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation)
+    save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation)
 
-    norm_suffix = '.norm'
-    save_plot(results[['norm_ref_gene_likelihood', 'norm_hyp_gene_likelihood']], likelihoods_plot_path + norm_suffix, conf.simulation)
-    save_plot(results[['norm_hm_data_likelihood']], harmonic_mean_plot_path + norm_suffix, conf.simulation)
-    save_plot(results[['norm_rbf_ratio']], expectation_plot_path + norm_suffix, conf.simulation)
 
     with open(summary_path, 'w') as f:
-        experiment_summary = summarize(results, conf)
+        experiment_summary = summarize(results_stats, conf)
         print(experiment_summary)
         f.write(experiment_summary)
 
     if conf.should_save_results():
-        results.to_csv(results_path)
+        results_data.to_csv(results_path)
 
 
-def summarize(results, conf):
+def summarize(results_stats, conf):
     clades, populations, migration_bands = conf.get_clades_pops_and_migs()
     simulation_name = conf.simulation.split('/')[-1]
 
-    return "Summary:\n" + \
-            "\tSimulation: %s\n" % simulation_name + \
-            "\tClades: {0} | Populations: {1} | Migration Bands: {2}\n\n".format(','.join(clades), ','.join(populations), ','.join(migration_bands)) + \
-            "\tRelative Bayes Factor  : ln_mean={0},\tln_var={1}\n".format(results.rbf[0], results.rbf[1]) + \
-            "\tNormalized RBF         : ln_mean={0},\tln_var={1}\n".format(results.norm_rbf[0], results.norm_rbf[1]) + \
-            "\tHarmonic Mean Estimator: ln_mean={0},\tln_var={1}\n".format(results.hm[0], results.hm[1]) + \
-            "\tNormalized HM Estimator: ln_mean={0},\tln_var={1}\n".format(results.norm_hm[0], results.norm_hm[1])
+    intro = "Summary:\n" + \
+            "Simulation: %s\n" % simulation_name + \
+            "|Clades: {0} | Populations: {1} | Migration Bands: {2}|\n".format(','.join(clades), ','.join(populations), ','.join(migration_bands))
+
+    results_string = []
+    for column in sorted(list(results_stats.keys())):
+        results_string.extend([column, ': ', str(results_stats[column]), '\n'])
+    results_string = ''.join(results_string)
+
+    print(intro + results_string)
+    exit()
+    return intro + results_string
 
 
 def save_plot(data_frame, plot_save_path, plot_name):

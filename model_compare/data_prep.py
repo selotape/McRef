@@ -2,8 +2,8 @@ from model_compare.probability_functions import ln_normalize
 from numpy import exp, floor
 
 
-def __trim_head(df, tail_length):
-    df = df[-tail_length:]
+def __trim_head(df, head_length):
+    df = df[head_length:]
     return df
 
 def __dilute_data(df, dilute_factor):
@@ -20,11 +20,10 @@ def __remove_percentiles(df, percentile, column):
     return df
 
 
-
 def preprocess_data(results, conf):
-    trim_percentile, dilute_factor, tail_length =  conf.get_data_prep_attributes()
+    trim_percentile, dilute_factor, burn_in =  conf.get_data_prep_attributes()
 
-    results = __trim_head(results, tail_length)
+    results = __trim_head(results, burn_in)
     results = __remove_percentiles(results, trim_percentile, 'hyp_gene_likelihood')
     results = __dilute_data(results, dilute_factor)
 
@@ -33,19 +32,6 @@ def preprocess_data(results, conf):
 def normalize_data(dataframe):
     for column in dataframe.columns:
         dataframe['norm_' + column] = ln_normalize(dataframe[column])
-    return dataframe
-
-def exponent_normalized_data(dataframe):
-    normalized_columns = (column for column in dataframe.columns if 'norm' in column)
-    for column in normalized_columns:
-        dataframe['exp_' + column] = exp(dataframe[column])
-
-    floored_df = dataframe.apply(floor)
-    exponented_columns = (column for column in floored_df.columns if 'exp' in column)
-    for column in exponented_columns:
-        print('\ncolumn ' + column + ':')
-        print(floored_df[column].value_counts())
-
     return dataframe
 
 

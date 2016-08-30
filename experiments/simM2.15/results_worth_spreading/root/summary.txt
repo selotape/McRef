@@ -1,0 +1,9 @@
+Summary:
+Simulation: experiments\simM2.15
+Clades: root | Populations:  | Migration Bands: 
+
+Column	ln_mean	ln_variance	bootstrap_variance
+Relative Bayes Factor:	-183589.29374196538	-367167.17877519137	775.4089955387212
+Normalized RBF:	6.041389610800252e-12	11.408708739391209	886.9596656223847
+Harmonic Mean Estimator:	7006466.208757375	14012943.826223489	194.29090422552775
+Normalized HM Estimator:	-2.794262599081776e-10	11.4087087388091	177.0260076234188
