@@ -30,7 +30,7 @@ __pycache__
 
 
 # Pycharm user-specific files
-.idea/workspace.xml
+.idea/workspace*.xml
 .idea/tasks.xml
 
 # run-time logs

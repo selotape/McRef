@@ -19,7 +19,7 @@ def model_compare(simulation='sample'):
 
     results_data = preprocess_data(results_data, conf)
 
-    results_stats = {column: statistify(results_data[column]) for column in results_data.columns}
+    results_stats = {column: statistify(results_data[column]) for column in ['rbf_ratio', 'hm_data_likelihood']}
 
     save_results(results_data, results_stats, conf)
 
@@ -98,8 +98,6 @@ def summarize(results_stats, conf):
         results_string.extend([column, ': ', str(results_stats[column]), '\n'])
     results_string = ''.join(results_string)
 
-    print(intro + results_string)
-    exit()
     return intro + results_string
 
 
