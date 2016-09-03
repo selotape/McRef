@@ -41,6 +41,7 @@ experiments/*/results/*
 *.seqs
 *.data
 *.dwn
+*.tsv
 
 # Others
 *.tmp
