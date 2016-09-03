@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import operator
-from numpy import exp
+from numpy import exp, sqrt, mean
 from numpy import linalg
 from numpy import log as ln
 
@@ -9,11 +9,12 @@ from numpy import log as ln
 
 
 def statistify(log_likelihoods):
+    print('statistifying ' + str(log_likelihoods.name))
 
     statistification = {
         'ln_mean': ln_mean(log_likelihoods),
-        'ln_variance': ln_variance(log_likelihoods),
-        'bootstrap': bootstrap(ln_mean, log_likelihoods, 10, operator.sub, linalg.norm)
+        # 'ln_variance': ln_variance(log_likelihoods),
+        'bootstrap': bootstrap(ln_mean, log_likelihoods, 1000, lambda x,y : (x-y)**2 , lambda X: sqrt(mean(X)))
     }
     return statistification
 
@@ -52,13 +53,13 @@ def ln_normalize(ln_samples):
 def bootstrap(statistic, samples, num_iterations, metric, norm):
     truth = statistic(samples)
 
-    estimates = (single_bootstrap(statistic, samples) for i in range(num_iterations))
+    estimates = (_single_bootstrap(statistic, samples) for i in range(num_iterations))
     distance_vector = pd.Series((metric(estimate, truth) for estimate in estimates))
     result = norm(distance_vector)
 
     return result
 
-def single_bootstrap(statistic, samples):
+def _single_bootstrap(statistic, samples):
     n = len(samples)
     rand_samples = np.random.choice(samples, n, replace=True)
     estimate = statistic(rand_samples)
