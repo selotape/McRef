@@ -47,3 +47,4 @@ experiments/*/*/results/*
 *.tmp
 *.zip
 *.png
+experiments/bck
