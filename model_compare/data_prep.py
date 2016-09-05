@@ -21,7 +21,7 @@ def __remove_percentiles(df, percentile, column):
 
 
 def preprocess_data(results, conf):
-    print('==preprocess_data==')
+    print('preprocessing_data')
     trim_percentile, dilute_factor, burn_in =  conf.get_data_prep_attributes()
 
     results = __trim_head(results, burn_in)

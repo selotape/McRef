@@ -35,16 +35,15 @@ __pycache__
 
 # run-time logs
 nohup.out
-experiments/*/results/*
+experiments/*/*/results/*
 
 # Sequence Simulation Data Files
 *.seqs
 *.data
 *.dwn
-<<<<<<< HEAD
 *.tsv
-=======
->>>>>>> 251d1f8f3a72f619726035b3f127de7aad6465f0
 
 # Others
 *.tmp
+*.zip
+*.png
