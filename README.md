@@ -20,5 +20,6 @@ Relative Bayesian model comparison framework through post-processing of G-PhoCS 
 ## Todo:
 	* add default option to read pops and mig_bands from gphocs ctl file
 	* create three seperate algorithms: flat, clade and harmonic_mean
+	* manage large data files in lfg
 
 For any question or suggestion feel free to contact me - Ron dot Visbord at Gmail dot com
