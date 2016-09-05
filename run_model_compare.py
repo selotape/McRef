@@ -18,8 +18,8 @@ if __name__ == "__main__":
     for simulation in simulations:
         validate_simulation(simulation)
 
-        print("Starting simulation \"%s\"" % simulation)
+#        print("Starting simulation \"%s\"" % simulation)
         model_compare.model_compare(simulation)
-        print("Finished \"%s\"" % simulation)
+#        print("Finished \"%s\"" % simulation)
 
-    print("Done!")
+#    print("Done!")

@@ -13,9 +13,9 @@ migs="1 2 4"
 
 for tau in $taus
 do
-        for m in $migs
-        do
-                        ./zipTraces.sh $tau $m 0
-                        ./zipTraces.sh $tau 0 $m
-        done
+	for m in $migs
+	do
+			./zipTraces.sh $tau $m 0
+			./zipTraces.sh $tau 0 $m
+	done
 done

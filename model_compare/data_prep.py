@@ -11,7 +11,6 @@ def __dilute_data(df, dilute_factor):
     return df
 
 def __remove_percentiles(df, percentile, column):
-
     bottom = df.quantile(percentile / 100)[column]
     top = df.quantile(1 - percentile / 100)[column]
 
@@ -19,9 +18,14 @@ def __remove_percentiles(df, percentile, column):
 
     return df
 
+def equate_lengths(df1, df2):
+    length = min((len(df1), len(df2)))
+    df1 = df1[:length]
+    df2 = df2[:length]
+    return df1, df2
+
 
 def preprocess_data(results, conf):
-    print('preprocessing_data')
     trim_percentile, dilute_factor, burn_in =  conf.get_data_prep_attributes()
 
     results = __trim_head(results, burn_in)

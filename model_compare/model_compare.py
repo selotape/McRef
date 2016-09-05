@@ -9,6 +9,7 @@ def model_compare(simulation='sample'):
 
     conf = ConfigHandler(simulation)
     clade_stats, trace = conf.get_gphocs_data()
+    clade_stats, trace = equate_lengths(clade_stats, trace)
 
     results_data = pd.DataFrame()
 
@@ -78,7 +79,8 @@ def save_results(results_data, results_stats, conf):
 
     with open(summary_path, 'w') as f:
         experiment_summary = summarize(results_stats, conf)
-        print(experiment_summary)
+        super_summary = super_summarize(results_stats, conf)
+        print(super_summary)
         f.write(experiment_summary)
 
     if conf.should_save_results():
@@ -99,6 +101,17 @@ def summarize(results_stats, conf):
     results_string = ''.join(results_string)
 
     return intro + results_string
+
+def super_summarize(results_stats, conf):
+    clades, pops, mig_bands = conf.get_clades_pops_and_migs()
+    simulation_name = conf.simulation.split('/')[-1]
+    hm_mean = results_stats['hm_data_likelihood']['ln_mean']
+    hm_boot = results_stats['hm_data_likelihood']['bootstrap']
+    rbf_mean = results_stats['rbf_ratio']['ln_mean']
+    rbf_boot = results_stats['rbf_ratio']['bootstrap']
+    result=','.join((simulation_name, '&'.join(clades), '&'.join(pops), '&'.join(mig_bands), \
+                      str(rbf_boot), str(rbf_mean), str(hm_boot), str(hm_mean)))
+    return result
 
 
 def save_plot(data_frame, plot_save_path, plot_name):

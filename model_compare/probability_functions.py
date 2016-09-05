@@ -9,8 +9,6 @@ from numpy import log as ln
 
 
 def statistify(log_likelihoods):
-    print('statistifying ' + str(log_likelihoods.name))
-
     statistification = {
         'ln_mean': ln_mean(log_likelihoods),
         # 'ln_variance': ln_variance(log_likelihoods),
