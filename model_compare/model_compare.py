@@ -72,9 +72,9 @@ def save_results(results_data, results_stats, conf):
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
 
-    save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, conf.simulation)
-    save_plot(results_data[['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation)
-    save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation)
+    save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, conf.simulation.split("/")[-1])
+    save_plot(results_data[['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation.split("/")[-1])
+    save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation.split("/")[-1])
 
 
     with open(summary_path, 'w') as f:
@@ -119,6 +119,7 @@ def save_plot(data_frame, plot_save_path, plot_name):
     plot_figure = plot.get_figure()
     plot_figure.savefig(plot_save_path + ".line.png")
 
-    hist = data_frame.plot.hist(alpha=0.5, bins=160, title=plot_name + ' histogram')
+    hist = data_frame.plot.hist(alpha=0.5, bins=160, normed=True, \
+		title=plot_name+' histogram')
     hist_figure = hist.get_figure()
     hist_figure.savefig(plot_save_path + ".hist.png")
