@@ -1,6 +1,6 @@
 # McRef User Guide
 
-powered by - <img src="http://www.faculty.idc.ac.il/igronau/images/research/gphocs-logo.png" alt="Drawing" style="width: 130px;"/>
+powered by - <img src="http://www.faculty.idc.ac.il/igronau/images/research/gphocs-logo.png"  width="130"/>
 
 
 McRef is an **Relative Bayesian algorithm for Phylogenetic-Population-Model Comparison**, through post-processing of the [G-PhoCS](http://compgen.cshl.edu/GPhoCS/) markov-chain monte-carlo samples.
