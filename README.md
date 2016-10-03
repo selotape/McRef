@@ -2,16 +2,9 @@
 
 
 
-McRef is an **Relative Bayesian algorithm for Phylogenetic-Population-Model Comparison**, through post-processing of the [G-PhoCS](http://compgen.cshl.edu/GPhoCS/) markov-chain monte-carlo samples.
+McRef is a **Relative Bayesian Algorithm for Phylogenetic-Population-Model Comparison**, through post-processing of the [G-PhoCS](http://compgen.cshl.edu/GPhoCS/) markov-chain monte-carlo samples.
 
 Below is the minimal documentation required to execute McRef.
-
-### Directory structure
-Inside the repo are several important directories:
-0. **root (./)**: In the root dir lie the module runner (*run_model_compare.py*) and the default config file.
-1. **scripts**: This directory contains bash scripts for bulk experiment executions and other misc development tools
-2. **model_compare**: This is **the** python module. all python source code is here.
-3. **experiments & sims**: Where, during development, we placed seq-gen data, gphocs traces and McRef results.
 
 
 
@@ -24,15 +17,15 @@ $ python ./run_model_compare.py ./experiments/sample
 
 Now that we got that out of the way, let's get on with a full explanation.
 
-A common experiment setup would be:
+#### A common experiment setup:
 1. Run G-PhocS w/ clade. Save data in *"data.cladestats.tsv"* & *"data.trace.tsv"* files. Put files in an *experiment directory*
     * For further explanation on G-PhoCS configuration and execution, see  [G-PhoCS Homepage](http://compgen.cshl.edu/GPhoCS/) and [G-PhoCS Manual](http://compgen.cshl.edu/GPhoCS/GPhoCS_Manual.pdf)
 2. Create a *config.ini* file (in the *experiment directory*) with the following attributes:
     * *clade_stats_file_name & trace_file_name*
     * *pops, clades & mig_bands*
     * *burn_in, trim_percentile, dilute_factor & bootstrap_iterations*
-3. `$ python ./run_model_compare.py /path/to/experiment_directory`
-4. Results will appear in directory */path/to/experiment_directory/results/##time-stamp##* 
+3. run `$ python ./run_model_compare.py /path/to/experiment_directory`
+4. see results in directory */path/to/experiment_directory/results/##time-stamp##* 
 
 ### The Config File
 *McRef* takes It's parameters from config file**s**.
@@ -69,6 +62,14 @@ Note - Attributes in **bold** are the most relevant.
   * *summary_name* = summary.txt - where to save experiment textual summary 
   * *save_data* = [yes/no] - whether to save to disk all statistics used in the final computations
   * *results_name* = results.csv - if save_data=yes, where to save statistics
+
+### Directory structure
+Inside the repo are several important directories:
+0. **root (./)**: In the root dir lie the module runner (*run_model_compare.py*) and the default config file.
+1. **scripts**: This directory contains bash scripts for bulk experiment executions and other misc development tools
+2. **model_compare**: This is **the** python module. all python source code is here.
+3. **experiments & sims**: Where, during development, we placed seq-gen data, gphocs traces and McRef results.
+
 
 
 ### Installation
