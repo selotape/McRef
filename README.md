@@ -63,8 +63,7 @@ Note - Attributes in **bold** are the most relevant.
   * *save_data* = [yes/no] - whether to save to disk all statistics used in the final computations
   * *results_name* = results.csv - if save_data=yes, where to save statistics
 
-### Directory structure
-Inside the repo are several important directories:
+### Important Directories
 0. **root (./)**: In the root dir lie the module runner (*run_model_compare.py*) and the default config file.
 1. **scripts**: This directory contains bash scripts for bulk experiment executions and other misc development tools
 2. **model_compare**: This is **the** python module. all python source code is here.
