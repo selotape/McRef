@@ -83,13 +83,13 @@ $ sudo apt-get install git
 ```
 
 #### Installing McRef
-1. Get latest release from bitbucket - `git clone https://my_user_name@bitbucket.org/gphocsdev/modelcompare.git`
-2. Test project on with sample config & data - `python run_model_compare.py experiments/sample`
+1. Get latest release from bitbucket - `$ git clone https://my_user_name@bitbucket.org/gphocsdev/modelcompare.git`
+2. Test project on with sample config & data - `$ python run_model_compare.py experiments/sample`
 3. Assert output is a comma-seperated set of results:
 
-    exp|clades|pops|mig_bands|rbf_boot|rbf_mean|hm_boot|hm_mean|
-    |---|---|---|----|---|---|
-    experiments\sample|AB|C&ABC&D&root| |0.0618392260752|-4.1527566832|1.41494558066|140113.8944914| 
+    | experiment name  | clades | pops         | mig_bands | rbf_boot   | rbf_mean   | hm_boot   | hm_mean  |
+    | ---------------- | :----: | ------------ | --------- | ---------- | ---------- | --------- | -------- |
+    |experiments\sample| AB     | C&ABC&D&root |           | 0.06183... | -4.1527... | 1.4149... | 14011... | 
 4. Success!!
 
 ### Contact Us!
