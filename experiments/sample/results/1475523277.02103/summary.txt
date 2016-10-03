@@ -1,0 +1,5 @@
+Summary:
+Simulation: experiments\sample
+|Clades: AB | Populations: C,ABC,D,root | Migration Bands: |
+hm_data_likelihood: {'ln_mean': 140113.89449133186, 'bootstrap': 1.4149455806596414}
+rbf_ratio: {'ln_mean': -4.1527566832027389, 'bootstrap': 0.061839226075200315}
