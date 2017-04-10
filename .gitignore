@@ -30,9 +30,7 @@ __pycache__
 
 
 # Pycharm user-specific files
-.idea/workspace*.xml
-.idea/tasks.xml
-.idea/*
+.idea
 
 # run-time logs
 nohup.out
@@ -49,3 +47,28 @@ experiments/*/*/results/*
 *.zip
 *.png
 experiments/bck
+experiments/helloComb/
+experiments/oxford/M3.01.migAC_0_0/
+experiments/oxford/M3.01.migAC_0_1/
+experiments/oxford/M3.01.migAC_0_2/
+experiments/oxford/M3.01.migAC_0_4/
+experiments/oxford/M3.01.migAC_1_0/
+experiments/oxford/M3.01.migAC_2_0/
+experiments/oxford/M3.01.migAC_4_0/
+experiments/oxford/M3.05.migAC_0_1/
+experiments/oxford/M3.05.migAC_0_2/
+experiments/oxford/M3.05.migAC_0_4/
+experiments/oxford/M3.05.migAC_1_0/
+experiments/oxford/M3.05.migAC_2_0/
+experiments/oxford/M3.05.migAC_4_0/
+experiments/oxford/M3.10.migAC_0_0/
+experiments/oxford/M3.10.migAC_0_1/
+experiments/oxford/M3.10.migAC_0_2/
+experiments/oxford/M3.10.migAC_0_4/
+experiments/oxford/M3.10.migAC_1_0/
+experiments/oxford/M3.10.migAC_2_0/
+experiments/oxford/M3.10.migAC_4_0/
+experiments/oxford/M3.15.migAC_0_1/
+experiments/oxford/M3.15.migAC_0_2/
+experiments/oxford/M3.15.migAC_1_0/
+experiments/oxford/M3.15.migAC_2_0/
