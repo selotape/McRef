@@ -1,64 +1,52 @@
-import numpy as np
-import pandas as pd
-import operator
-from numpy import exp, sqrt, mean
-from numpy import linalg
-from numpy import log as ln
+from numpy import exp, sqrt, mean, random, log as ln
+from pandas import Series
 
 
+def statistify(log_likelihoods) -> dict:
 
+    def norm(x): return sqrt(mean(x))
+    def metric(x, y): return (x - y) ** 2
 
-def statistify(log_likelihoods):
     statistification = {
-        'ln_mean': ln_mean(log_likelihoods),
-        # 'ln_variance': ln_variance(log_likelihoods),
-        'bootstrap': bootstrap(ln_mean, log_likelihoods, 1000, lambda x,y : (x-y)**2 , lambda X: sqrt(mean(X)))
+        'ln_mean': _ln_mean(log_likelihoods),
+        'bootstrap': bootstrap(_ln_mean, log_likelihoods, 1000, metric, norm)
     }
+
     return statistification
-
-
-def kingman_coalescent(theta, num_coal, coal_stats):
-    result = num_coal*ln(2.0/theta) - (coal_stats / theta)
-    return result
-
-def kingman_migration(mig_rate, num_migs, mig_stats):
-    result = num_migs*ln(mig_rate) - mig_stats*mig_rate;
-    return result
-
-
-def ln_mean(ln_samples):
-    """
-    :param ln_samples: a series of tiny probabilities, with ln applied to them
-    :return: ln of mean of probabilities
-    """
-    ln_C = max(ln_samples)
-    n = len(ln_samples)
-    ln_meany = ln_C + ln(sum(exp(ln_samples - ln_C))) - ln(n)
-    return ln_meany
-
-def ln_variance(ln_samples):
-    ln_C = max(ln_samples)
-    ln_var = ln((exp(ln_samples - ln_C)).var()) + 2*ln_C
-    return ln_var
-
-def ln_normalize(ln_samples):
-    ln_meany = ln_mean(ln_samples)
-    result = ln_samples - ln_meany
-    return result
-
 
 
 def bootstrap(statistic, samples, num_iterations, metric, norm):
     truth = statistic(samples)
 
-    estimates = (_single_bootstrap(statistic, samples) for i in range(num_iterations))
-    distance_vector = pd.Series((metric(estimate, truth) for estimate in estimates))
+    estimates = [_single_bootstrap(statistic, samples) for _ in range(num_iterations)]
+    distance_vector = Series((metric(estimate, truth) for estimate in estimates))
     result = norm(distance_vector)
 
     return result
 
+
+def kingman_coalescent(theta, num_coal, coal_stats) -> Series:
+    result = num_coal * ln(2.0 / theta) - (coal_stats / theta)
+    return result
+
+
+def kingman_migration(mig_rate, num_migs, mig_stats) -> Series:
+    result = num_migs * ln(mig_rate) - mig_stats * mig_rate
+    return result
+
+
+def _ln_mean(ln_samples) -> Series:
+    """
+    :param ln_samples: a series of tiny probabilities, with ln applied to them
+    :return: ln of mean of probabilities
+    """
+    ln_c = max(ln_samples)
+    n = len(ln_samples)
+    ln_meany = ln_c + ln(sum(exp(ln_samples - ln_c))) - ln(n)
+    return ln_meany
+
+
 def _single_bootstrap(statistic, samples):
-    n = len(samples)
-    rand_samples = np.random.choice(samples, n, replace=True)
+    rand_samples = random.choice(samples, len(samples), replace=True)
     estimate = statistic(rand_samples)
     return estimate

@@ -1,5 +1,7 @@
 import time
 import configparser
+
+import logging
 import pandas as pd
 
 
@@ -7,8 +9,8 @@ class ConfigHandler:
     def __init__(self, simulation):
         self.simulation = simulation
         self.config = configparser.ConfigParser()
-        self.config.read(['config.ini',
-                          '%s/config.ini' % simulation])  # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
+        # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
+        self.config.read(['config.ini', '%s/config.ini' % simulation])
 
     def get_data_prep_attributes(self):
         trim_percentile = self.config.getint('Data', 'trim_percentile')
@@ -31,15 +33,18 @@ class ConfigHandler:
         return comb, comb_leaves, pops, mig_bands
 
     def get_gphocs_data(self):
+
         simulation_path = self.get_simulation_path()
 
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
         comb_stats = pd.read_csv(comb_stats_path, sep='\t')
+        logging.info("loaded comb_stats data")
 
         trace_file_name = self.config.get('Input', 'trace_file_name')
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
         trace = pd.read_csv(trace_path, sep='\t')
+        logging.info("loaded trace data")
 
         return comb_stats, trace
 

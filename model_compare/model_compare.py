@@ -1,9 +1,10 @@
-import pandas as pd
 import os
+
+import pandas as pd
+
 from model_compare.config_handler import ConfigHandler
 from model_compare.data_prep import *
 from model_compare.probability_functions import *
-import fire
 
 
 def model_compare(simulation='sample'):
@@ -73,6 +74,7 @@ def calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf
 
     columns_to_sum = [comb] + populations + migration_bands
     ref_gene_likelihood = objects_to_sum[columns_to_sum].sum(axis=1)
+    logging.info("Calculated reference genealogy likelihood")
 
     return ref_gene_likelihood
 
@@ -106,7 +108,7 @@ def summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
     formatted_migbands = ','.join(migration_bands)
     intro_template = "Summary:\n" + \
                      "Simulation: %s\n" % simulation_name + \
-                     "| Clades: {0} | C_Leaves: {1} | Populations: {2} | Migration Bands: {3}|\n"
+                     "Clades: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"
     intro = intro_template.format(comb, formatted_leaves, formatted_pops, formatted_migbands)
 
     results_string = []
@@ -138,7 +140,3 @@ def save_plot(data_frame, plot_save_path, plot_name):
                                 title=plot_name + ' histogram')
     hist_figure = hist.get_figure()
     hist_figure.savefig(plot_save_path + ".hist.png")
-
-
-if __name__ == "__main__":
-    fire.Fire(model_compare)

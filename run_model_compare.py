@@ -1,4 +1,7 @@
 import sys
+
+import logging
+
 from model_compare import model_compare
 import os
 
@@ -10,6 +13,7 @@ def print_usage_and_leave():
 
 def validate_simulation(sim):
     assert os.path.isdir(sim), "\"%s\" is not a directory" % sim
+    logging.info("Validated simulation %s", sim)
 
 
 if __name__ == "__main__":
