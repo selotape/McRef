@@ -30,6 +30,7 @@ __pycache__
 
 
 # Pycharm user-specific files
+.idea/*
 .idea
 
 # run-time logs

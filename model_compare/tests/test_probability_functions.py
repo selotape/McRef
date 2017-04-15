@@ -1,8 +1,7 @@
 import unittest
-from pandas.util.testing import assert_frame_equal
-import pandas as pd
-import numpy as np
+
 from model_compare.probability_functions import *
+
 
 class test_probability_functions(unittest.TestCase):
 
@@ -15,7 +14,7 @@ class test_probability_functions(unittest.TestCase):
 
         input = pd.Series(i for i in range(100))
         expected = 0.0
-        actual = bootstrap(np.mean, input, 1000, operator.sub, np.mean)
+        actual = bootstrap(np.mean, input, 50000, operator.sub, np.mean)
         self.assertAlmostEqual(expected, actual, delta=0.01)
 
     def test_log_expectation(self):
