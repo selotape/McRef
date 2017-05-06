@@ -43,4 +43,4 @@ experiments/*/*/*/results
 *.tmp
 *.zip
 *.png
-
+*.log

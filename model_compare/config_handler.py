@@ -39,12 +39,12 @@ class ConfigHandler:
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
         comb_stats = pd.read_csv(comb_stats_path, sep='\t')
-        logging.info("loaded comb_stats data")
+        logging.info("Loaded comb_stats data")
 
         trace_file_name = self.config.get('Input', 'trace_file_name')
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
         trace = pd.read_csv(trace_path, sep='\t')
-        logging.info("loaded trace data")
+        logging.info("Loaded trace data")
 
         return comb_stats, trace
 

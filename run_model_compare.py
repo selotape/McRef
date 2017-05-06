@@ -17,9 +17,13 @@ def validate_simulation(sim):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(filename='model_compare.log', level=logging.INFO)
+    logging.info("Starting model_compare...")
+
     simulations = sys.argv[1:]
     if len(simulations) < 1:
         print_usage_and_leave()
     for simulation in simulations:
         validate_simulation(simulation)
         model_compare.model_compare(simulation)
+    logging.info("Done!")

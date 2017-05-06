@@ -108,7 +108,7 @@ def summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
     formatted_migbands = ','.join(migration_bands)
     intro_template = "Summary:\n" + \
                      "Simulation: %s\n" % simulation_name + \
-                     "Clades: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"
+                     "Comb: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"
     intro = intro_template.format(comb, formatted_leaves, formatted_pops, formatted_migbands)
 
     results_string = []
