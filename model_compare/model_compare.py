@@ -28,8 +28,8 @@ def model_compare(simulation='sample'):
 
 def calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
     theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template, \
-    comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template, comb_migband_mig_stats_template, \
-    comb_migband_num_migs_template = conf.get_column_name_templates()
+        comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template, \
+        comb_migband_mig_stats_template, comb_migband_num_migs_template = conf.get_column_name_templates()
 
     comb, comb_leaves, populations, migration_bands = conf.get_comb_pops_and_migs()
     theta_print_factor, mig_rate_print_factor = conf.get_data_config()
@@ -80,7 +80,8 @@ def calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf
 
 
 def save_results(results_data, results_stats, conf):
-    results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
+    results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, \
+        summary_path = conf.get_results_paths()
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
@@ -126,7 +127,8 @@ def super_summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
     hm_boot = results_stats['hm_data_likelihood']['bootstrap']
     rbf_mean = results_stats['rbf_ratio']['ln_mean']
     rbf_boot = results_stats['rbf_ratio']['bootstrap']
-    result = ','.join((simulation_name, comb, '&'.join(comb_leaves), '&'.join(pops), '&'.join(mig_bands), \
+
+    result = ','.join((simulation_name, comb, '&'.join(comb_leaves), '&'.join(pops), '&'.join(mig_bands),
                        str(rbf_boot), str(rbf_mean), str(hm_boot), str(hm_mean)))
     return result
 
@@ -136,7 +138,7 @@ def save_plot(data_frame, plot_save_path, plot_name):
     plot_figure = plot.get_figure()
     plot_figure.savefig(plot_save_path + ".line.png")
 
-    hist = data_frame.plot.hist(alpha=0.5, bins=160, normed=True, \
+    hist = data_frame.plot.hist(alpha=0.5, bins=160, normed=True,
                                 title=plot_name + ' histogram')
     hist_figure = hist.get_figure()
     hist_figure.savefig(plot_save_path + ".hist.png")

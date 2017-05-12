@@ -1,7 +1,7 @@
-import time
 import configparser
-
 import logging
+import time
+
 import pandas as pd
 
 
@@ -10,7 +10,7 @@ class ConfigHandler:
         self.simulation = simulation
         self.config = configparser.ConfigParser()
         # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
-        self.config.read(['config.ini', '%s/config.ini' % simulation])
+        self.config.read(['config.ini', 'model_compare/config.ini', '%s/config.ini' % simulation])
 
     def get_data_prep_attributes(self):
         trim_percentile = self.config.getint('Data', 'trim_percentile')
@@ -33,7 +33,6 @@ class ConfigHandler:
         return comb, comb_leaves, pops, mig_bands
 
     def get_gphocs_data(self):
-
         simulation_path = self.get_simulation_path()
 
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
@@ -50,7 +49,6 @@ class ConfigHandler:
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
-        # timestamp = datetime.now().strftime("%H.%M_%d.%m.%Y")
         timestamp = str(time.time())
 
         results_directory = simulation_path + '/' + self.config.get('Output', 'results_directory') + '/' + timestamp
@@ -60,19 +58,8 @@ class ConfigHandler:
         expectation_plot_path = results_directory + '/' + self.config.get('Output', 'expectation_plot_name')
         harmonic_mean_plot_path = results_directory + '/' + self.config.get('Output', 'harmonic_mean_plot_name')
 
-        return results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path
-
-    def get_pop_coal_stats_column_names(self):
-        return None
-
-    def get_pop_num_coals_column_names(self):
-        return None
-
-    def get_pop_column_names(self):
-        return None
-
-    def get_pop_column_names(self):
-        return None
+        return results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, \
+            summary_path
 
     def get_column_name_templates(self):  # TODO - add annotations
 
@@ -88,9 +75,8 @@ class ConfigHandler:
         comb_migband_num_migs_template = self.config.get('Templates', 'comb_migband_num_migs')
 
         return theta, mig_rate, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template, \
-            comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template, comb_migband_mig_stats_template,\
-            comb_migband_num_migs_template
-
+            comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template, \
+            comb_migband_mig_stats_template, comb_migband_num_migs_template
 
     def get_data_config(self):
         theta_print_factor = self.config.getfloat('Input', 'theta_print_factor')
@@ -103,7 +89,7 @@ class ConfigHandler:
         return result
 
 
-def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - take variable amount of args
+def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - accept any number of args
     comb_leaves = list(filter(None, comb_leaves))
     pops = list(filter(None, pops))
     mig_bands = list(filter(None, mig_bands))

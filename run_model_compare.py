@@ -7,7 +7,7 @@ from model_compare.model_compare import model_compare
 def main(simulations):
     if len(simulations) < 1:
         print_usage_and_exit()
-        
+
     for simulation in simulations:
         if is_valid_simulation(simulation):
             model_compare(simulation)
