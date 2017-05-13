@@ -12,9 +12,9 @@ EXPERIMENT_DIR = "G:\\Users\\ronvis\\Dropbox\\Thesis\\ModelCompare\\experiments\
 
 
 def plotnic(experiment_dir, data_plots_dir, trace_file_name):
-    logging.info('reading data...')
+    logging.info('reading simdata...')
     trace = pd.read_csv(experiment_dir + '\\' + trace_file_name, delimiter='\t')
-    logging.info('preprocessing data...')
+    logging.info('preprocessing simdata...')
     trace.drop('Sample', axis=1, inplace=True)
     trace = trace[BURN_IN:]
     trace = trace[SKIP::]

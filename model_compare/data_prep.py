@@ -16,7 +16,7 @@ def preprocess_data(results: DataFrame, conf):
     results = _trim_head(results, burn_in)
     results = _remove_percentiles(results, trim_percentile, 'hyp_gene_likelihood')
     results = _dilute_data(results, dilute_factor)
-    logging.info("Preprocessed data")
+    logging.info("Preprocessed simdata")
 
     return results
 

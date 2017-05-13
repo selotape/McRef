@@ -1,3 +1,25 @@
+# Pycharm user-specific files
+.idea/*
+.idea
+
+# run-time logs
+nohup.out
+simulations/experiments/*/results
+simulations/experiments/*/*/results
+simulations/experiments/*/*/*/results
+simulations/experiments/*/*/*/*/results
+
+
+# Sequence Simulation Data Files
+*.seqs
+*.tsv
+
+# Others
+*.zip
+*.png
+*.log
+
+
 # Distribution / packaging
 .Python
 env/
@@ -21,26 +43,3 @@ var/
 # python binaries
 *.pyc
 __pycache__
-
-
-# Pycharm user-specific files
-.idea/*
-.idea
-
-# run-time logs
-nohup.out
-experiments/*/results
-experiments/*/*/results
-experiments/*/*/*/results
-
-# Sequence Simulation Data Files
-*.seqs
-*.data
-*.dwn
-*.tsv
-
-# Others
-*.tmp
-*.zip
-*.png
-*.log
