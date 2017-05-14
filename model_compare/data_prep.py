@@ -14,9 +14,9 @@ def preprocess_data(results: DataFrame, conf):
     trim_percentile, dilute_factor, burn_in = conf.get_data_prep_attributes()
 
     results = _trim_head(results, burn_in)
-    results = _remove_percentiles(results, trim_percentile, 'hyp_gene_likelihood')
+    results = _remove_percentiles(results, trim_percentile, 'rbf_ratio')
     results = _dilute_data(results, dilute_factor)
-    logging.info("Preprocessed simdata")
+    logging.info("Preprocessed results data")
 
     return results
 

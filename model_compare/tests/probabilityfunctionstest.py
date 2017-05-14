@@ -16,7 +16,7 @@ class ProbabilityFunctionsTest(unittest.TestCase):
 
         bootstrap_input = pd.Series(i for i in range(100))
         expected = 0.0
-        actual = bootstrap(np.mean, bootstrap_input, 50000, operator.sub, np.mean)
+        actual = _bootstrap(np.mean, bootstrap_input, 50000, operator.sub, np.mean)
         self.assertAlmostEqual(expected, actual, delta=0.01)
 
     def test_log_expectation(self):

@@ -12,6 +12,21 @@ class ConfigHandler:
         # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
         self.config.read(['config.ini', 'model_compare/config.ini', '%s/config.ini' % simulation])
 
+    def get_gphocs_data(self):
+        simulation_path = self.get_simulation_path()
+
+        comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
+        comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
+        comb_stats = pd.read_csv(comb_stats_path, sep='\t')
+        logging.info("Loaded comb_stats simdata")
+
+        trace_file_name = self.config.get('Input', 'trace_file_name')
+        trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
+        trace = pd.read_csv(trace_path, sep='\t')
+        logging.info("Loaded trace simdata")
+
+        return comb_stats, trace
+
     def get_data_prep_attributes(self):
         trim_percentile = self.config.getint('Data', 'trim_percentile')
         dilute_factor = self.config.getint('Data', 'dilute_factor')
@@ -31,21 +46,6 @@ class ConfigHandler:
         comb_leaves, mig_bands, pops = remove_empty_strings(comb_leaves, mig_bands, pops)
 
         return comb, comb_leaves, pops, mig_bands
-
-    def get_gphocs_data(self):
-        simulation_path = self.get_simulation_path()
-
-        comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
-        comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
-        comb_stats = pd.read_csv(comb_stats_path, sep='\t')
-        logging.info("Loaded comb_stats simdata")
-
-        trace_file_name = self.config.get('Input', 'trace_file_name')
-        trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
-        trace = pd.read_csv(trace_path, sep='\t')
-        logging.info("Loaded trace simdata")
-
-        return comb_stats, trace
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()

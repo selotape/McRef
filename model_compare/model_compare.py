@@ -9,21 +9,22 @@ from model_compare.probability_functions import *
 
 def model_compare(simulation='sample'):
     conf = ConfigHandler(simulation)
-    comb_stats, trace = conf.get_gphocs_data()
-    comb_stats, trace = equate_lengths(comb_stats, trace)
+    comb_stats, trace = conf.get_gphocs_data()  # TODO - check return values are correct
+    comb_stats, trace = equate_lengths(comb_stats, trace)  # TODO - check return values are correct
 
     results_data = pd.DataFrame()
-
     results_data['ref_gene_likelihood'] = calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
-    results_data['hm_data_likelihood'] = -trace['Full-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
+    results_data['harmonic_mean'] = -trace['Data-ld-ln']
 
     results_data = preprocess_data(results_data, conf)
 
-    results_stats = {column: statistify(results_data[column]) for column in ['rbf_ratio', 'hm_data_likelihood']}
+    results_stats = {column: analyze(results_data[column]) for column in ['rbf_ratio', 'harmonic_mean']}
 
     save_results(results_data, results_stats, conf)
+
+
 
 
 def calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
@@ -81,14 +82,14 @@ def calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf
 
 def save_results(results_data, results_stats, conf):
     results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, \
-        summary_path = conf.get_results_paths()
+    summary_path = conf.get_results_paths()
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
 
     save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path,
               conf.simulation.split("/")[-1])
-    save_plot(results_data[['hm_data_likelihood']], harmonic_mean_plot_path, conf.simulation.split("/")[-1])
+    save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, conf.simulation.split("/")[-1])
     save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation.split("/")[-1])
 
     with open(summary_path, 'w') as f:
@@ -123,8 +124,8 @@ def summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
 def super_summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
     comb, comb_leaves, pops, mig_bands = conf.get_comb_pops_and_migs()
     simulation_name = conf.simulation.split('/')[-1]
-    hm_mean = results_stats['hm_data_likelihood']['ln_mean']
-    hm_boot = results_stats['hm_data_likelihood']['bootstrap']
+    hm_mean = results_stats['harmonic_mean']['ln_mean']
+    hm_boot = results_stats['harmonic_mean']['bootstrap']
     rbf_mean = results_stats['rbf_ratio']['ln_mean']
     rbf_boot = results_stats['rbf_ratio']['bootstrap']
 
