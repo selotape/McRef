@@ -49,7 +49,8 @@ class ConfigHandler:
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
-        timestamp = str(time.time())
+        timestamp = time.strftime('%Y%m%d_%H%M')
+
 
         results_directory = simulation_path + '/' + self.config.get('Output', 'results_directory') + '/' + timestamp
         results_path = results_directory + '/' + self.config.get('Output', 'results_name')
