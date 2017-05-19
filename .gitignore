@@ -1,13 +1,9 @@
 # Pycharm user-specific files
-.idea/*
 .idea
 
 # run-time logs
 nohup.out
-simulations/experiments/*/results
-simulations/experiments/*/*/results
-simulations/experiments/*/*/*/results
-simulations/experiments/*/*/*/*/results
+simulations/**/results
 
 
 # Sequence Simulation Data Files
@@ -15,8 +11,7 @@ simulations/experiments/*/*/*/*/results
 *.tsv
 
 # Others
-*.zip
-*.png
+
 *.log
 
 

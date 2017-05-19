@@ -1,5 +1,4 @@
 import os
-
 import pandas as pd
 
 from model_compare.config_handler import ConfigHandler
@@ -9,11 +8,11 @@ from model_compare.probability_functions import *
 
 def model_compare(simulation='sample'):
     conf = ConfigHandler(simulation)
-    comb_stats, trace = conf.get_gphocs_data()  # TODO - check return values are correct
-    comb_stats, trace = equate_lengths(comb_stats, trace)  # TODO - check return values are correct
+    comb_stats, trace = conf.get_gphocs_data()
+    comb_stats, trace = equate_lengths(comb_stats, trace)
 
     results_data = pd.DataFrame()
-    results_data['ref_gene_likelihood'] = calc_ref_gene_likelihood(comb_stats, trace, conf)
+    results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
@@ -22,12 +21,10 @@ def model_compare(simulation='sample'):
 
     results_stats = {column: analyze(results_data[column]) for column in ['rbf_ratio', 'harmonic_mean']}
 
-    save_results(results_data, results_stats, conf)
+    _save_results(results_data, results_stats, conf)
 
 
-
-
-def calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
     theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template, \
         comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template, \
         comb_migband_mig_stats_template, comb_migband_num_migs_template = conf.get_column_name_templates()
@@ -80,29 +77,28 @@ def calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf
     return ref_gene_likelihood
 
 
-def save_results(results_data, results_stats, conf):
+def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigHandler):
     results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, \
-    summary_path = conf.get_results_paths()
+        summary_path = conf.get_results_paths()
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
 
-    save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path,
-              conf.simulation.split("/")[-1])
-    save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, conf.simulation.split("/")[-1])
-    save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation.split("/")[-1])
+    _save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path,
+               conf.simulation.split("/")[-1])
+    _save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, conf.simulation.split("/")[-1])
+    _save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation.split("/")[-1])
 
     with open(summary_path, 'w') as f:
-        experiment_summary = summarize(results_stats, conf)
-        super_summary = super_summarize(results_stats, conf)
-        print(super_summary)
+        experiment_summary = _summarize(results_stats, conf)
+        print(experiment_summary)
         f.write(experiment_summary)
 
     if conf.should_save_results():
         results_data.to_csv(results_path)
 
 
-def summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
+def _summarize(results_stats: dict, conf: ConfigHandler):
     comb, comb_leaves, populations, migration_bands = conf.get_comb_pops_and_migs()
     simulation_name = conf.simulation.split('/')[-1]
     formatted_leaves = ','.join(comb_leaves)
@@ -121,20 +117,7 @@ def summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
     return intro + results_string
 
 
-def super_summarize(results_stats: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, pops, mig_bands = conf.get_comb_pops_and_migs()
-    simulation_name = conf.simulation.split('/')[-1]
-    hm_mean = results_stats['harmonic_mean']['ln_mean']
-    hm_boot = results_stats['harmonic_mean']['bootstrap']
-    rbf_mean = results_stats['rbf_ratio']['ln_mean']
-    rbf_boot = results_stats['rbf_ratio']['bootstrap']
-
-    result = ','.join((simulation_name, comb, '&'.join(comb_leaves), '&'.join(pops), '&'.join(mig_bands),
-                       str(rbf_boot), str(rbf_mean), str(hm_boot), str(hm_mean)))
-    return result
-
-
-def save_plot(data_frame, plot_save_path, plot_name):
+def _save_plot(data_frame: pd.DataFrame, plot_save_path: str, plot_name: str):
     plot = data_frame.plot(title=plot_name)
     plot_figure = plot.get_figure()
     plot_figure.savefig(plot_save_path + ".line.png")

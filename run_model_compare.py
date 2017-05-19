@@ -1,7 +1,7 @@
 import sys
 import logging
 import os
-from model_compare.model_compare import model_compare
+from model_compare import compare_models
 
 
 def main(simulations):
@@ -10,7 +10,7 @@ def main(simulations):
 
     for simulation in simulations:
         if is_valid_simulation(simulation):
-            model_compare(simulation)
+            compare_models(simulation)
 
 
 def print_usage_and_exit():
