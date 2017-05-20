@@ -18,11 +18,11 @@ def analyze(log_likelihoods) -> dict:
     def norm(x): return sqrt(mean(x))
     def metric(x, y): return (x - y) ** 2
 
-    iterations = 1000
+    bootstrap_iterations = 1000
 
     statistification = {
         'ln_mean': _ln_mean(log_likelihoods),
-        'bootstrap': _bootstrap(_ln_mean, log_likelihoods, iterations, metric, norm)
+        'bootstrap': _bootstrap(_ln_mean, log_likelihoods, bootstrap_iterations, metric, norm)
     }
 
     return statistification
