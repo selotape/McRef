@@ -25,7 +25,12 @@ def model_compare(simulation='sample'):
 
     results_data = preprocess_data(results_data, conf)
 
-    results_stats = {column: analyze(results_data[column]) for column in ['rbf_ratio', 'harmonic_mean']}
+    results_stats = {}
+    for column in ['rbf_ratio', 'harmonic_mean']:
+        logging.info("Starting analysis of column \'{}\'".format(column))
+        analysis = analyze(results_data[column])
+        results_stats[column] = analysis
+        logging.info("Finished analysis of column \'{}\'".format(column))
 
     _save_results(results_data, results_stats, conf)
     logging.info("Done!")
@@ -137,10 +142,9 @@ def _save_plot(data_frame: pd.DataFrame, plot_save_path: str, plot_name: str):
 
 def setup_logging(conf):
     results_directory = conf.get_results_paths()[0]
-    os.makedirs(results_directory)
+    os.makedirs(results_directory, exist_ok=True)
     log_file = results_directory + '/model_compare.log'
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                        datefmt='%m-%d %H:%M',
                         filename=log_file,
                         filemode='w')
