@@ -15,14 +15,17 @@ class ConfigHandler:
     def get_gphocs_data(self):
         simulation_path = self.get_simulation_path()
 
+        trim_percentile, dilute_factor, burn_in, num_rows = self.get_data_prep_attributes()
+
+
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
-        comb_stats = pd.read_csv(comb_stats_path, sep='\t')
+        comb_stats = pd.read_csv(comb_stats_path, sep='\t', skiprows=range(1, burn_in), nrows=num_rows, header=0)
         logging.info("Loaded comb_stats simdata")
 
         trace_file_name = self.config.get('Input', 'trace_file_name')
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
-        trace = pd.read_csv(trace_path, sep='\t')
+        trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), nrows=num_rows, header=0)
         logging.info("Loaded trace simdata")
 
         return comb_stats, trace
@@ -30,8 +33,9 @@ class ConfigHandler:
     def get_data_prep_attributes(self):
         trim_percentile = self.config.getint('Data', 'trim_percentile')
         dilute_factor = self.config.getint('Data', 'dilute_factor')
-        burn_in = self.config.getint('Data', 'burn_in')
-        return trim_percentile, dilute_factor, burn_in
+        burn_in = self.config.getint('Data', 'skip_rows')
+        num_rows = self.config.getint('Data', 'number_of_rows')
+        return trim_percentile, dilute_factor, burn_in, num_rows
 
     def get_simulation_path(self):
         return self.simulation

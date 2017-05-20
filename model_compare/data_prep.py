@@ -11,9 +11,8 @@ def equate_lengths(df1: DataFrame, df2: DataFrame):
 
 
 def preprocess_data(results: DataFrame, conf):
-    trim_percentile, dilute_factor, burn_in = conf.get_data_prep_attributes()
+    trim_percentile, dilute_factor, burn_in, num_rows = conf.get_data_prep_attributes()
 
-    results = _trim_head(results, burn_in)
     results = _remove_percentiles(results, trim_percentile, 'rbf_ratio')
     results = _dilute_data(results, dilute_factor)
     logging.info("Preprocessed results data")
