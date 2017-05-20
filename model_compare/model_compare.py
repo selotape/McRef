@@ -1,13 +1,19 @@
 import os
 import pandas as pd
 
+import logging
 from model_compare.config_handler import ConfigHandler
 from model_compare.data_prep import *
 from model_compare.probability_functions import *
 
 
 def model_compare(simulation='sample'):
+
+
     conf = ConfigHandler(simulation)
+
+    setup_logging(conf)
+
     comb_stats, trace = conf.get_gphocs_data()
     comb_stats, trace = equate_lengths(comb_stats, trace)
 
@@ -22,6 +28,7 @@ def model_compare(simulation='sample'):
     results_stats = {column: analyze(results_data[column]) for column in ['rbf_ratio', 'harmonic_mean']}
 
     _save_results(results_data, results_stats, conf)
+    logging.info("Done!")
 
 
 def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
@@ -126,3 +133,14 @@ def _save_plot(data_frame: pd.DataFrame, plot_save_path: str, plot_name: str):
                                 title=plot_name + ' histogram')
     hist_figure = hist.get_figure()
     hist_figure.savefig(plot_save_path + ".hist.png")
+
+
+def setup_logging(conf):
+    results_directory = conf.get_results_paths()[0]
+    os.makedirs(results_directory)
+    log_file = results_directory + '/model_compare.log'
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                        datefmt='%m-%d %H:%M',
+                        filename=log_file,
+                        filemode='w')

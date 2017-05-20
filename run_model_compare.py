@@ -1,6 +1,6 @@
-import sys
-import logging
 import os
+import sys
+
 from model_compare import compare_models
 
 
@@ -22,18 +22,6 @@ def is_valid_simulation(sim):
     return os.path.isdir(sim), "\"%s\" is not a directory" % sim
 
 
-def setup_logging():
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                        datefmt='%m-%d %H:%M',
-                        filename='model_compare.log',
-                        filemode='w')
-
 
 if __name__ == "__main__":
-    setup_logging()
-    logging.info("Starting model_compare...")
-
     main(sys.argv[1:])
-
-    logging.info("Done!")
