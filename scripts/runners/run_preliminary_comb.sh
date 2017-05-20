@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 model_compare="python /home/rvisbord/dev/modelcompare/run_model_compare.py"
 
 for exp in 'AB_C' 'BC_A' 'AC_B'; 
