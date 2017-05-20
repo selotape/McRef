@@ -11,7 +11,7 @@ simulations/**/results
 *.tsv
 
 # Others
-
+*.swp
 *.log
 
 
