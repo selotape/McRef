@@ -51,6 +51,13 @@ class ConfigHandler:
 
         return comb, comb_leaves, pops, mig_bands
 
+    def get_debug_pops(self):
+        debug_pops = self.config.get('ReferenceModel', 'debug_pops').split(',')
+
+        debug_pops = list(filter(None, debug_pops))
+
+        return debug_pops
+
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
         timestamp = time.strftime('%Y%m%d_%H%M')

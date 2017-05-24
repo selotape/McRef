@@ -1,15 +1,13 @@
 import os
+
 import pandas as pd
 
-import logging
 from model_compare.config_handler import ConfigHandler
 from model_compare.data_prep import *
 from model_compare.probability_functions import *
 
 
 def model_compare(simulation='sample'):
-
-
     conf = ConfigHandler(simulation)
 
     setup_logging(conf)
@@ -19,6 +17,8 @@ def model_compare(simulation='sample'):
 
     results_data = pd.DataFrame()
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
+    results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
+    results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
@@ -37,9 +37,9 @@ def model_compare(simulation='sample'):
 
 
 def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template, \
-        comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template, \
-        comb_migband_mig_stats_template, comb_migband_num_migs_template = conf.get_column_name_templates()
+    (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
+     comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
+     comb_migband_mig_stats_template, comb_migband_num_migs_template) = conf.get_column_name_templates()
 
     comb, comb_leaves, populations, migration_bands = conf.get_comb_pops_and_migs()
     theta_print_factor, mig_rate_print_factor = conf.get_data_config()
@@ -89,15 +89,69 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
     return ref_gene_likelihood
 
 
+def _debug_calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+    (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
+     comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
+     comb_migband_mig_stats_template, comb_migband_num_migs_template) = conf.get_column_name_templates()
+
+    debug_pops = conf.get_debug_pops()
+    theta_print_factor, mig_rate_print_factor = conf.get_data_config()
+
+    debug_thetas = trace[[theta_template.format(pop=p) for p in debug_pops]].divide(theta_print_factor)
+
+    debug_pops_num_coals_columns = [pop_num_coals_template.format(pop=p) for p in debug_pops]
+    debug_num_coal = comb_stats[debug_pops_num_coals_columns]
+
+    debug_pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in debug_pops]
+    debug_coal_stats = comb_stats[debug_pop_coal_stats_columns]
+
+    debug_objects_to_sum = pd.DataFrame()
+
+    for debug_pop in debug_pops:
+        debug_pop_theta = debug_thetas[theta_template.format(pop=debug_pop)]
+        debug_pop_num_coal = debug_num_coal[pop_num_coals_template.format(pop=debug_pop)]
+        debug_pop_coal_stats = debug_coal_stats[pop_coal_stats_template.format(pop=debug_pop)]
+        debug_objects_to_sum[debug_pop] = kingman_coalescent(debug_pop_theta, debug_pop_num_coal, debug_pop_coal_stats)
+
+    debug_columns_to_sum = debug_pops
+    debug_ref_gene_likelihood = debug_objects_to_sum[debug_columns_to_sum].sum(axis=1)
+    logging.info("Calculated DEBUG reference genealogy likelihood")
+
+    return debug_ref_gene_likelihood
+
+
+def _debug_calc_coal_stats(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+    (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
+     comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
+     comb_migband_mig_stats_template, comb_migband_num_migs_template) = conf.get_column_name_templates()
+
+    comb, comb_leaves, populations, migration_bands = conf.get_comb_pops_and_migs()
+    debug_pops = conf.get_debug_pops()
+
+    debug_pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in debug_pops]
+    comb_coal_stats_column = [comb_coal_stats_template.format(comb=comb)]
+    pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in populations]
+    comb_leaves_coal_stats_columns = [comb_leaf_coal_stats_template.format(comb=comb, leaf=l) for l in comb_leaves]
+
+    debug_results_coal_stats = pd.DataFrame()
+    debug_results_coal_stats['debug'] = comb_stats[debug_pop_coal_stats_columns].sum(axis=1)
+    ref_coal_stats_columns = comb_coal_stats_column + pop_coal_stats_columns + comb_leaves_coal_stats_columns
+    debug_results_coal_stats['ref'] = comb_stats[ref_coal_stats_columns].sum(axis=1)
+
+    logging.info("Calculated DEBUG coal stats")
+
+    return debug_results_coal_stats['debug'], debug_results_coal_stats['ref']
+
+
 def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigHandler):
-    results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, \
-        summary_path = conf.get_results_paths()
+    results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
 
-    _save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path,
+    _save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path,
                conf.simulation.split("/")[-1])
+    _save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], results_directory + '/debug_coal_stats', conf.simulation.split("/")[-1])
     _save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, conf.simulation.split("/")[-1])
     _save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation.split("/")[-1])
 
