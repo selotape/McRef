@@ -6,7 +6,7 @@ sim_root_dir="${model_compare}/simulations/experiments/preliminary_comb/M3.15.mi
 for exp in 'AB_C' 'BC_A' 'AC_B'; 
 do 
     sim_dir="${sim_root_dir}/${exp}"
-    time nohup $model_compare ${sim_dir} &
+    time nohup $model_compare_exe ${sim_dir} &
     disown -a
 done
 

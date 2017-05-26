@@ -1,5 +1,0 @@
-Summary:
-Simulation: experiments\comb\M3.15.migAC_0_0\BC_A
-Comb: root | Comb Leaves: A,B,C | Populations:  | Migration Bands:
-hm_data_likelihood: {'ln_mean': 2864101.3654574128, 'bootstrap': 6.1844054043796977}
-rbf_ratio: {'ln_mean': -61898.319171381794, 'bootstrap': 85.519540295926475}
