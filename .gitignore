@@ -9,6 +9,7 @@ simulations/**/results
 # Sequence Simulation Data Files
 *.seqs
 *.tsv
+*.csv
 
 # Others
 *.swp
@@ -38,3 +39,28 @@ var/
 # python binaries
 *.pyc
 __pycache__
+simulations/experiments/oxford/M3.01.migAC_0_0/
+simulations/experiments/oxford/M3.01.migAC_0_1/
+simulations/experiments/oxford/M3.01.migAC_0_2/
+simulations/experiments/oxford/M3.01.migAC_0_4/
+simulations/experiments/oxford/M3.01.migAC_1_0/
+simulations/experiments/oxford/M3.01.migAC_2_0/
+simulations/experiments/oxford/M3.01.migAC_4_0/
+simulations/experiments/oxford/M3.05.migAC_0_1/
+simulations/experiments/oxford/M3.05.migAC_0_2/
+simulations/experiments/oxford/M3.05.migAC_0_4/
+simulations/experiments/oxford/M3.05.migAC_1_0/
+simulations/experiments/oxford/M3.05.migAC_2_0/
+simulations/experiments/oxford/M3.05.migAC_4_0/
+simulations/experiments/oxford/M3.10.migAC_0_0/
+simulations/experiments/oxford/M3.10.migAC_0_1/
+simulations/experiments/oxford/M3.10.migAC_0_2/
+simulations/experiments/oxford/M3.10.migAC_0_4/
+simulations/experiments/oxford/M3.10.migAC_1_0/
+simulations/experiments/oxford/M3.10.migAC_2_0/
+simulations/experiments/oxford/M3.10.migAC_4_0/
+simulations/experiments/oxford/M3.15.migAC_0_1/
+simulations/experiments/oxford/M3.15.migAC_0_2/
+simulations/experiments/oxford/M3.15.migAC_1_0/
+simulations/experiments/oxford/M3.15.migAC_2_0/
+simulations/simdata/oxford/
