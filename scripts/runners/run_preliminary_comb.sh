@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-model_compare="python /home/rvisbord/dev/modelcompare/run_model_compare.py"
+model_compare="/home/rvisbord/dev/modelcompare"
+model_compare_exe="python ${model_compare}/run_model_compare.py"
+sim_root_dir="${model_compare}/simulations/experiments/preliminary_comb/M3.15.migAC_0_0"
 
 for exp in 'AB_C' 'BC_A' 'AC_B'; 
 do 
-    sim_dir="simulations/experiments/preliminary_comb/M3.15.migAC_0_0/${exp}"
+    sim_dir="${sim_root_dir}/${exp}"
     time nohup $model_compare ${sim_dir} &
     disown -a
 done
