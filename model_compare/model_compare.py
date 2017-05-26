@@ -11,10 +11,16 @@ def model_compare(simulation='sample'):
     conf = ConfigHandler(simulation)
 
     setup_logging(conf)
+    try:
+        _model_compare(conf)
+    except:
+        logging.exception("Failure during _model_compare")
+    logging.info("Done!")
 
+
+def _model_compare(conf):
     comb_stats, trace = conf.get_gphocs_data()
     comb_stats, trace = equate_lengths(comb_stats, trace)
-
     results_data = pd.DataFrame()
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
@@ -22,18 +28,14 @@ def model_compare(simulation='sample'):
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
-
     results_data = preprocess_data(results_data, conf)
-
     results_stats = {}
     for column in ['rbf_ratio', 'harmonic_mean']:
         logging.info("Starting analysis of column \'{}\'".format(column))
         analysis = analyze(results_data[column])
         results_stats[column] = analysis
         logging.info("Finished analysis of column \'{}\'".format(column))
-
     _save_results(results_data, results_stats, conf)
-    logging.info("Done!")
 
 
 def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
