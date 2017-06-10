@@ -6,6 +6,7 @@ from model_compare.data_prep import *
 from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import configure_logging, module_logger
+from model_compare.util.plotter import save_plot
 
 logger = module_logger(__name__)
 
@@ -90,6 +91,10 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
     columns_to_sum = [comb] + populations + migration_bands
+
+    debug_dir = conf.get_results_paths()[1]
+    save_plot(objects_to_sum[columns_to_sum], debug_dir+'/pop_ln_ld', 'ronvis')
+
     ref_gene_likelihood = objects_to_sum[columns_to_sum].sum(axis=1)
     logger.info("Calculated reference genealogy likelihood")
 
@@ -154,17 +159,14 @@ def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigH
     (results_directory, debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.get_results_paths()
 
-    for directory in (results_directory, debug_directory):
-        if not os.path.exists(directory):
-            os.makedirs(directory)
 
     sim_name = conf.simulation.split("/")[-1]
-    _save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, sim_name)
-    _save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
-    _save_plot(results_data[['rbf_ratio']], expectation_plot_path, sim_name)
+    save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, sim_name)
+    save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
+    save_plot(results_data[['rbf_ratio']], expectation_plot_path, sim_name)
 
-    _save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods', sim_name)
-    _save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], debug_directory + '/coal_stats', sim_name)
+    save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods', sim_name)
+    save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], debug_directory + '/coal_stats', sim_name)
 
     with open(summary_path, 'w') as f:
         experiment_summary = _summarize(results_stats, conf)
@@ -193,14 +195,4 @@ def _summarize(results_stats: dict, conf: ConfigHandler):
 
     return intro + results_string
 
-
-def _save_plot(data_frame: pd.DataFrame, plot_save_path: str, plot_name: str):
-    plot = data_frame.plot(title=plot_name)
-    plot_figure = plot.get_figure()
-    plot_figure.savefig(plot_save_path + ".line.png")
-
-    # hist = data_frame.plot.hist(alpha=0.5, bins=160, normed=True,
-    #                             title=plot_name + ' histogram')
-    # hist_figure = hist.get_figure()
-    # hist_figure.savefig(plot_save_path + ".hist.png")
 

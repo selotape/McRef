@@ -1,5 +1,6 @@
 import configparser
 import logging
+import os
 import time
 
 import pandas as pd
@@ -30,6 +31,9 @@ class ConfigHandler:
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
         trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), nrows=num_rows, header=0)
         logger.info("Loaded trace simdata")
+
+        assert len(comb_stats) == num_rows, "expected {} rows but got {}".format(num_rows, len(comb_stats))
+        assert len(trace) == num_rows, "expected {} rows but got {}".format(num_rows, len(trace))
 
         return comb_stats, trace
 
@@ -68,6 +72,9 @@ class ConfigHandler:
 
         results_directory = simulation_path + '/' + self.config.get('Output', 'results_directory') + '/' + timestamp
         debug_directory = results_directory + '/' + self.config.get('Output', 'debug_directory')
+        for directory in (results_directory, debug_directory):
+            if not os.path.exists(directory):
+                os.makedirs(directory)
         results_path = results_directory + '/' + self.config.get('Output', 'results_name')
         summary_path = results_directory + '/' + self.config.get('Output', 'summary_name')
         likelihoods_plot_path = results_directory + '/' + self.config.get('Output', 'likelihoods_plot_name')

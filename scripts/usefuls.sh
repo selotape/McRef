@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # executes gphocs safely
 nohup ./scripts/run_simulation.sh experiments/simM2.00/full/ &> ./experiments/simM2.00/full/nohup.out& 
 nohup G-PhoCS-1-2-3 folder/control-file.ctl &> folder/nohup.out& 
@@ -12,3 +13,6 @@ pkill -f G-PhoCS-1-2-3
 for KILLPID in `ps ax | grep '0_1\|0_2\|0_4' | awk ' { print $1;}'`; do 
   kill -9 $KILLPID;
 done
+
+# pretty print gphocs results
+head -1 trace.tsv | column -t && tail -10 trace.tsv | column -t

@@ -1,12 +1,13 @@
 import operator
 import unittest
+from unittest import TestCase
 import pandas as pd
 import numpy as np
 from model_compare.probability_functions import *
-from model_compare.probability_functions import _ln_mean
+from model_compare.probability_functions import ln_mean
 
 
-class ProbabilityFunctionsTest(unittest.TestCase):
+class ProbabilityFunctionsTest(TestCase):
     precision = 0.00000000000001
 
     def test_ln_mean(self):  # Test ln_mean by using a different but equal calculation
@@ -16,7 +17,7 @@ class ProbabilityFunctionsTest(unittest.TestCase):
 
         bootstrap_input = pd.Series(i for i in range(100))
         expected = 0.0
-        actual = _bootstrap(np.mean, bootstrap_input, 50000, operator.sub, np.mean)
+        actual = bootstrap(np.mean, bootstrap_input, 50000, operator.sub, np.mean)
         self.assertAlmostEqual(expected, actual, delta=0.01)
 
     def test_log_expectation(self):
@@ -24,7 +25,7 @@ class ProbabilityFunctionsTest(unittest.TestCase):
         data = [1, 2, 3, 4]
         ln_data = pd.Series([np.log(x) for x in data])
         expected = np.log(pd.Series(data).mean())
-        actual = _ln_mean(ln_data)
+        actual = ln_mean(ln_data)
 
         self.assertAlmostEqual(expected, actual, delta=self.precision)
 
@@ -32,7 +33,7 @@ class ProbabilityFunctionsTest(unittest.TestCase):
                 2234987654723423234, 3345345345999888777, 43453453333345, 12345678912345678]
         ln_data = pd.Series([np.log(x) for x in data])
         expected = np.log(pd.Series(data).mean())
-        actual = _ln_mean(ln_data)
+        actual = ln_mean(ln_data)
 
         self.assertAlmostEqual(expected, actual, delta=self.precision)
 

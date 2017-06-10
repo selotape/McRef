@@ -21,14 +21,14 @@ def analyze(log_likelihoods) -> dict:
     bootstrap_iterations = 1000
 
     statistification = {
-        'ln_mean': _ln_mean(log_likelihoods),
-        'bootstrap': _bootstrap(_ln_mean, log_likelihoods, bootstrap_iterations, metric, norm)
+        'ln_mean': ln_mean(log_likelihoods),
+        'bootstrap': bootstrap(ln_mean, log_likelihoods, bootstrap_iterations, metric, norm)
     }
 
     return statistification
 
 
-def _ln_mean(ln_samples) -> Series:
+def ln_mean(ln_samples) -> Series:
     """
     :param ln_samples: a series of tiny probabilities, with ln applied to them
     :return: ln of mean of probabilities
@@ -39,7 +39,7 @@ def _ln_mean(ln_samples) -> Series:
     return ln_meany
 
 
-def _bootstrap(statistic, samples, num_iterations, metric, norm):
+def bootstrap(statistic, samples, num_iterations, metric, norm):
     truth = statistic(samples)
 
     estimates = [_single_bootstrap(statistic, samples) for _ in range(num_iterations)]
