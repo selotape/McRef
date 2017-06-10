@@ -25,13 +25,15 @@ def _model_compare(conf):
     comb_stats, trace = conf.get_gphocs_data()
     comb_stats, trace = equate_lengths(comb_stats, trace)
     results_data = pd.DataFrame()
+
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
-    results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
-    results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
-    results_data = preprocess_data(results_data, conf)
+
+    results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
+    results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, trace, conf)
+    results_data = clean_results(results_data, conf)
     results_stats = {}
     for column in ['rbf_ratio', 'harmonic_mean']:
         logger.info("Starting analysis of column \'{}\'".format(column))
