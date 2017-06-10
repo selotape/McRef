@@ -2,20 +2,23 @@ import os
 
 import pandas as pd
 
-from model_compare.config_handler import ConfigHandler
 from model_compare.data_prep import *
 from model_compare.probability_functions import *
+from model_compare.util.config_handler import ConfigHandler
+from model_compare.util.log import configure_logging, module_logger
+
+logger = module_logger(__name__)
 
 
 def model_compare(simulation='sample'):
     conf = ConfigHandler(simulation)
 
-    setup_logging(conf)
+    configure_logging(conf)
     try:
         _model_compare(conf)
     except:
-        logging.exception("Failure during _model_compare")
-    logging.info("Done!")
+        logger.exception("Failure during _model_compare")
+    logger.info("===== Done! =====")
 
 
 def _model_compare(conf):
@@ -31,10 +34,10 @@ def _model_compare(conf):
     results_data = preprocess_data(results_data, conf)
     results_stats = {}
     for column in ['rbf_ratio', 'harmonic_mean']:
-        logging.info("Starting analysis of column \'{}\'".format(column))
+        logger.info("Starting analysis of column \'{}\'".format(column))
         analysis = analyze(results_data[column])
         results_stats[column] = analysis
-        logging.info("Finished analysis of column \'{}\'".format(column))
+        logger.info("Finished analysis of column \'{}\'".format(column))
     _save_results(results_data, results_stats, conf)
 
 
@@ -86,7 +89,7 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
 
     columns_to_sum = [comb] + populations + migration_bands
     ref_gene_likelihood = objects_to_sum[columns_to_sum].sum(axis=1)
-    logging.info("Calculated reference genealogy likelihood")
+    logger.info("Calculated reference genealogy likelihood")
 
     return ref_gene_likelihood
 
@@ -117,7 +120,7 @@ def _debug_calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFram
 
     debug_columns_to_sum = debug_pops
     debug_ref_gene_likelihood = debug_objects_to_sum[debug_columns_to_sum].sum(axis=1)
-    logging.info("Calculated DEBUG reference genealogy likelihood")
+    logger.info("Calculated DEBUG reference genealogy likelihood")
 
     return debug_ref_gene_likelihood
 
@@ -140,7 +143,7 @@ def _debug_calc_coal_stats(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: 
     ref_coal_stats_columns = comb_coal_stats_column + pop_coal_stats_columns + comb_leaves_coal_stats_columns
     debug_results_coal_stats['ref'] = comb_stats[ref_coal_stats_columns].sum(axis=1)
 
-    logging.info("Calculated DEBUG coal stats")
+    logger.info("Calculated DEBUG coal stats")
 
     return debug_results_coal_stats['debug'], debug_results_coal_stats['ref']
 
@@ -195,12 +198,3 @@ def _save_plot(data_frame: pd.DataFrame, plot_save_path: str, plot_name: str):
     hist_figure = hist.get_figure()
     hist_figure.savefig(plot_save_path + ".hist.png")
 
-
-def setup_logging(conf):
-    results_directory = conf.get_results_paths()[0]
-    os.makedirs(results_directory, exist_ok=True)
-    log_file = results_directory + '/model_compare.log'
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                        filename=log_file,
-                        filemode='w')

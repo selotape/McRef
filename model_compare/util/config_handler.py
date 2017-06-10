@@ -4,6 +4,9 @@ import time
 
 import pandas as pd
 
+from model_compare.util.log import module_logger
+
+logger = module_logger(__name__)
 
 class ConfigHandler:
     def __init__(self, simulation):
@@ -21,12 +24,12 @@ class ConfigHandler:
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
         comb_stats = pd.read_csv(comb_stats_path, sep='\t', skiprows=range(1, burn_in), nrows=num_rows, header=0)
-        logging.info("Loaded comb_stats simdata")
+        logger.info("Loaded comb_stats simdata")
 
         trace_file_name = self.config.get('Input', 'trace_file_name')
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
         trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), nrows=num_rows, header=0)
-        logging.info("Loaded trace simdata")
+        logger.info("Loaded trace simdata")
 
         return comb_stats, trace
 
@@ -101,8 +104,13 @@ class ConfigHandler:
         return result
 
 
+    def get_log_conf(self):
+        return self.config.get('Logging', 'level'), self.config.get('Logging', 'file_name')
+
+
 def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - accept any number of args
     comb_leaves = list(filter(None, comb_leaves))
     pops = list(filter(None, pops))
     mig_bands = list(filter(None, mig_bands))
     return comb_leaves, mig_bands, pops
+

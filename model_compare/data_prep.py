@@ -2,6 +2,9 @@ import logging
 
 from pandas import DataFrame
 
+from model_compare.util.log import module_logger
+
+logger = module_logger(__name__)
 
 def equate_lengths(df1: DataFrame, df2: DataFrame):
     length = min((len(df1), len(df2)))
@@ -15,7 +18,7 @@ def preprocess_data(results: DataFrame, conf):
 
     results = _remove_percentiles(results, trim_percentile, 'rbf_ratio')
     results = _dilute_data(results, dilute_factor)
-    logging.info("Preprocessed results data")
+    logger.info("Preprocessed results data")
 
     return results
 
