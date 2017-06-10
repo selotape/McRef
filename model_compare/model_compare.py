@@ -199,8 +199,8 @@ def _save_plot(data_frame: pd.DataFrame, plot_save_path: str, plot_name: str):
     plot_figure = plot.get_figure()
     plot_figure.savefig(plot_save_path + ".line.png")
 
-    hist = data_frame.plot.hist(alpha=0.5, bins=160, normed=True,
-                                title=plot_name + ' histogram')
-    hist_figure = hist.get_figure()
-    hist_figure.savefig(plot_save_path + ".hist.png")
+    # hist = data_frame.plot.hist(alpha=0.5, bins=160, normed=True,
+    #                             title=plot_name + ' histogram')
+    # hist_figure = hist.get_figure()
+    # hist_figure.savefig(plot_save_path + ".hist.png")
 
