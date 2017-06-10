@@ -1,6 +1,8 @@
 import logging
 from logging import FileHandler, StreamHandler
 
+import sys
+
 
 class LoggingMixin(object):
     def __init__(self):
@@ -26,6 +28,9 @@ def configure_logging(conf):
 
     logger = logging.getLogger()  # root
     logger.setLevel(log_level)
-    handler = FileHandler(log_file) if log_file else StreamHandler()
-    handler.setFormatter(logging.Formatter(fmt=DEFAULT_FORMAT))
-    logger.addHandler(handler)
+    file_handler = FileHandler(log_file) if log_file else StreamHandler()
+    file_handler.setFormatter(logging.Formatter(fmt=DEFAULT_FORMAT))
+    logger.addHandler(file_handler)
+    stdout_handler = StreamHandler(sys.stdout)
+    stdout_handler.setFormatter(logging.Formatter(fmt=DEFAULT_FORMAT))
+    logger.addHandler(stdout_handler)

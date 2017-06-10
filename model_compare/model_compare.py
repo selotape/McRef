@@ -162,7 +162,7 @@ def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigH
 
     with open(summary_path, 'w') as f:
         experiment_summary = _summarize(results_stats, conf)
-        print(experiment_summary)
+        logger.info(experiment_summary)
         f.write(experiment_summary)
 
     if conf.should_save_results():
@@ -177,7 +177,7 @@ def _summarize(results_stats: dict, conf: ConfigHandler):
     formatted_migbands = ','.join(migration_bands)
     intro_template = "Summary:\n" + \
                      "Simulation: %s\n" % simulation_name + \
-                     "Comb: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"
+                     "Comb: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}"
     intro = intro_template.format(comb, formatted_leaves, formatted_pops, formatted_migbands)
 
     results_string = []
