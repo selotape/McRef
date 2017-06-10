@@ -87,13 +87,20 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
     comb_coal_stats = coal_stats[comb_coal_stats_template.format(comb=comb)]
     objects_to_sum[comb] = kingman_coalescent(comb_theta, comb_num_coal, comb_coal_stats)
 
+    for leaf in comb_leaves:
+        leaf_theta = thetas[theta_template.format(pop=leaf)]
+        leaf_num_coal = num_coal[comb_leaf_num_coals_template.format(comb=comb, leaf=leaf)]
+        leaf_coal_stats = coal_stats[comb_leaf_coal_stats_template.format(comb=comb, leaf=leaf)]
+        objects_to_sum[leaf] = kingman_coalescent(leaf_theta, leaf_num_coal, leaf_coal_stats)
+
     for mig in migration_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
-    columns_to_sum = [comb] + populations + migration_bands
+    columns_to_sum = [comb] + comb_leaves + populations + migration_bands
 
     debug_dir = conf.get_results_paths()[1]
-    save_plot(objects_to_sum[columns_to_sum], debug_dir+'/pop_ln_ld', 'ronvis')
+    population_gene_ld = objects_to_sum[columns_to_sum]
+    save_plot(population_gene_ld, debug_dir + '/pop_ln_ld', 'ronvis')
 
     ref_gene_likelihood = objects_to_sum[columns_to_sum].sum(axis=1)
     logger.info("Calculated reference genealogy likelihood")
