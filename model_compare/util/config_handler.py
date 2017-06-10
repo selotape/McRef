@@ -67,13 +67,14 @@ class ConfigHandler:
 
 
         results_directory = simulation_path + '/' + self.config.get('Output', 'results_directory') + '/' + timestamp
+        debug_directory = results_directory + '/' + self.config.get('Output', 'debug_directory')
         results_path = results_directory + '/' + self.config.get('Output', 'results_name')
         summary_path = results_directory + '/' + self.config.get('Output', 'summary_name')
         likelihoods_plot_path = results_directory + '/' + self.config.get('Output', 'likelihoods_plot_name')
         expectation_plot_path = results_directory + '/' + self.config.get('Output', 'expectation_plot_name')
         harmonic_mean_plot_path = results_directory + '/' + self.config.get('Output', 'harmonic_mean_plot_name')
 
-        return results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, \
+        return results_directory, debug_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, \
             summary_path
 
     def get_column_name_templates(self):  # TODO - add annotations

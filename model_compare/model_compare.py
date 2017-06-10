@@ -151,16 +151,20 @@ def _debug_calc_coal_stats(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: 
 
 
 def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigHandler):
-    results_directory, results_path, likelihoods_plot_path, expectation_plot_path, harmonic_mean_plot_path, summary_path = conf.get_results_paths()
+    (results_directory, debug_directory, results_path, likelihoods_plot_path,
+     expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.get_results_paths()
 
-    if not os.path.exists(results_directory):
-        os.makedirs(results_directory)
+    for directory in (results_directory, debug_directory):
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
-    _save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path,
-               conf.simulation.split("/")[-1])
-    _save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], results_directory + '/debug_coal_stats', conf.simulation.split("/")[-1])
-    _save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, conf.simulation.split("/")[-1])
-    _save_plot(results_data[['rbf_ratio']], expectation_plot_path, conf.simulation.split("/")[-1])
+    sim_name = conf.simulation.split("/")[-1]
+    _save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, sim_name)
+    _save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
+    _save_plot(results_data[['rbf_ratio']], expectation_plot_path, sim_name)
+
+    _save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods', sim_name)
+    _save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], debug_directory + '/coal_stats', sim_name)
 
     with open(summary_path, 'w') as f:
         experiment_summary = _summarize(results_stats, conf)
