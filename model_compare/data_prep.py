@@ -24,14 +24,8 @@ def clean_results(results: DataFrame, conf):
     return results
 
 
-def _trim_head(df: DataFrame, head_length):
-    df = df[head_length:]
-    return df
-
-
 def _dilute_data(df: DataFrame, dilute_factor: int):
-    df = df[::dilute_factor]
-    return df
+    return df[::dilute_factor]
 
 
 def _remove_percentiles(df: DataFrame, percentile, column):

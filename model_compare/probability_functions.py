@@ -15,8 +15,10 @@ def kingman_migration(mig_rate, num_migs, mig_stats) -> Series:
 def analyze(log_likelihoods) -> dict:
     """Performs a set of statistical analyses on a series of ln-likelihoods"""
 
-    def norm(x): return sqrt(mean(x))
-    def metric(x, y): return (x - y) ** 2
+    def norm(x):
+        return sqrt(mean(x))
+    def metric(x, y):
+        return (x - y) ** 2
 
     bootstrap_iterations = 1000
 
@@ -43,7 +45,7 @@ def bootstrap(statistic, samples, num_iterations, metric, norm):
     truth = statistic(samples)
 
     estimates = [_single_bootstrap(statistic, samples) for _ in range(num_iterations)]
-    distance_vector = Series((metric(estimate, truth) for estimate in estimates))
+    distance_vector = Series(metric(estimate, truth) for estimate in estimates)
     result = norm(distance_vector)
 
     return result
