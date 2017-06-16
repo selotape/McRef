@@ -1,5 +1,3 @@
-import os
-
 import pandas as pd
 
 from model_compare.data_prep import *
@@ -33,7 +31,7 @@ def _model_compare(conf):
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
 
     results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
-    results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, trace, conf)
+    results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, conf)
     results_data = clean_results(results_data, conf)
     results_stats = {}
     for column in ['rbf_ratio', 'harmonic_mean']:
@@ -71,7 +69,7 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
     num_migs = comb_stats[num_migs_columns]
     mig_stats = comb_stats[mig_stats_columns]
 
-    for df in (mig_rates, num_migs, mig_stats):
+    for df in mig_rates, num_migs, mig_stats:
         df.columns = migration_bands
 
     objects_to_sum = pd.DataFrame()
@@ -139,7 +137,7 @@ def _debug_calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFram
     return debug_ref_gene_likelihood
 
 
-def _debug_calc_coal_stats(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+def _debug_calc_coal_stats(comb_stats: pd.DataFrame, conf: ConfigHandler):
     (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
      comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
      comb_migband_mig_stats_template, comb_migband_num_migs_template) = conf.get_column_name_templates()
@@ -201,5 +199,3 @@ def _summarize(results_stats: dict, conf: ConfigHandler):
     results_string = ''.join(results_string)
 
     return intro + results_string
-
-

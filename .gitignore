@@ -11,9 +11,14 @@ simulations/**/results
 *.tsv
 *.csv
 
+!simulations/experiments/sample/*.tsv
+!simulations/experiments/sample/config.ini
+
 # Others
 *.swp
 *.log
+
+
 
 
 # Distribution / packaging
