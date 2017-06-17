@@ -111,7 +111,8 @@ class ConfigHandler:
         return result
 
     def get_log_conf(self):
-        return self.config.get('Logging', 'level', fallback='INFO'), self.config.get('Logging', 'file_name', fallback='model_compare.log')
+        return (self.config.get('Logging', 'level', fallback='INFO'),
+                self.config.get('Logging', 'file_name', fallback='model_compare.log'))
 
 
 def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - accept any number of args

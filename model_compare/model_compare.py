@@ -9,10 +9,10 @@ from model_compare.util.plotter import save_plot
 logger = module_logger(__name__)
 
 
-def model_compare(simulation='sample'):
+def model_compare(simulation):
     conf = ConfigHandler(simulation)
 
-    configure_logging(conf)
+    configure_logging(*conf.get_log_conf())
     try:
         _model_compare(conf)
     except:
@@ -20,7 +20,7 @@ def model_compare(simulation='sample'):
     logger.info("===== Done! =====")
 
 
-def _model_compare(conf):
+def _model_compare(conf: ConfigHandler):
     comb_stats, trace = conf.get_gphocs_data()
     comb_stats, trace = equate_lengths(comb_stats, trace)
     results_data = pd.DataFrame()
