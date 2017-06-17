@@ -9,10 +9,10 @@ McRef is a **Relative Bayesian Algorithm for Phylogenetic-Population-Model Compa
 ### Quick Start
 The quickest, surest way to run McRef is:
 ```bash
-$ git clone https://github.com/selotape/Population-Model-Compare modelcompare
-$ cd ./modelcompare
-$ pip install -r requirements.txt
-$ python3 ./run_model_compare.py ./simulations/experiments/sample
+git clone https://github.com/selotape/Population-Model-Compare mcref
+cd ./mcref
+pip install -r requirements.txt
+python3 ./run_model_compare.py ./simulations/experiments/sample
 ```
 
 
