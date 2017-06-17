@@ -3,7 +3,6 @@ import sys
 from logging import FileHandler, StreamHandler
 
 
-
 class LoggingMixin(object):
     def __init__(self):
         self.logger = class_logger(self)
@@ -42,6 +41,7 @@ def with_entry_log(logger):
             logger.debug("entered {} with args {}".format(f.__name__, args))
             f(*args)
             logger.debug("exited  {}".format(f.__name__))
+
         return wrapped_f
 
     return wrap

@@ -164,7 +164,6 @@ def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigH
     (results_directory, debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.get_results_paths()
 
-
     sim_name = conf.simulation.split("/")[-1]
     save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, sim_name)
     save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
