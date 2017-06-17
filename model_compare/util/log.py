@@ -1,7 +1,6 @@
 import logging
-from logging import FileHandler, StreamHandler
-
 import sys
+from logging import FileHandler, StreamHandler
 
 
 class LoggingMixin(object):
@@ -34,3 +33,14 @@ def configure_logging(conf):
     stdout_handler = StreamHandler(sys.stdout)
     stdout_handler.setFormatter(logging.Formatter(fmt=DEFAULT_FORMAT))
     logger.addHandler(stdout_handler)
+
+
+def with_entry_log(logger):
+    def wrap(f):
+        def wrapped_f(*args):
+            logger.debug("entered {} with args {}".format(f.__name__, args))
+            f(*args)
+            logger.debug("exited  {}".format(f.__name__))
+        return wrapped_f
+
+    return wrap
