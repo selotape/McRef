@@ -25,8 +25,8 @@ The majority of attributes are preconfigured by the config in the project root d
 1. Run G-PhocS w/ clade. Save data in *"data.cladestats.tsv"* & *"data.trace.tsv"* files. Put files in an *experiment directory*
     * For further explanation on G-PhoCS configuration and execution, see  [G-PhoCS Homepage](http://compgen.cshl.edu/GPhoCS/) and [G-PhoCS Manual](http://compgen.cshl.edu/GPhoCS/GPhoCS_Manual.pdf)
 2. Create a *config.ini* file (in the *experiment directory*) with the following attributes:
-    * *clade_stats_file_name & trace_file_name*
-    * *combs, comb leaves, pops & mig_bands*
+    * *comb_stats_file_name* and *trace_file_name*
+    * *combs, comb leaves, pops* and *mig_bands*
     * *skip_rows, number_of_rows, trim_percentile, dilute_factor*
 3. run `$ python ./run_model_compare.py [/path/to/experiment1 ...]`
 4. see results in directory */path/to/experiment_directory/results/##time-stamp##* 

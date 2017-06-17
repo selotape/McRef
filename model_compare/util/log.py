@@ -3,6 +3,7 @@ import sys
 from logging import FileHandler, StreamHandler
 
 
+
 class LoggingMixin(object):
     def __init__(self):
         self.logger = class_logger(self)

@@ -170,7 +170,8 @@ def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigH
     save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
     save_plot(results_data[['rbf_ratio']], expectation_plot_path, sim_name)
 
-    save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods', sim_name)
+    save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods',
+              sim_name)
     save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], debug_directory + '/coal_stats', sim_name)
 
     with open(summary_path, 'w') as f:
