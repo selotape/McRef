@@ -17,6 +17,7 @@ def analyze(log_likelihoods) -> dict:
 
     def norm(x):
         return sqrt(mean(x))
+
     def metric(x, y):
         return (x - y) ** 2
 

@@ -22,8 +22,7 @@ def class_logger(cls_or_instance):
 DEFAULT_FORMAT = "[%(asctime)s][%(levelname)s][%(name)s] %(message)s"
 
 
-def configure_logging(conf):
-    log_level, log_file = conf.get_log_conf()
+def configure_logging(log_level, log_file):
 
     logger = logging.getLogger()  # root
     logger.setLevel(log_level)
@@ -41,6 +40,7 @@ def with_entry_log(logger):
             logger.debug("entered {} with args {}".format(f.__name__, args))
             f(*args)
             logger.debug("exited  {}".format(f.__name__))
+
         return wrapped_f
 
     return wrap

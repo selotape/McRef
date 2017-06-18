@@ -1,5 +1,3 @@
-import logging
-
 from pandas import DataFrame
 
 from model_compare.util.log import module_logger

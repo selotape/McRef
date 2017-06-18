@@ -9,10 +9,10 @@ from model_compare.util.plotter import save_plot
 logger = module_logger(__name__)
 
 
-def model_compare(simulation='sample'):
+def model_compare(simulation):
     conf = ConfigHandler(simulation)
 
-    configure_logging(conf)
+    configure_logging(*conf.get_log_conf())
     try:
         _model_compare(conf)
     except:
@@ -20,7 +20,7 @@ def model_compare(simulation='sample'):
     logger.info("===== Done! =====")
 
 
-def _model_compare(conf):
+def _model_compare(conf: ConfigHandler):
     comb_stats, trace = conf.get_gphocs_data()
     comb_stats, trace = equate_lengths(comb_stats, trace)
     results_data = pd.DataFrame()
@@ -164,13 +164,13 @@ def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigH
     (results_directory, debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.get_results_paths()
 
-
     sim_name = conf.simulation.split("/")[-1]
     save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, sim_name)
     save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
     save_plot(results_data[['rbf_ratio']], expectation_plot_path, sim_name)
 
-    save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods', sim_name)
+    save_plot(results_data[['ref_gene_likelihood', 'debug_ref_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods',
+              sim_name)
     save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], debug_directory + '/coal_stats', sim_name)
 
     with open(summary_path, 'w') as f:
