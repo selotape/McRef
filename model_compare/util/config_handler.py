@@ -39,7 +39,7 @@ class ConfigHandler:
 
     def get_data_prep_attributes(self):
         trim_percentile = self.config.getint('Data', 'trim_percentile', fallback=0)
-        dilute_factor = self.config.getint('Data', 'dilute_factor', fallback=0)
+        dilute_factor = self.config.getint('Data', 'dilute_factor', fallback=1)
         burn_in = self.config.getint('Data', 'skip_rows', fallback=0)
         num_rows = self.config.getint('Data', 'number_of_rows', fallback=None)
         return trim_percentile, dilute_factor, burn_in, num_rows

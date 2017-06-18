@@ -1,6 +1,7 @@
 from pandas import DataFrame
 
 from model_compare.util.log import module_logger
+from util.config_handler import ConfigHandler
 
 logger = module_logger(__name__)
 
@@ -12,7 +13,7 @@ def equate_lengths(df1: DataFrame, df2: DataFrame):
     return df1, df2
 
 
-def clean_results(results: DataFrame, conf):
+def clean_results(results: DataFrame, conf: ConfigHandler):
     trim_percentile, dilute_factor, burn_in, num_rows = conf.get_data_prep_attributes()
 
     results = _remove_percentiles(results, trim_percentile, 'rbf_ratio')
