@@ -19,21 +19,18 @@ class ConfigHandler:
     def get_gphocs_data(self):
         simulation_path = self.get_simulation_path()
 
-        trim_percentile, dilute_factor, burn_in, num_rows = self.get_data_prep_attributes()
+        trim_percentile, dilute_factor, burn_in = self.get_data_prep_attributes()
 
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name', fallback='comb-trace.tsv')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
-        comb_stats = pd.read_csv(comb_stats_path, sep='\t', skiprows=range(1, burn_in), nrows=num_rows, header=0)
-        logger.info("Loaded comb_stats simdata")
+        comb_stats = pd.read_csv(comb_stats_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
+        logger.info("Loaded comb_stats data")
 
         trace_file_name = self.config.get('Input', 'trace_file_name', fallback='trace.tsv')
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
-        trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), nrows=num_rows, header=0)
-        logger.info("Loaded trace simdata")
+        trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='Sample')
+        logger.info("Loaded trace data")
 
-        if num_rows:
-            assert len(comb_stats) == num_rows, "expected {} rows but found {}".format(num_rows, len(comb_stats))
-            assert len(trace) == num_rows, "expected {} rows but got found".format(num_rows, len(trace))
 
         return comb_stats, trace
 
@@ -41,8 +38,7 @@ class ConfigHandler:
         trim_percentile = self.config.getint('Data', 'trim_percentile', fallback=0)
         dilute_factor = self.config.getint('Data', 'dilute_factor', fallback=1)
         burn_in = self.config.getint('Data', 'skip_rows', fallback=0)
-        num_rows = self.config.getint('Data', 'number_of_rows', fallback=None)
-        return trim_percentile, dilute_factor, burn_in, num_rows
+        return trim_percentile, dilute_factor, burn_in
 
     def get_simulation_path(self):
         return self.simulation

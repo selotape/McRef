@@ -22,7 +22,7 @@ def model_compare(simulation):
 
 def _model_compare(conf: ConfigHandler):
     comb_stats, trace = conf.get_gphocs_data()
-    comb_stats, trace = equate_lengths(comb_stats, trace)
+    comb_stats, trace = align_input_data(comb_stats, trace)
     results_data = pd.DataFrame()
 
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
@@ -32,7 +32,8 @@ def _model_compare(conf: ConfigHandler):
 
     results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, conf)
-    results_data = clean_results(results_data, conf)
+    trim_percentile = conf.get_data_prep_attributes()[0]
+    results_data = clean_results(results_data, trim_percentile)
     results_stats = {}
     for column in ['rbf_ratio', 'harmonic_mean']:
         logger.info("Starting analysis of column \'{}\'".format(column))

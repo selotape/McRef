@@ -1,8 +1,9 @@
 import operator
-import unittest
 from unittest import TestCase
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+
 from model_compare.probability_functions import *
 from model_compare.probability_functions import ln_mean
 
@@ -60,7 +61,3 @@ class ProbabilityFunctionsTest(TestCase):
 
         for i in range(len(expected)):
             self.assertAlmostEqual(expected[i], actual[i], delta=self.precision)
-
-
-if __name__ == '__main__':
-    unittest.main()
