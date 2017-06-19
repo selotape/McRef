@@ -23,7 +23,7 @@ for sim in  M3.20.migAC_0_0   M3.25.migAC_0_0   M3.29.migAC_0_0 ; do
 
     # copy a ready-made config file and edit it
     cp ${root}/../preliminary_comb/M3.15.migAC_0_0/${hyp}/config.ini ./
-    sed -i -e 's/1000000/250000/g' ./config.ini
+    sed -i -e 's/1000000/25000/g' ./config.ini
 
     # run model_compare
     pushd /home/rvisbord/dev/modelcompare
