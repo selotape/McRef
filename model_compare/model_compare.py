@@ -32,8 +32,6 @@ def _model_compare(conf: ConfigHandler):
 
     results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, conf)
-    trim_percentile = conf.get_data_prep_attributes()[0]
-    results_data = clean_results(results_data, trim_percentile)
     results_stats = {}
     for column in ['rbf_ratio', 'harmonic_mean']:
         logger.info("Starting analysis of column \'{}\'".format(column))

@@ -19,7 +19,7 @@ class ConfigHandler:
     def get_gphocs_data(self):
         simulation_path = self.get_simulation_path()
 
-        trim_percentile, dilute_factor, burn_in = self.get_data_prep_attributes()
+        burn_in = self.get_burn_in()
 
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name', fallback='comb-trace.tsv')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
@@ -31,14 +31,10 @@ class ConfigHandler:
         trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='Sample')
         logger.info("Loaded trace data")
 
-
         return comb_stats, trace
 
-    def get_data_prep_attributes(self):
-        trim_percentile = self.config.getint('Data', 'trim_percentile', fallback=0)
-        dilute_factor = self.config.getint('Data', 'dilute_factor', fallback=1)
-        burn_in = self.config.getint('Data', 'skip_rows', fallback=0)
-        return trim_percentile, dilute_factor, burn_in
+    def get_burn_in(self):
+        return self.config.getint('Data', 'skip_rows', fallback=0)
 
     def get_simulation_path(self):
         return self.simulation
