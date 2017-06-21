@@ -15,7 +15,7 @@ for sim in M3.00.migAC_0_0  M3.05.migAC_0_1  M3.05.migAC_0_2  M3.05.migAC_0_4  M
 
   for hyp in AB_C BC_A AC_B ; do 
 
-    mig_hyp="${hyp}__A-\>C"
+    mig_hyp="${hyp}__C-\>A"
     rm -rf ${mig_hyp}
     mkdir -p ${mig_hyp};
     pushd ${mig_hyp}
@@ -33,7 +33,7 @@ for sim in M3.00.migAC_0_0  M3.05.migAC_0_1  M3.05.migAC_0_2  M3.05.migAC_0_4  M
     popd
 
 
-  done;
+  done
 
   popd
 
