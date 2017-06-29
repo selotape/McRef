@@ -23,14 +23,15 @@ DEFAULT_FORMAT = "[%(asctime)s][%(levelname)s][%(name)s] %(message)s"
 
 
 def configure_logging(log_level, log_file):
-
     logger = logging.getLogger()  # root
     logger.setLevel(log_level)
-    file_handler = FileHandler(log_file) if log_file else StreamHandler()
-    file_handler.setFormatter(logging.Formatter(fmt=DEFAULT_FORMAT))
-    logger.addHandler(file_handler)
+    formatter = logging.Formatter(fmt=DEFAULT_FORMAT)
+    if log_file:
+        file_handler = FileHandler(log_file)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
     stdout_handler = StreamHandler(sys.stdout)
-    stdout_handler.setFormatter(logging.Formatter(fmt=DEFAULT_FORMAT))
+    stdout_handler.setFormatter(formatter)
     logger.addHandler(stdout_handler)
 
 

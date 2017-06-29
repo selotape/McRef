@@ -6,7 +6,7 @@ from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import configure_logging, module_logger
 from model_compare.util.plotter import save_plot
 
-logger = module_logger(__name__)
+log = module_logger(__name__)
 
 
 def model_compare(simulation):
@@ -16,29 +16,35 @@ def model_compare(simulation):
     try:
         _model_compare(conf)
     except:
-        logger.exception("Failure during _model_compare")
-    logger.info("===== Done! =====")
+        log.exception("Failure during _model_compare")
+    log.info("===== Done! =====")
 
 
 def _model_compare(conf: ConfigHandler):
-    comb_stats, trace = conf.get_gphocs_data()
-    comb_stats, trace = align_input_data(comb_stats, trace)
+    comb_stats, trace = align_by_index(*conf.get_gphocs_data())
     results_data = pd.DataFrame()
+    results_analysis = {}
 
+    _calculate_likelihoods(comb_stats, conf, results_data, trace)
+    _analyze_results(results_data, results_analysis)
+    _save_results(results_data, results_analysis, conf)
+
+
+def _calculate_likelihoods(comb_stats, conf, results_data, trace):
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
-
     results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, conf)
-    results_stats = {}
+
+
+def _analyze_results(results_data, results_analysis):
     for column in ['rbf_ratio', 'harmonic_mean']:
-        logger.info("Starting analysis of column \'{}\'".format(column))
+        log.info("Starting analysis of column \'{}\'".format(column))
         analysis = analyze(results_data[column])
-        results_stats[column] = analysis
-        logger.info("Finished analysis of column \'{}\'".format(column))
-    _save_results(results_data, results_stats, conf)
+        results_analysis[column] = analysis
+        log.info("Finished analysis of column \'{}\'".format(column))
 
 
 def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
@@ -100,7 +106,7 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
     save_plot(population_gene_ld, debug_dir + '/pop_ln_ld', 'ronvis')
 
     ref_gene_likelihood = objects_to_sum[columns_to_sum].sum(axis=1)
-    logger.info("Calculated reference genealogy likelihood")
+    log.info("Calculated reference genealogy likelihood")
 
     return ref_gene_likelihood
 
@@ -131,7 +137,7 @@ def _debug_calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFram
 
     debug_columns_to_sum = debug_pops
     debug_ref_gene_likelihood = debug_objects_to_sum[debug_columns_to_sum].sum(axis=1)
-    logger.info("Calculated DEBUG reference genealogy likelihood")
+    log.info("Calculated DEBUG reference genealogy likelihood")
 
     return debug_ref_gene_likelihood
 
@@ -154,7 +160,7 @@ def _debug_calc_coal_stats(comb_stats: pd.DataFrame, conf: ConfigHandler):
     ref_coal_stats_columns = comb_coal_stats_column + pop_coal_stats_columns + comb_leaves_coal_stats_columns
     debug_results_coal_stats['ref'] = comb_stats[ref_coal_stats_columns].sum(axis=1)
 
-    logger.info("Calculated DEBUG coal stats")
+    log.info("Calculated DEBUG coal stats")
 
     return debug_results_coal_stats['debug'], debug_results_coal_stats['ref']
 
@@ -174,7 +180,7 @@ def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigH
 
     with open(summary_path, 'w') as f:
         experiment_summary = _summarize(results_stats, conf)
-        logger.info(experiment_summary)
+        log.info(experiment_summary)
         f.write(experiment_summary)
 
     if conf.should_save_results():
