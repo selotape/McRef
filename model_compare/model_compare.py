@@ -1,10 +1,11 @@
 import pandas as pd
 
-from model_compare.data_prep import *
 from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import configure_logging, module_logger
-from util.pandas import _copy_rename_columns, save_plot
+from model_compare.util.panda_helpers import align_by_index
+from probability_functions import analyze_columns
+from util.panda_helpers import copy_then_rename_columns, save_plot
 
 log = module_logger(__name__)
 
@@ -24,12 +25,12 @@ def _model_compare(conf: ConfigHandler):
     comb_stats, trace = conf.get_gphocs_data()
     comb_stats, trace = align_by_index(comb_stats, trace)
     results_data = _calculate_likelihoods(comb_stats, trace, conf)
-    results_analysis = _analyze_results(results_data)
+    results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     _save_results(results_data, results_analysis, conf)
 
 
 def _calculate_likelihoods(comb_stats, trace, conf):
-    results_data = DataFrame()
+    results_data = pd.DataFrame()
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
@@ -103,22 +104,22 @@ def _get_coal_stats(comb_stats, conf: ConfigHandler):
     columns_map.update({comb_leaf_coal_stats_template.format(comb=comb, leaf=l): l for l in comb_leaves})
     columns_map.update({pop_coal_stats_template.format(pop=p): p for p in populations})
 
-    coal_stats = _copy_rename_columns(columns_map, comb_stats)
+    coal_stats = copy_then_rename_columns(comb_stats, columns_map)
     return coal_stats
 
 
-def _get_thetas(trace: DataFrame, conf: ConfigHandler):
+def _get_thetas(trace: pd.DataFrame, conf: ConfigHandler):
     comb, comb_leaves, populations, _ = conf.get_reference_tree()
     theta_print_factor, theta_template = conf.get_theta_setup()
     all_pops = populations + [comb] + comb_leaves
     theta_columns = [theta_template.format(pop=p) for p in all_pops]
-    thetas = trace[theta_columns].divide(theta_print_factor).copy()  # type: DataFrame
+    thetas = trace[theta_columns].divide(theta_print_factor).copy()  # type: pd.DataFrame
     columns_map = {theta_template.format(pop=p): p for p in all_pops}
     thetas.rename(columns=columns_map, inplace=True)
     return thetas
 
 
-def _get_num_coals(comb_stats: DataFrame, conf: ConfigHandler):
+def _get_num_coals(comb_stats: pd.DataFrame, conf: ConfigHandler):
     comb, comb_leaves, populations, _ = conf.get_reference_tree()
     comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template = conf.get_num_coals_template()
 
@@ -126,7 +127,7 @@ def _get_num_coals(comb_stats: DataFrame, conf: ConfigHandler):
     columns_map.update({comb_leaf_num_coals_template.format(comb=comb, leaf=l): l for l in comb_leaves})
     columns_map.update({pop_num_coals_template.format(pop=p): p for p in populations})
 
-    num_coal = _copy_rename_columns(columns_map, comb_stats)
+    num_coal = copy_then_rename_columns(comb_stats, columns_map)
     return num_coal
 
 
@@ -182,17 +183,6 @@ def _debug_calc_coal_stats(comb_stats: pd.DataFrame, conf: ConfigHandler):
     log.info("Calculated DEBUG coal stats")
 
     return debug_results_coal_stats['debug'], debug_results_coal_stats['ref']
-
-
-def _analyze_results(results_data):
-    columns_to_analyze = ['rbf_ratio', 'harmonic_mean']
-    log.info("Starting analysis of columns \'{}\'".format(columns_to_analyze))
-    results_analysis = {
-        column: analyze(results_data[column])
-        for column in columns_to_analyze
-    }
-    log.info("Finished analysis of columns \'{}\'".format(columns_to_analyze))
-    return results_analysis
 
 
 def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigHandler):

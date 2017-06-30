@@ -1,6 +1,10 @@
 from numpy import exp, sqrt, mean, random, log as ln
 from pandas import Series
 
+from util.log import module_logger
+
+log = module_logger(__name__)
+
 
 def kingman_coalescent(theta, num_coal, coal_stats) -> Series:
     result = num_coal * ln(2.0 / theta) - (coal_stats / theta)
@@ -10,6 +14,16 @@ def kingman_coalescent(theta, num_coal, coal_stats) -> Series:
 def kingman_migration(mig_rate, num_migs, mig_stats) -> Series:
     result = num_migs * ln(mig_rate) - mig_stats * mig_rate
     return result
+
+
+def analyze_columns(results_data, columns):
+    log.info("Starting analysis of columns {}".format(columns))
+    results_analysis = {
+        column: analyze(results_data[column])
+        for column in columns
+    }
+    log.info("Finished analysis of columns \'{}\'".format(columns))
+    return results_analysis
 
 
 def analyze(log_likelihoods) -> dict:
