@@ -40,17 +40,17 @@ def _calculate_likelihoods(comb_stats, conf, results_data, trace):
 
 
 def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
+    (_, mig_rate_template, _, _, _,
      comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
-     comb_migband_mig_stats_template, comb_migband_num_migs_template) = conf.get_column_name_templates()
+     _, comb_migband_num_migs_template) = conf.get_column_name_templates()
     comb, comb_leaves, populations, migration_bands = conf.get_reference_tree()
 
     thetas = _get_thetas(trace, conf)
+    mig_rates = _get_mig_rates(trace, conf)
     num_coal = _get_num_coals(comb_stats, conf)
     coal_stats = _get_coal_stats(comb_stats, conf)
     num_migs = _get_num_migs(comb_stats, conf)
     mig_stats = _get_mig_stats(comb_stats, conf)
-    mig_rates = _get_mig_rates(trace, conf)
 
     for df in mig_rates, num_migs, mig_stats:
         df.columns = migration_bands
@@ -58,19 +58,19 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
     objects_to_sum = pd.DataFrame()
 
     for pop in populations:
-        pop_theta = thetas[theta_template.format(pop=pop)]
-        pop_num_coal = num_coal[pop_num_coals_template.format(pop=pop)]
+        pop_theta = thetas[pop]
+        pop_num_coal = num_coal[pop]
         pop_coal_stats = coal_stats[pop_coal_stats_template.format(pop=pop)]
         objects_to_sum[pop] = kingman_coalescent(pop_theta, pop_num_coal, pop_coal_stats)
 
-    comb_theta = thetas[theta_template.format(pop=comb)]
-    comb_num_coal = num_coal[comb_num_coals_template.format(comb=comb)]
+    comb_theta = thetas[comb]
+    comb_num_coal = num_coal[comb]
     comb_coal_stats = coal_stats[comb_coal_stats_template.format(comb=comb)]
     objects_to_sum[comb] = kingman_coalescent(comb_theta, comb_num_coal, comb_coal_stats)
 
     for leaf in comb_leaves:
-        leaf_theta = thetas[theta_template.format(pop=leaf)]
-        leaf_num_coal = num_coal[comb_leaf_num_coals_template.format(comb=comb, leaf=leaf)]
+        leaf_theta = thetas[leaf]
+        leaf_num_coal = num_coal[leaf]
         leaf_coal_stats = coal_stats[comb_leaf_coal_stats_template.format(comb=comb, leaf=leaf)]
         objects_to_sum[leaf] = kingman_coalescent(leaf_theta, leaf_num_coal, leaf_coal_stats)
 
@@ -128,22 +128,25 @@ def _get_coal_stats(comb_stats, conf: ConfigHandler):
     return coal_stats
 
 
-def _get_thetas(trace, conf: ConfigHandler):
+def _get_thetas(trace: DataFrame, conf: ConfigHandler):
     comb, comb_leaves, populations, _ = conf.get_reference_tree()
     theta_print_factor, theta_template = conf.get_theta_setup()
     all_pops = populations + [comb] + comb_leaves
     theta_columns = [theta_template.format(pop=p) for p in all_pops]
-    thetas = trace[theta_columns].divide(theta_print_factor)
+    thetas = trace[theta_columns].divide(theta_print_factor).copy()  # type: DataFrame
+    columns_map = {theta_template.format(pop=p): p for p in all_pops}
+    thetas.rename(columns=columns_map, inplace=True)
     return thetas
 
 
-def _get_num_coals(comb_stats, conf: ConfigHandler):
+def _get_num_coals(comb_stats: DataFrame, conf: ConfigHandler):
     comb, comb_leaves, populations, _ = conf.get_reference_tree()
     comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template = conf.get_num_coals_template()
-    comb_num_coals_column = [comb_num_coals_template.format(comb=comb)]
-    comb_leaves_num_coals_columns = [comb_leaf_num_coals_template.format(comb=comb, leaf=l) for l in comb_leaves]
-    pops_num_coals_columns = [pop_num_coals_template.format(pop=p) for p in populations]
-    num_coal = comb_stats[comb_num_coals_column + comb_leaves_num_coals_columns + pops_num_coals_columns]
+    columns_map = {comb_num_coals_template.format(comb=comb): comb}
+    columns_map.update({comb_leaf_num_coals_template.format(comb=comb, leaf=l): l for l in comb_leaves})
+    columns_map.update({pop_num_coals_template.format(pop=p): p for p in populations})
+    num_coal = comb_stats[list(columns_map.keys())].copy()
+    num_coal.rename(columns=columns_map, inplace=True)
     return num_coal
 
 
