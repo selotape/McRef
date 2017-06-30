@@ -23,12 +23,12 @@ def analyze(log_likelihoods) -> dict:
 
     bootstrap_iterations = 1000
 
-    statistification = {
+    analysis = {
         'ln_mean': ln_mean(log_likelihoods),
         'bootstrap': bootstrap(ln_mean, log_likelihoods, bootstrap_iterations, metric, norm)
     }
 
-    return statistification
+    return analysis
 
 
 def ln_mean(ln_samples) -> Series:

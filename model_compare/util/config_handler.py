@@ -39,13 +39,12 @@ class ConfigHandler:
     def get_simulation_path(self):
         return self.simulation
 
-    def get_comb_pops_and_migs(self):
+    def get_reference_tree(self):
         comb = self.config.get('ReferenceModel', 'comb')
         comb_leaves = self.config.get('ReferenceModel', 'comb_leaves').split(',')
         pops = self.config.get('ReferenceModel', 'pops').split(',')
         mig_bands = self.config.get('ReferenceModel', 'mig_bands').split(',')
 
-        # remove empty strings
         comb_leaves, mig_bands, pops = remove_empty_strings(comb_leaves, mig_bands, pops)
 
         return comb, comb_leaves, pops, mig_bands
@@ -92,7 +91,7 @@ class ConfigHandler:
                 comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
                 comb_migband_mig_stats_template, comb_migband_num_migs_template)
 
-    def get_data_config(self):
+    def get_print_factors(self):
         theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
         mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor', fallback=0.1)
 
@@ -105,6 +104,36 @@ class ConfigHandler:
     def get_log_conf(self):
         return (self.config.get('Logging', 'level', fallback='INFO'),
                 self.config.get('Logging', 'file_name', fallback='model_compare.log'))
+
+    def get_num_coals_template(self):
+        comb_leaf_num_coals_template = self.config.get('Templates', 'comb_leaf_num_coals', fallback='C_{comb}_{leaf} nc')
+        comb_num_coals_template = self.config.get('Templates', 'comb_num_coals', fallback='C_{comb} nc')
+        pop_num_coals_template = self.config.get('Templates', 'pop_num_coals', fallback='P_{pop} nc')
+        return comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template
+
+    def get_theta_setup(self):
+        theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
+        theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
+        return theta_print_factor, theta_template
+
+    def get_coal_stats_templates(self):
+        pop_coal_stats_template = self.config.get('Templates', 'pop_coal_stats', fallback='P_{pop} cs')
+        comb_coal_stats_template = self.config.get('Templates', 'comb_coal_stats', fallback='C_{comb} cs')
+        comb_leaf_coal_stats_template = self.config.get('Templates', 'comb_leaf_coal_stats', fallback='C_{comb}_{leaf} cs')
+        return comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template
+
+    def get_mig_stats_template(self):
+        comb_migband_mig_stats_template = self.config.get('Templates', 'comb_migband_mig_stats', fallback='C_{comb}_{migband} ms')
+        return comb_migband_mig_stats_template
+
+    def get_num_migs_template(self):
+        comb_migband_num_migs_template = self.config.get('Templates', 'comb_migband_num_migs', fallback='C_{comb}_{migband} nm')
+        return comb_migband_num_migs_template
+
+
+    def get_migrate_template(self):
+        mig_rate = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
+        return mig_rate
 
 
 def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - accept any number of args
