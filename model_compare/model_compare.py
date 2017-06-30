@@ -4,7 +4,7 @@ from model_compare.data_prep import *
 from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import configure_logging, module_logger
-from model_compare.util.plotter import save_plot
+from util.pandas import _copy_rename_columns, save_plot
 
 log = module_logger(__name__)
 
@@ -21,22 +21,22 @@ def model_compare(simulation):
 
 
 def _model_compare(conf: ConfigHandler):
-    comb_stats, trace = align_by_index(*conf.get_gphocs_data())
-    results_data = pd.DataFrame()
-    results_analysis = {}
-
-    _calculate_likelihoods(comb_stats, conf, results_data, trace)
-    _analyze_results(results_data, results_analysis)
+    comb_stats, trace = conf.get_gphocs_data()
+    comb_stats, trace = align_by_index(comb_stats, trace)
+    results_data = _calculate_likelihoods(comb_stats, trace, conf)
+    results_analysis = _analyze_results(results_data)
     _save_results(results_data, results_analysis, conf)
 
 
-def _calculate_likelihoods(comb_stats, conf, results_data, trace):
+def _calculate_likelihoods(comb_stats, trace, conf):
+    results_data = DataFrame()
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
     results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, conf)
+    return results_data
 
 
 def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
@@ -55,13 +55,10 @@ def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, con
     for mig in migration_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
-    columns_to_sum = populations + [comb] + comb_leaves + migration_bands
-
     debug_dir = conf.get_results_paths()[1]
-    population_gene_ld = objects_to_sum[columns_to_sum]
-    save_plot(population_gene_ld, debug_dir + '/pop_ln_ld', 'ronvis')
+    save_plot(objects_to_sum, debug_dir + '/pop_ln_ld', 'ronvis')
 
-    ref_gene_likelihood = objects_to_sum[columns_to_sum].sum(axis=1)
+    ref_gene_likelihood = objects_to_sum.sum(axis=1)
     log.info("Calculated reference genealogy likelihood")
 
     return ref_gene_likelihood
@@ -133,12 +130,6 @@ def _get_num_coals(comb_stats: DataFrame, conf: ConfigHandler):
     return num_coal
 
 
-def _copy_rename_columns(columns_map, df):
-    result = df[list(columns_map.keys())].copy()
-    result.rename(columns=columns_map, inplace=True)
-    return result
-
-
 def _debug_calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
     (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
      comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
@@ -193,12 +184,15 @@ def _debug_calc_coal_stats(comb_stats: pd.DataFrame, conf: ConfigHandler):
     return debug_results_coal_stats['debug'], debug_results_coal_stats['ref']
 
 
-def _analyze_results(results_data, results_analysis):
-    for column in ['rbf_ratio', 'harmonic_mean']:
-        log.info("Starting analysis of column \'{}\'".format(column))
-        analysis = analyze(results_data[column])
-        results_analysis[column] = analysis
-        log.info("Finished analysis of column \'{}\'".format(column))
+def _analyze_results(results_data):
+    columns_to_analyze = ['rbf_ratio', 'harmonic_mean']
+    log.info("Starting analysis of columns \'{}\'".format(columns_to_analyze))
+    results_analysis = {
+        column: analyze(results_data[column])
+        for column in columns_to_analyze
+    }
+    log.info("Finished analysis of columns \'{}\'".format(columns_to_analyze))
+    return results_analysis
 
 
 def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigHandler):
