@@ -4,8 +4,7 @@ from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import configure_logging, module_logger
 from model_compare.util.panda_helpers import align_by_index
-from probability_functions import analyze_columns
-from util.panda_helpers import copy_then_rename_columns, save_plot
+from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot
 
 log = module_logger(__name__)
 
