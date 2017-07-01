@@ -1,7 +1,7 @@
 from numpy import exp, sqrt, mean, random, log as ln
 from pandas import Series
 
-from util.log import module_logger
+from model_compare.util.log import module_logger
 
 log = module_logger(__name__)
 
