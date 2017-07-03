@@ -33,6 +33,23 @@ class ConfigHandler:
 
         return comb_stats, trace
 
+    def get_clade_gphocs_data(self):
+        simulation_path = self.get_simulation_path()
+
+        burn_in = self.get_burn_in()
+
+        clade_stats_name = self.config.get('Input', 'clade_stats_file_name', fallback='clade-trace.tsv')
+        clade_stats_path = simulation_path + '/' + clade_stats_name  # TODO - use system fs separator
+        clade_stats = pd.read_csv(clade_stats_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
+        logger.info("Loaded clade_stats data")
+
+        trace_file_name = self.config.get('Input', 'trace_file_name', fallback='trace.tsv')
+        trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
+        trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='Sample')
+        logger.info("Loaded trace data")
+
+        return clade_stats, trace
+
     def get_burn_in(self):
         return self.config.getint('Data', 'skip_rows', fallback=0)
 
@@ -48,6 +65,14 @@ class ConfigHandler:
         comb_leaves, mig_bands, pops = remove_empty_strings(comb_leaves, mig_bands, pops)
 
         return comb, comb_leaves, pops, mig_bands
+
+    def get_clade_reference_tree(self):
+        clade = self.config.get('ReferenceModel', 'clade')
+        pops = self.config.get('ReferenceModel', 'pops').split(',')
+        mig_bands = self.config.get('ReferenceModel', 'mig_bands').split(',')
+        _, mig_bands, pops = remove_empty_strings([], mig_bands, pops)
+
+        return clade, pops, mig_bands
 
     def get_debug_pops(self):
         debug_pops = self.config.get('ReferenceModel', 'debug_pops').split(',')
@@ -111,6 +136,11 @@ class ConfigHandler:
         pop_num_coals_template = self.config.get('Templates', 'pop_num_coals', fallback='P_{pop} nc')
         return comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template
 
+    def get_clade_num_coals_template(self):
+        clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
+        pop_num_coals_template = self.config.get('Templates', 'clade_pop_num_coals', fallback='{pop}__pop_num_coals_total')
+        return clade_num_coals_template, pop_num_coals_template
+
     def get_theta_setup(self):
         theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
         theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
@@ -122,14 +152,26 @@ class ConfigHandler:
         comb_leaf_coal_stats_template = self.config.get('Templates', 'comb_leaf_coal_stats', fallback='C_{comb}_{leaf} cs')
         return comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template
 
+    def get_clade_coal_stats_templates(self):
+        pop_coal_stats_template = self.config.get('Templates', 'clade_pop_coal_stats', fallback='{pop}__pop_coal_stats_total')
+        clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
+        return clade_coal_stats_template, pop_coal_stats_template
+
     def get_mig_stats_template(self):
         comb_migband_mig_stats_template = self.config.get('Templates', 'comb_migband_mig_stats', fallback='C_{comb}_{migband} ms')
         return comb_migband_mig_stats_template
+
+    def get_clade_mig_stats_template(self):
+        clade_migband_mig_stats_template = self.config.get('Templates', 'clade_migband_mig_stats', fallback='{migband}_mig_stats')
+        return clade_migband_mig_stats_template
 
     def get_num_migs_template(self):
         comb_migband_num_migs_template = self.config.get('Templates', 'comb_migband_num_migs', fallback='C_{comb}_{migband} nm')
         return comb_migband_num_migs_template
 
+    def get_clade_num_migs_template(self):
+        clade_migband_num_migs_template = self.config.get('Templates', 'clade_migband_num_migs', fallback='{migband}_num_migs')
+        return clade_migband_num_migs_template
 
     def get_migrate_template(self):
         mig_rate = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
