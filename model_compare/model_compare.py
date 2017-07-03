@@ -58,7 +58,7 @@ def _clade_calculate_likelihoods(comb_stats, trace, conf):
 
 def _calculate_likelihoods(comb_stats, trace, conf):
     results_data = pd.DataFrame()
-    results_data['ref_gene_likelihood'] = _clade_calc_ref_gene_likelihood(comb_stats, trace, conf)
+    results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
@@ -70,8 +70,8 @@ def _calculate_likelihoods(comb_stats, trace, conf):
 def _calc_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
     comb, comb_leaves, populations, migration_bands = conf.get_reference_tree()
 
-    thetas = _get_clade_thetas(trace, conf)
-    mig_rates = _get_clade_mig_rates(trace, conf)
+    thetas = _get_thetas(trace, conf)
+    mig_rates = _get_mig_rates(trace, conf)
     num_migs = _get_num_migs(comb_stats, conf)
     mig_stats = _get_mig_stats(comb_stats, conf)
     num_coal = _get_num_coals(comb_stats, conf)
