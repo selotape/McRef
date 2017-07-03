@@ -21,12 +21,12 @@ class ConfigHandler:
 
         burn_in = self.get_burn_in()
 
-        comb_stats_name = self.config.get('Input', 'comb_stats_file_name', fallback='comb-trace.tsv')
+        comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
         comb_stats = pd.read_csv(comb_stats_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
         logger.info("Loaded comb_stats data")
 
-        trace_file_name = self.config.get('Input', 'trace_file_name', fallback='trace.tsv')
+        trace_file_name = self.config.get('Input', 'trace_file_name')
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
         trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='Sample')
         logger.info("Loaded trace data")
@@ -38,12 +38,12 @@ class ConfigHandler:
 
         burn_in = self.get_burn_in()
 
-        clade_stats_name = self.config.get('Input', 'clade_stats_file_name', fallback='clade-trace.tsv')
+        clade_stats_name = self.config.get('Input', 'clade_stats_file_name')
         clade_stats_path = simulation_path + '/' + clade_stats_name  # TODO - use system fs separator
         clade_stats = pd.read_csv(clade_stats_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
         logger.info("Loaded clade_stats data")
 
-        trace_file_name = self.config.get('Input', 'trace_file_name', fallback='trace.tsv')
+        trace_file_name = self.config.get('Input', 'trace_file_name')
         trace_path = simulation_path + '/' + trace_file_name  # TODO - use system fs separator
         trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='Sample')
         logger.info("Loaded trace data")
@@ -75,7 +75,7 @@ class ConfigHandler:
         return clade, pops, mig_bands
 
     def get_debug_pops(self):
-        debug_pops = self.config.get('ReferenceModel', 'debug_pops').split(',')
+        debug_pops = self.config.get('Debug', 'hypothesis_pops').split(',')
 
         debug_pops = list(filter(None, debug_pops))
 
@@ -176,6 +176,9 @@ class ConfigHandler:
     def get_migrate_template(self):
         mig_rate = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
         return mig_rate
+
+    def is_debug_enabled(self):
+        return self.config.getboolean('Debug', 'enabled', fallback=False)
 
 
 def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - accept any number of args

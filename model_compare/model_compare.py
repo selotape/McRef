@@ -9,12 +9,12 @@ from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot
 log = module_logger(__name__)
 
 
-def model_compare(simulation):
+def comb_model_compare(simulation):
     conf = ConfigHandler(simulation)
 
     configure_logging(*conf.get_log_conf())
     try:
-        _model_compare(conf)
+        _comb_model_compare(conf)
     except:
         log.exception("Failure during _model_compare")
     log.info("===== Done! =====")
@@ -31,7 +31,7 @@ def clade_model_compare(simulation):
     log.info("===== Done! =====")
 
 
-def _model_compare(conf: ConfigHandler):
+def _comb_model_compare(conf: ConfigHandler):
     comb_stats, trace = conf.get_gphocs_data()
     comb_stats, trace = align_by_index(comb_stats, trace)
     results_data = _calculate_likelihoods(comb_stats, trace, conf)
@@ -56,14 +56,16 @@ def _clade_calculate_likelihoods(comb_stats, trace, conf):
     return results_data
 
 
-def _calculate_likelihoods(comb_stats, trace, conf):
+def _calculate_likelihoods(comb_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
     results_data['ref_gene_likelihood'] = _calc_ref_gene_likelihood(comb_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
-    results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
-    results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, conf)
+    if conf.is_debug_enabled():
+        results_data['debug_ref_gene_likelihood'] = _debug_calc_ref_gene_likelihood(comb_stats, trace, conf)
+        results_data['debug_coal_stats'], results_data['ref_coal_stats'] = _debug_calc_coal_stats(comb_stats, conf)
+
     return results_data
 
 
