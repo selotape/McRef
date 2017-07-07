@@ -32,7 +32,8 @@ def clade_model_compare(simulation):
 
 
 def _comb_model_compare(conf: ConfigHandler):
-    comb_stats, trace = conf.get_gphocs_data()
+    comb_stats = conf.load_comb_data()
+    trace = conf.load_trace_data()
     comb_stats, trace = align_by_index(comb_stats, trace)
     results_data = _calculate_comb_likelihoods(comb_stats, trace, conf)
     if conf.is_debug_enabled():
@@ -43,11 +44,13 @@ def _comb_model_compare(conf: ConfigHandler):
 
 
 def _clade_model_compare(conf: ConfigHandler):
-    clade_stats, trace = conf.get_clade_gphocs_data()
+    clade_stats = conf.load_clade_data()
+    trace = conf.load_trace_data()
     clade_stats, trace = align_by_index(clade_stats, trace)
     results_data = _calculate_clade_likelihoods(clade_stats, trace, conf)
     if conf.is_debug_enabled():
-        _calc_hyp_gene_likelihood(results_data, clade_stats, trace, conf)
+        hyp_stats = conf.load_hyp_data()
+        _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     _clade_save_results(results_data, results_analysis, conf)
 
@@ -284,7 +287,6 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
         objects_to_sum[pop] = kingman_coalescent(thetas[pop], num_coal[pop], coal_stats[pop])
     for mig in mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
-
 
     debug_dir = conf.get_results_paths()[1]
     save_plot(objects_to_sum, debug_dir + '/hyp_ln_ld', 'Kingman coal & mig of Hypothesis Model')
