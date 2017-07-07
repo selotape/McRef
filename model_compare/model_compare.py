@@ -19,6 +19,7 @@ def comb_model_compare(simulation):
         log.exception("Failure during _model_compare")
     log.info("===== Done! =====")
 
+
 def clade_model_compare(simulation):
     conf = ConfigHandler(simulation)
 
@@ -36,7 +37,7 @@ def _comb_model_compare(conf: ConfigHandler):
     results_data = _calculate_comb_likelihoods(comb_stats, trace, conf)
     if conf.is_debug_enabled():
         _calc_hyp_gene_likelihood(results_data, comb_stats, trace, conf)
-        _debug_calc_coal_stats(results_data, comb_stats, conf)
+        _debug_calc_coal_stats(results_data, comb_stats, comb_stats, conf)
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     _save_results(results_data, results_analysis, conf)
 
@@ -85,8 +86,9 @@ def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame
     for mig in migration_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
-    debug_dir = conf.get_results_paths()[1]
-    save_plot(objects_to_sum, debug_dir + '/pop_ln_ld', 'ronvis')
+    if conf.is_debug_enabled():
+        debug_dir = conf.get_results_paths()[1]
+        save_plot(objects_to_sum, debug_dir + '/pop_ln_ld', 'Kingman coal & mig of Reference Model')
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
     log.info("Calculated reference genealogy likelihood")
@@ -145,6 +147,16 @@ def _get_clade_mig_stats(clade_stats, conf: ConfigHandler):
     return mig_stats
 
 
+def _get_hyp_mig_stats(clade_stats, conf: ConfigHandler):
+    _, mig_bands = conf.get_hypothesis_model()
+    clade_migband_num_migs_template = conf.get_clade_num_migs_template()
+
+    mig_stats_columns = [clade_migband_num_migs_template.format(migband=mb) for mb in mig_bands]
+    mig_stats = clade_stats[mig_stats_columns]
+    mig_stats.columns = mig_bands
+    return mig_stats
+
+
 def _get_comb_num_migs(comb_stats, conf: ConfigHandler):
     comb, _, _, migration_bands = conf.get_reference_tree()
     _, comb_mig_stats_template = conf.get_comb_migs_templates()
@@ -165,13 +177,18 @@ def _get_clade_num_migs(clade_stats, conf: ConfigHandler):
     return num_migs
 
 
-def _get_hyp_num_migs(hyp_stats, mig_bands, conf: ConfigHandler):
-    _, hyp_num_migs_template = conf.get_hyp_mig_templates()
+def _get_all_hyp_mig_stats(hyp_stats, mig_bands, conf: ConfigHandler):
+    hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
 
     num_migs_columns = [hyp_num_migs_template.format(migband=mb) for mb in mig_bands]
     num_migs = hyp_stats[num_migs_columns]
     num_migs.columns = mig_bands  # TODO unify column renaming methods
-    return num_migs
+
+    mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in mig_bands]
+    mig_stats = hyp_stats[mig_stats_columns]
+    mig_stats.columns = mig_bands
+
+    return mig_stats, num_migs
 
 
 def _get_comb_coal_stats(comb_stats, conf: ConfigHandler):
@@ -198,12 +215,14 @@ def _get_clade_coal_stats(clade_stats, conf: ConfigHandler):
     return coal_stats
 
 
+def _get_all_hyp_coal_stats(pops, hyp_stats, conf: ConfigHandler):
+    pop_coal_stats_template, pop_num_coals_template = conf.get_hyp_coal_templates()
+    num_columns_map = {pop_num_coals_template.format(pop=p): p for p in pops}
+    num_coals = copy_then_rename_columns(hyp_stats, num_columns_map)
+    stats_columns_map = {pop_coal_stats_template.format(pop=p): p for p in pops}
+    coal_stats = copy_then_rename_columns(hyp_stats, stats_columns_map)
+    return coal_stats, num_coals
 
-def _get_hyp_coal_stats(pops, hyp_stats, conf: ConfigHandler):
-    pop_coal_stats_template, _ = conf.get_hyp_coal_templates()
-    columns_map = {pop_coal_stats_template.format(pop=p): p for p in pops}
-    coal_stats = copy_then_rename_columns(hyp_stats, columns_map)
-    return coal_stats
 
 def _get_comb_thetas(trace: pd.DataFrame, conf: ConfigHandler):
     comb, comb_leaves, populations, _ = conf.get_reference_tree()
@@ -251,39 +270,38 @@ def _get_clade_num_coals(clade_stats: pd.DataFrame, conf: ConfigHandler):
 
 
 def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    pops, migbands = conf.get_hypothesis_model()
+    pops, mig_bands = conf.get_hypothesis_model()
 
-    thetas = _get_thetas(pops, conf, trace)
-    mig_rates = _get_migrates(trace, migbands, conf)
-    num_migs = _get_hyp_num_migs(hyp_stats, mig_bands=migbands, conf)
-    mig_stats = _get_hyp_mig_stats(hyp_stats, conf)
-    num_coal = _get_hyp_num_coals(hyp_stats, conf)
-    coal_stats = _get_hyp_coal_stats(pops, hyp_stats, conf)
+    thetas = _get_thetas(pops, trace, conf)
+    mig_rates = _get_migrates(mig_bands, trace, conf)
+    mig_stats, num_migs = _get_all_hyp_mig_stats(hyp_stats, mig_bands, conf)
+    num_coal, coal_stats = _get_all_hyp_coal_stats(pops, hyp_stats, conf)
 
     objects_to_sum = pd.DataFrame()
     for pop in pops:
         objects_to_sum[pop] = kingman_coalescent(thetas[pop], num_coal[pop], coal_stats[pop])
-    for mig in migbands:
+    for mig in mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
+
     debug_dir = conf.get_results_paths()[1]
-    save_plot(objects_to_sum, debug_dir + '/hyp_ln_ld', 'ronvis')
+    save_plot(objects_to_sum, debug_dir + '/hyp_ln_ld', 'Kingman coal & mig of Hypothesis Model')
 
     hyp_gene_likelihood = objects_to_sum.sum(axis=1)
     log.info("Calculated hypothesis genealogy likelihood")
 
-    results_data['hyp_gene_likelihood'] = hyp_gene_likelihood
+    results_data['debug_hyp_gene_likelihood'] = hyp_gene_likelihood
 
 
-def _debug_calc_coal_stats(results_data: pd.DataFrame, comb_stats: pd.DataFrame, conf: ConfigHandler):
+def _debug_calc_coal_stats(results_data: pd.DataFrame, comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
     (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
      comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
      comb_migband_mig_stats_template, comb_migband_num_migs_template) = conf.get_column_name_templates()
 
     comb, comb_leaves, populations, migration_bands = conf.get_reference_tree()
-    debug_pops, _ = conf.get_hypothesis_model()
+    hyp_pops, _ = conf.get_hypothesis_model()
 
-    debug_pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in debug_pops]
+    debug_pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in hyp_pops]
     comb_coal_stats_column = [comb_coal_stats_template.format(comb=comb)]
     pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in populations]
     comb_leaves_coal_stats_columns = [comb_leaf_coal_stats_template.format(comb=comb, leaf=l) for l in comb_leaves]
