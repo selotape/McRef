@@ -74,14 +74,14 @@ class ConfigHandler:
 
         return clade, pops, mig_bands
 
-    def get_debug_hypothesis_model(self):
-        debug_pops = self.config.get('Debug', 'hypothesis_pops').split(',')
-        debug_migs = self.config.get('Debug', 'hypothesis_migbands').split(',')
+    def get_hypothesis_model(self):
+        pops = self.config.get('Debug', 'hypothesis_pops').split(',')
+        migs = self.config.get('Debug', 'hypothesis_migbands').split(',')
 
-        debug_pops = list(filter(None, debug_pops))
-        debug_migs = list(filter(None, debug_migs))
+        pops = list(filter(None, pops))
+        migs = list(filter(None, migs))
 
-        return debug_pops, debug_migs
+        return pops, migs
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
@@ -128,11 +128,7 @@ class ConfigHandler:
         result = self.config.getboolean("Output", "save_data", fallback=False)
         return result
 
-    def get_log_conf(self):
-        return (self.config.get('Logging', 'level', fallback='INFO'),
-                self.config.get('Logging', 'file_name', fallback='model_compare.log'))
-
-    def get_num_coals_template(self):
+    def get_comb_num_coals_template(self):
         comb_leaf_num_coals_template = self.config.get('Templates', 'comb_leaf_num_coals', fallback='C_{comb}_{leaf} nc')
         comb_num_coals_template = self.config.get('Templates', 'comb_num_coals', fallback='C_{comb} nc')
         pop_num_coals_template = self.config.get('Templates', 'pop_num_coals', fallback='P_{pop} nc')
@@ -148,34 +144,34 @@ class ConfigHandler:
         theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
         return theta_print_factor, theta_template
 
-    def get_coal_stats_templates(self):
-        pop_coal_stats_template = self.config.get('Templates', 'pop_coal_stats', fallback='P_{pop} cs')
+    def get_comb_coal_stats_templates(self):
         comb_coal_stats_template = self.config.get('Templates', 'comb_coal_stats', fallback='C_{comb} cs')
         comb_leaf_coal_stats_template = self.config.get('Templates', 'comb_leaf_coal_stats', fallback='C_{comb}_{leaf} cs')
-        return comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template
+        return comb_coal_stats_template, comb_leaf_coal_stats_template
 
     def get_clade_coal_stats_templates(self):
         pop_coal_stats_template = self.config.get('Templates', 'clade_pop_coal_stats', fallback='{pop}__pop_coal_stats_total')
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_coal_stats_template, pop_coal_stats_template
 
-    def get_comb_mig_stats_template(self):
-        comb_migband_mig_stats_template = self.config.get('Templates', 'comb_migband_mig_stats', fallback='C_{comb}_{migband} ms')
-        return comb_migband_mig_stats_template
+    def get_hyp_coal_templates(self):
+        pop_coal_stats_template = self.config.get('Templates', 'pop_coal_stats', fallback='P_{pop} cs')
+        pop_num_coals_template = self.config.get('Templates', 'pop_coal_stats', fallback='P_{pop} nc')
+        return pop_coal_stats_template, pop_num_coals_template
 
-    def get_hyp_mig_stats_template(self):
-        hyp_migband_mig_stats_template = self.config.get('Templates', 'hyp_migband_mig_stats', fallback='MB_{migband} ms')
-        hyp_migband_num_migs_template = self.config.get('Templates', 'hyp_migband_num_migs', fallback='MB_{migband} nm')
-        return hyp_migband_mig_stats_template, hyp_migband_num_migs_template
+    def get_hyp_mig_templates(self):
+        hyp_mig_stats_template = self.config.get('Templates', 'hyp_migband_mig_stats', fallback='MB_{migband} ms')
+        hyp_num_migs_template = self.config.get('Templates', 'hyp_migband_num_migs', fallback='MB_{migband} nm')
+        return hyp_mig_stats_template, hyp_num_migs_template
 
     def get_clade_mig_stats_template(self):
         clade_migband_mig_stats_template = self.config.get('Templates', 'clade_migband_mig_stats', fallback='{migband}_mig_stats')
         return clade_migband_mig_stats_template
 
-    def get_comb_num_migs_template(self):
-        comb_migband_num_migs_template = self.config.get('Templates', 'comb_migband_num_migs', fallback='C_{comb}_{migband} nm')
-        return comb_migband_num_migs_template
-
+    def get_comb_migs_templates(self):
+        comb_num_migs_template = self.config.get('Templates', 'comb_migband_num_migs', fallback='C_{comb}_{migband} nm')
+        comb_mig_stats_template = self.config.get('Templates', 'comb_migband_mig_stats', fallback='C_{comb}_{migband} ms')
+        return comb_num_migs_template, comb_mig_stats_template
 
     def get_clade_num_migs_template(self):
         clade_migband_num_migs_template = self.config.get('Templates', 'clade_migband_num_migs', fallback='{migband}_num_migs')
@@ -187,6 +183,10 @@ class ConfigHandler:
 
     def is_debug_enabled(self):
         return self.config.getboolean('Debug', 'enabled', fallback=False)
+
+    def get_log_conf(self):
+        return (self.config.get('Logging', 'level', fallback='INFO'),
+                self.config.get('Logging', 'file_name', fallback='model_compare.log'))
 
 
 def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - accept any number of args
