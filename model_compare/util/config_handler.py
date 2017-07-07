@@ -74,12 +74,14 @@ class ConfigHandler:
 
         return clade, pops, mig_bands
 
-    def get_debug_pops(self):
+    def get_debug_hypothesis_model(self):
         debug_pops = self.config.get('Debug', 'hypothesis_pops').split(',')
+        debug_migs = self.config.get('Debug', 'hypothesis_migbands').split(',')
 
         debug_pops = list(filter(None, debug_pops))
+        debug_migs = list(filter(None, debug_migs))
 
-        return debug_pops
+        return debug_pops, debug_migs
 
     def get_results_paths(self):
         simulation_path = self.get_simulation_path()
@@ -157,17 +159,23 @@ class ConfigHandler:
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_coal_stats_template, pop_coal_stats_template
 
-    def get_mig_stats_template(self):
+    def get_comb_mig_stats_template(self):
         comb_migband_mig_stats_template = self.config.get('Templates', 'comb_migband_mig_stats', fallback='C_{comb}_{migband} ms')
         return comb_migband_mig_stats_template
+
+    def get_hyp_mig_stats_template(self):
+        hyp_migband_mig_stats_template = self.config.get('Templates', 'hyp_migband_mig_stats', fallback='MB_{migband} ms')
+        hyp_migband_num_migs_template = self.config.get('Templates', 'hyp_migband_num_migs', fallback='MB_{migband} nm')
+        return hyp_migband_mig_stats_template, hyp_migband_num_migs_template
 
     def get_clade_mig_stats_template(self):
         clade_migband_mig_stats_template = self.config.get('Templates', 'clade_migband_mig_stats', fallback='{migband}_mig_stats')
         return clade_migband_mig_stats_template
 
-    def get_num_migs_template(self):
+    def get_comb_num_migs_template(self):
         comb_migband_num_migs_template = self.config.get('Templates', 'comb_migband_num_migs', fallback='C_{comb}_{migband} nm')
         return comb_migband_num_migs_template
+
 
     def get_clade_num_migs_template(self):
         clade_migband_num_migs_template = self.config.get('Templates', 'clade_migband_num_migs', fallback='{migband}_num_migs')
