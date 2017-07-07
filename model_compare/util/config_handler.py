@@ -74,7 +74,7 @@ class ConfigHandler:
 
         return clade, pops, mig_bands
 
-    def get_hypothesis_model(self):
+    def get_hypothesis_tree(self):
         pops = self.config.get('Debug', 'hypothesis_pops').split(',')
         migs = self.config.get('Debug', 'hypothesis_migbands').split(',')
 

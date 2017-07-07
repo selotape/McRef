@@ -46,6 +46,8 @@ def _clade_model_compare(conf: ConfigHandler):
     clade_stats, trace = conf.get_clade_gphocs_data()
     clade_stats, trace = align_by_index(clade_stats, trace)
     results_data = _calculate_clade_likelihoods(clade_stats, trace, conf)
+    if conf.is_debug_enabled():
+        _calc_hyp_gene_likelihood(results_data, clade_stats, trace, conf)
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     _clade_save_results(results_data, results_analysis, conf)
 
@@ -148,7 +150,7 @@ def _get_clade_mig_stats(clade_stats, conf: ConfigHandler):
 
 
 def _get_hyp_mig_stats(clade_stats, conf: ConfigHandler):
-    _, mig_bands = conf.get_hypothesis_model()
+    _, mig_bands = conf.get_hypothesis_tree()
     clade_migband_num_migs_template = conf.get_clade_num_migs_template()
 
     mig_stats_columns = [clade_migband_num_migs_template.format(migband=mb) for mb in mig_bands]
@@ -270,7 +272,7 @@ def _get_clade_num_coals(clade_stats: pd.DataFrame, conf: ConfigHandler):
 
 
 def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    pops, mig_bands = conf.get_hypothesis_model()
+    pops, mig_bands = conf.get_hypothesis_tree()
 
     thetas = _get_thetas(pops, trace, conf)
     mig_rates = _get_migrates(mig_bands, trace, conf)
@@ -294,27 +296,23 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 
 
 def _debug_calc_coal_stats(results_data: pd.DataFrame, comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
-    (theta_template, mig_rate_template, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
-     comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
-     comb_migband_mig_stats_template, comb_migband_num_migs_template) = conf.get_column_name_templates()
+    comb, comb_leaves, ref_pops, _ = conf.get_reference_tree()
+    hyp_pops, _ = conf.get_hypothesis_tree()
 
-    comb, comb_leaves, populations, migration_bands = conf.get_reference_tree()
-    hyp_pops, _ = conf.get_hypothesis_model()
+    pop_coal_stats_template, _ = conf.get_hyp_coal_templates()
+    comb_coal_stats_template, comb_leaf_coal_stats_template = conf.get_comb_coal_stats_templates()
 
     debug_pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in hyp_pops]
-    comb_coal_stats_column = [comb_coal_stats_template.format(comb=comb)]
-    pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in populations]
-    comb_leaves_coal_stats_columns = [comb_leaf_coal_stats_template.format(comb=comb, leaf=l) for l in comb_leaves]
 
-    debug_results_coal_stats = pd.DataFrame()
-    debug_results_coal_stats['debug'] = comb_stats[debug_pop_coal_stats_columns].sum(axis=1)
+    comb_coal_stats_column = [comb_coal_stats_template.format(comb=comb)]
+    pop_coal_stats_columns = [pop_coal_stats_template.format(pop=p) for p in ref_pops]
+    comb_leaves_coal_stats_columns = [comb_leaf_coal_stats_template.format(comb=comb, leaf=l) for l in comb_leaves]
     ref_coal_stats_columns = comb_coal_stats_column + pop_coal_stats_columns + comb_leaves_coal_stats_columns
-    debug_results_coal_stats['ref'] = comb_stats[ref_coal_stats_columns].sum(axis=1)
+
+    results_data['hyp_coal_stats'] = hyp_stats[debug_pop_coal_stats_columns].sum(axis=1)
+    results_data['ref_coal_stats'] = comb_stats[ref_coal_stats_columns].sum(axis=1)
 
     log.info("Calculated DEBUG coal stats")
-
-    results_data['debug_coal_stats'] = debug_results_coal_stats['debug']
-    results_data['ref_coal_stats'] = debug_results_coal_stats['ref']
 
 
 def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigHandler):
@@ -329,7 +327,7 @@ def _save_results(results_data: pd.DataFrame, results_stats: dict, conf: ConfigH
     if conf.is_debug_enabled():
         save_plot(results_data[['ref_gene_likelihood', 'debug_hyp_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods',
                   sim_name)
-        save_plot(results_data[['ref_coal_stats', 'debug_coal_stats']], debug_directory + '/coal_stats', sim_name)
+        save_plot(results_data[['ref_coal_stats', 'hyp_coal_stats']], debug_directory + '/coal_stats', sim_name)
 
     with open(summary_path, 'w') as f:
         experiment_summary = _summarize(results_stats, conf)
