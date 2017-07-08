@@ -1,16 +1,12 @@
 import os
 import sys
 
-from model_compare import compare_models, clade_compare_models
+from model_compare import compare_models
 
 
 def main(args):
     simulation, is_clade = _parse_args(args)
-
-    if is_clade:
-        clade_compare_models(simulation)
-    else:
-        compare_models(simulation)
+    compare_models(simulation, is_clade)
 
 
 def _parse_args(args):

@@ -64,14 +64,14 @@ class ConfigHandler:
     def get_comb_reference_tree(self):
         comb = self.config.get('ReferenceModel', 'comb')
         comb_leaves = self.config.get('ReferenceModel', 'comb_leaves').split(',')
-        pops = self.config.get('ReferenceModel', 'pops').split(',')
+        hyp_pops = self.config.get('ReferenceModel', 'hyp_pops').split(',')
         comb_mig_bands = self.config.get('ReferenceModel', 'comb_mig_bands').split(',')
         hyp_mig_bands = self.config.get('ReferenceModel', 'hyp_mig_bands').split(',')
 
-        for l in comb_leaves, comb_mig_bands, pops, hyp_mig_bands:
+        for l in comb_leaves, comb_mig_bands, hyp_pops, hyp_mig_bands:
             l[:] = [i.strip() for i in l if i]
 
-        return comb, comb_leaves, pops, comb_mig_bands, hyp_mig_bands
+        return comb, comb_leaves, hyp_pops, comb_mig_bands, hyp_mig_bands
 
     def get_clade_reference_tree(self):
         clade = self.config.get('ReferenceModel', 'clade')
@@ -137,11 +137,10 @@ class ConfigHandler:
         result = self.config.getboolean("Output", "save_data", fallback=False)
         return result
 
-    def get_comb_num_coals_template(self):
+    def get_comb_num_coals_templates(self):
         comb_leaf_num_coals_template = self.config.get('Templates', 'comb_leaf_num_coals', fallback='C_{comb}_{leaf} nc')
         comb_num_coals_template = self.config.get('Templates', 'comb_num_coals', fallback='C_{comb} nc')
-        pop_num_coals_template = self.config.get('Templates', 'pop_num_coals', fallback='P_{pop} nc')
-        return comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template
+        return comb_leaf_num_coals_template, comb_num_coals_template
 
     def get_clade_coal_templates(self):
         clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')

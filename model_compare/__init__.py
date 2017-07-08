@@ -1,2 +1,1 @@
-from model_compare.model_compare import comb_model_compare as compare_models
-from model_compare.model_compare import clade_model_compare as clade_compare_models
+from model_compare.model_compare import model_compare as compare_models
