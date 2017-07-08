@@ -6,7 +6,7 @@ from model_compare.util.log import module_logger
 log = module_logger(__name__)
 
 
-def copy_then_rename_columns(df, columns_map):
+def copy_then_rename_columns(df, columns_map) -> pd.DataFrame:
     result = df[list(columns_map.keys())].copy()
     result.rename(columns=columns_map, inplace=True)
     return result

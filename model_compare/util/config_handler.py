@@ -75,11 +75,13 @@ class ConfigHandler:
 
     def get_clade_reference_tree(self):
         clade = self.config.get('ReferenceModel', 'clade')
-        pops = self.config.get('ReferenceModel', 'pops').split(',')
-        mig_bands = self.config.get('ReferenceModel', 'mig_bands').split(',')
-        _, mig_bands, pops = remove_empty_strings([], mig_bands, pops)
+        hyp_pops = self.config.get('ReferenceModel', 'hyp_pops').split(',')
+        hyp_mig_bands = self.config.get('ReferenceModel', 'hyp_mig_bands').split(',')
 
-        return clade, pops, mig_bands
+        for l in hyp_pops, hyp_mig_bands:
+            l[:] = [i.strip() for i in l if i]
+
+        return clade, hyp_pops, hyp_mig_bands
 
     def get_hypothesis_tree(self):
         pops = self.config.get('Debug', 'hypothesis_pops').split(',')
@@ -141,10 +143,10 @@ class ConfigHandler:
         pop_num_coals_template = self.config.get('Templates', 'pop_num_coals', fallback='P_{pop} nc')
         return comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template
 
-    def get_clade_num_coals_template(self):
+    def get_clade_coal_templates(self):
         clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
-        pop_num_coals_template = self.config.get('Templates', 'clade_pop_num_coals', fallback='{pop}__pop_num_coals_total')
-        return clade_num_coals_template, pop_num_coals_template
+        clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
+        return clade_num_coals_template, clade_coal_stats_template
 
     def get_theta_setup(self):
         theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
@@ -157,7 +159,6 @@ class ConfigHandler:
         return comb_coal_stats_template, comb_leaf_coal_stats_template
 
     def get_clade_coal_stats_templates(self):
-        pop_coal_stats_template = self.config.get('Templates', 'clade_pop_coal_stats', fallback='{pop}__pop_coal_stats_total')
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_coal_stats_template, pop_coal_stats_template
 

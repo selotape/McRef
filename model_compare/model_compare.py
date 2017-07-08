@@ -49,11 +49,15 @@ def _comb_model_compare(conf: ConfigHandler):
 def _clade_model_compare(conf: ConfigHandler):
     clade_stats = conf.load_clade_data()
     trace = conf.load_trace_data()
+    hyp_stats = conf.load_hyp_data()
+
     clade_stats, trace = align_by_index(clade_stats, trace)
-    results_data = _calculate_clade_likelihoods(clade_stats, trace, conf)
+    results_data = _calculate_clade_likelihoods(clade_stats, hyp_stats, trace, conf)
+
     if conf.is_debug_enabled():
         hyp_stats = conf.load_hyp_data()
         _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
+
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     _clade_save_results(results_data, results_analysis, conf)
 
@@ -68,9 +72,9 @@ def _calculate_comb_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandle
     return results_data
 
 
-def _calculate_clade_likelihoods(comb_stats, trace, conf):
+def _calculate_clade_likelihoods(clade_stats, hyp_stats, trace, conf):
     results_data = pd.DataFrame()
-    results_data['ref_gene_likelihood'] = _calc_clade_ref_gene_likelihood(comb_stats, trace, conf)
+    results_data['ref_gene_likelihood'] = _calc_clade_ref_gene_likelihood(clade_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
@@ -106,20 +110,18 @@ def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataF
     return ref_gene_likelihood
 
 
-def _calc_clade_ref_gene_likelihood(clade_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    clade, populations, migration_bands = conf.get_clade_reference_tree()
+def _calc_clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.DataFrame, conf: ConfigHandler):
+    clade, hyp_pops, hyp_mig_bands = conf.get_clade_reference_tree()
 
     thetas = _get_clade_thetas(trace, conf)
-    mig_rates = _get_migrates(migration_bands, trace, conf)
-    num_migs = _get_clade_num_migs(clade_stats, conf)
-    mig_stats = _get_clade_mig_stats(clade_stats, conf)
-    num_coal = _get_clade_num_coals(clade_stats, conf)
-    coal_stats = _get_clade_coal_stats(clade_stats, conf)
+    mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
+    mig_stats, num_migs = _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf)
+    coal_stats, num_coal = _get_clade_coal_stats(clade_stats, hyp_stats, conf)
 
     objects_to_sum = pd.DataFrame()
-    for node in populations + [clade]:
-        objects_to_sum[node] = kingman_coalescent(thetas[node], num_coal[node], coal_stats[node])
-    for mig in migration_bands:
+    for pop in hyp_pops + [clade]:
+        objects_to_sum[pop] = kingman_coalescent(thetas[pop], num_coal[pop], coal_stats[pop])
+    for mig in hyp_mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
@@ -128,12 +130,12 @@ def _calc_clade_ref_gene_likelihood(clade_stats: pd.DataFrame, trace: pd.DataFra
     return ref_gene_likelihood
 
 
-def _get_migrates(migration_bands, trace, conf: ConfigHandler):
+def _get_migrates(mig_bands, trace, conf: ConfigHandler):
     _, mig_rate_print_factor = conf.get_print_factors()
     mig_rate_template = conf.get_migrate_template()
-    mig_rate_columns = [mig_rate_template.format(migband=mb) for mb in migration_bands]
+    mig_rate_columns = [mig_rate_template.format(migband=mb) for mb in mig_bands]
     mig_rates = trace[mig_rate_columns].divide(mig_rate_print_factor).copy()
-    mig_rates.columns = migration_bands
+    mig_rates.columns = mig_bands
     return mig_rates
 
 
@@ -157,14 +159,18 @@ def _get_clade_mig_stats(clade_stats, conf: ConfigHandler):
     return mig_stats
 
 
-def _get_hyp_mig_stats(clade_stats, conf: ConfigHandler):
-    _, mig_bands = conf.get_hypothesis_tree()
-    clade_migband_num_migs_template = conf.get_clade_num_migs_template()
+def _get_hyp_mig_stats(mig_bands, hyp_stats, conf: ConfigHandler):
+    hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
 
-    mig_stats_columns = [clade_migband_num_migs_template.format(migband=mb) for mb in mig_bands]
-    mig_stats = clade_stats[mig_stats_columns]
+    mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in mig_bands]
+    mig_stats = hyp_stats[mig_stats_columns]
     mig_stats.columns = mig_bands
-    return mig_stats
+
+    num_migs_columns = [hyp_num_migs_template.format(migband=mb) for mb in mig_bands]
+    num_migs = hyp_stats[num_migs_columns]
+    num_migs.columns = mig_bands
+
+    return mig_stats, num_migs
 
 
 def _get_comb_num_migs(comb_stats, hyp_stats, conf: ConfigHandler):
@@ -214,15 +220,6 @@ def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
     return coal_stats
 
 
-def _get_clade_coal_stats(clade_stats, conf: ConfigHandler):
-    clade, populations, _ = conf.get_clade_reference_tree()
-    clade_coal_stats_template, pop_coal_stats_template = conf.get_clade_coal_stats_templates()
-
-    columns_map = {clade_coal_stats_template.format(clade=clade): clade}
-    columns_map.update({pop_coal_stats_template.format(pop=p): p for p in populations})
-
-    coal_stats = copy_then_rename_columns(clade_stats, columns_map)
-    return coal_stats
 
 
 def _get_all_hyp_coal_stats(pops, hyp_stats, conf: ConfigHandler):
@@ -268,15 +265,25 @@ def _get_comb_num_coals(comb_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler
     return num_coal
 
 
-def _get_clade_num_coals(clade_stats: pd.DataFrame, conf: ConfigHandler):
-    clade, populations, _ = conf.get_clade_reference_tree()
-    clade_num_coals_template, pop_num_coals_template = conf.get_clade_num_coals_template()
+def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler):
+    clade, hyp_pops, _ = conf.get_clade_reference_tree()
+    clade_num_coals_template, clade_coal_stats_template = conf.get_clade_coal_templates()
+    pop_coal_stats_template, pop_num_coals_template = conf.get_hyp_coal_templates()
 
-    columns_map = {clade_num_coals_template.format(clade=clade): clade}
-    columns_map.update({pop_num_coals_template.format(pop=p): p for p in populations})
+    hyp_nc_columns_map = {pop_num_coals_template.format(pop=p): p for p in hyp_pops}
+    hyp_num_coal = copy_then_rename_columns(hyp_stats, hyp_nc_columns_map)
+    clade_num_coals = clade_stats[[clade_num_coals_template.format(clade=clade)]]
+    clade_num_coals.columns = [clade]
+    num_coals = hyp_num_coal.append(clade_num_coals)
 
-    num_coal = copy_then_rename_columns(clade_stats, columns_map)
-    return num_coal
+    hyp_cs_columns_map = {pop_coal_stats_template.format(pop=p): p for p in hyp_pops}
+    hyp_coal_stats = copy_then_rename_columns(hyp_stats, hyp_cs_columns_map)
+    clade_coal_stats = clade_stats[[clade_coal_stats_template.format(clade=clade)]]
+    clade_coal_stats.columns = [clade]
+    coal_stats = hyp_coal_stats.append(clade_coal_stats)
+
+
+    return coal_stats, num_coals
 
 
 def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
