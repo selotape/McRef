@@ -16,7 +16,7 @@ def comb_model_compare(simulation):
     try:
         _comb_model_compare(conf)
     except:
-        log.exception("Failure during _model_compare")
+        log.exception("Failure during _comb_model_compare")
     log.info("===== Done! =====")
 
 
@@ -35,12 +35,13 @@ def _comb_model_compare(conf: ConfigHandler):
     comb_stats = conf.load_comb_data()
     trace = conf.load_trace_data()
     hyp_stats = conf.load_hyp_data()
-
-    # comb_stats, trace = align_by_index(comb_stats, trace)
+    # comb_stats, trace = align_by_index(comb_stats, trace)  # TODO - make sure data is aligned
     results_data = _calculate_comb_likelihoods(comb_stats, hyp_stats, trace, conf)
+
     if conf.is_debug_enabled():
-        _calc_hyp_gene_likelihood(results_data, comb_stats, trace, conf)
-        _debug_calc_coal_stats(results_data, comb_stats, comb_stats, conf)
+        _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
+        _debug_calc_coal_stats(results_data, comb_stats, hyp_stats, conf)
+
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     _save_results(results_data, results_analysis, conf)
 
@@ -77,11 +78,13 @@ def _calculate_clade_likelihoods(comb_stats, trace, conf):
 
 
 def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, populations, comb_mig_bands, _ = conf.get_comb_reference_tree()
+    comb, comb_leaves, populations, comb_mig_bands, hyp_mig_bands = conf.get_comb_reference_tree()
 
     all_pops = [comb] + comb_leaves + populations
     thetas = _get_thetas(all_pops, trace, conf)
-    mig_rates = _get_migrates(comb_mig_bands, trace, conf)
+    all_mig_bands = comb_mig_bands + hyp_mig_bands
+    mig_rates = _get_migrates(all_mig_bands, trace, conf)
+
     num_migs = _get_comb_num_migs(comb_stats, hyp_stats, conf)
     mig_stats = _get_comb_mig_stats(comb_stats, hyp_stats, conf)
     num_coal = _get_comb_num_coals(comb_stats, hyp_stats, conf)
@@ -361,11 +364,11 @@ def _clade_save_results(results_data: pd.DataFrame, results_stats: dict, conf: C
 
 
 def _summarize(results_stats: dict, conf: ConfigHandler):
-    comb, comb_leaves, populations, comb_mig_bands, _ = conf.get_comb_reference_tree()
+    comb, comb_leaves, populations, leaf_mig_bands, _ = conf.get_comb_reference_tree()
     simulation_name = conf.simulation.split('/')[-1]
     formatted_leaves = ','.join(comb_leaves)
     formatted_pops = ','.join(populations)
-    formatted_migbands = ','.join(comb_mig_bands)
+    formatted_migbands = ','.join(leaf_mig_bands)
     intro_template = "Summary:\n" + \
                      "Simulation: %s\n" % simulation_name + \
                      "Comb: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"

@@ -68,7 +68,8 @@ class ConfigHandler:
         comb_mig_bands = self.config.get('ReferenceModel', 'comb_mig_bands').split(',')
         hyp_mig_bands = self.config.get('ReferenceModel', 'hyp_mig_bands').split(',')
 
-        comb_leaves, comb_mig_bands, pops = remove_empty_strings(comb_leaves, comb_mig_bands, pops)
+        for l in comb_leaves, comb_mig_bands, pops, hyp_mig_bands:
+            l[:] = [i.strip() for i in l if i]
 
         return comb, comb_leaves, pops, comb_mig_bands, hyp_mig_bands
 
