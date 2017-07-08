@@ -103,7 +103,7 @@ def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataF
 def _calc_clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.DataFrame, conf: ConfigHandler):
     clade, hyp_pops, hyp_mig_bands = conf.get_clade_reference_tree()
 
-    thetas = _get_clade_thetas(trace, conf)
+    thetas = _get_thetas(hyp_pops + [clade], trace, conf)
     mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
     mig_stats, num_migs = _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf)
     coal_stats, num_coal = _get_clade_coal_stats(clade_stats, hyp_stats, conf)
@@ -127,6 +127,16 @@ def _get_migrates(mig_bands, trace, conf: ConfigHandler):
     mig_rates = trace[mig_rate_columns].divide(mig_rate_print_factor).copy()
     mig_rates.columns = mig_bands
     return mig_rates
+
+
+def _get_thetas(pops, trace, conf):
+    theta_print_factor, theta_template = conf.get_theta_setup()
+
+    theta_columns = [theta_template.format(pop=p) for p in pops]
+    thetas = trace[theta_columns].divide(theta_print_factor).copy()  # type: pd.DataFrame
+    columns_map = {theta_template.format(pop=p): p for p in pops}
+    thetas.rename(columns=columns_map, inplace=True)
+    return thetas
 
 
 def _get_comb_mig_stats(comb_stats, hyp_stats, conf: ConfigHandler):
@@ -162,38 +172,27 @@ def _get_hyp_mig_stats(mig_bands, hyp_stats, conf: ConfigHandler):
     return mig_stats, num_migs
 
 
-def _get_comb_num_migs(comb_stats, hyp_stats, conf: ConfigHandler):
-    comb, _, _, leaf_mig_bands, _ = conf.get_comb_reference_tree()
-    _, comb_mig_stats_template = conf.get_comb_migs_templates()
-
-    num_migs_columns = [comb_mig_stats_template.format(comb=comb, migband=mb) for mb in leaf_mig_bands]
-    num_migs = comb_stats[num_migs_columns]
-    num_migs.columns = leaf_mig_bands  # TODO unify column renaming methods
-    return num_migs
-
-
-def _get_clade_num_migs(clade_stats, conf: ConfigHandler):
-    _, _, migration_bands = conf.get_clade_reference_tree()
-    clade_migband_mig_stats_template = conf.get_clade_mig_stats_template()
-
-    num_migs_columns = [clade_migband_mig_stats_template.format(migband=mb) for mb in migration_bands]
-    num_migs = clade_stats[num_migs_columns]
-    num_migs.columns = migration_bands  # TODO unify column renaming methods
-    return num_migs
-
-
 def _get_all_hyp_mig_stats(hyp_stats, mig_bands, conf: ConfigHandler):
     hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
 
     num_migs_columns = [hyp_num_migs_template.format(migband=mb) for mb in mig_bands]
     num_migs = hyp_stats[num_migs_columns]
-    num_migs.columns = mig_bands  # TODO unify column renaming methods
+    num_migs.columns = mig_bands
 
     mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in mig_bands]
     mig_stats = hyp_stats[mig_stats_columns]
     mig_stats.columns = mig_bands
 
     return mig_stats, num_migs
+
+
+def _get_all_hyp_coal_stats(pops, hyp_stats, conf: ConfigHandler):
+    pop_coal_stats_template, pop_num_coals_template = conf.get_hyp_coal_templates()
+    num_columns_map = {pop_num_coals_template.format(pop=p): p for p in pops}
+    num_coals = copy_then_rename_columns(hyp_stats, num_columns_map)
+    stats_columns_map = {pop_coal_stats_template.format(pop=p): p for p in pops}
+    coal_stats = copy_then_rename_columns(hyp_stats, stats_columns_map)
+    return coal_stats, num_coals
 
 
 def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
@@ -213,49 +212,6 @@ def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
     num_coal = hyp_num_coal.append(comb_num_coals)
 
     return num_coal, coal_stats
-
-
-def _get_all_hyp_coal_stats(pops, hyp_stats, conf: ConfigHandler):
-    pop_coal_stats_template, pop_num_coals_template = conf.get_hyp_coal_templates()
-    num_columns_map = {pop_num_coals_template.format(pop=p): p for p in pops}
-    num_coals = copy_then_rename_columns(hyp_stats, num_columns_map)
-    stats_columns_map = {pop_coal_stats_template.format(pop=p): p for p in pops}
-    coal_stats = copy_then_rename_columns(hyp_stats, stats_columns_map)
-    return coal_stats, num_coals
-
-
-def _get_comb_thetas(trace: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, populations, _, _ = conf.get_comb_reference_tree()
-    pops = populations + [comb] + comb_leaves
-    return _get_thetas(pops, trace, conf)
-
-
-def _get_clade_thetas(trace: pd.DataFrame, conf: ConfigHandler):
-    clade, populations, _ = conf.get_clade_reference_tree()
-    all_pops = populations + [clade]
-    return _get_thetas(all_pops, trace, conf)
-
-
-def _get_thetas(pops, trace, conf):
-    theta_print_factor, theta_template = conf.get_theta_setup()
-
-    theta_columns = [theta_template.format(pop=p) for p in pops]
-    thetas = trace[theta_columns].divide(theta_print_factor).copy()  # type: pd.DataFrame
-    columns_map = {theta_template.format(pop=p): p for p in pops}
-    thetas.rename(columns=columns_map, inplace=True)
-    return thetas
-
-
-def _get_comb_num_coals(comb_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler):
-    comb, comb_leaves, populations, _, _ = conf.get_comb_reference_tree()
-    comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template = conf.get_comb_num_coals_templates()
-
-    columns_map = {comb_num_coals_template.format(comb=comb): comb}
-    columns_map.update({comb_leaf_num_coals_template.format(comb=comb, leaf=l): l for l in comb_leaves})
-    columns_map.update({pop_num_coals_template.format(pop=p): p for p in populations})
-
-    num_coal = copy_then_rename_columns(comb_stats, columns_map)
-    return num_coal
 
 
 def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler):
