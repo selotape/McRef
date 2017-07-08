@@ -34,8 +34,10 @@ def clade_model_compare(simulation):
 def _comb_model_compare(conf: ConfigHandler):
     comb_stats = conf.load_comb_data()
     trace = conf.load_trace_data()
-    comb_stats, trace = align_by_index(comb_stats, trace)
-    results_data = _calculate_comb_likelihoods(comb_stats, trace, conf)
+    hyp_stats = conf.load_hyp_data()
+
+    # comb_stats, trace = align_by_index(comb_stats, trace)
+    results_data = _calculate_comb_likelihoods(comb_stats, hyp_stats, trace, conf)
     if conf.is_debug_enabled():
         _calc_hyp_gene_likelihood(results_data, comb_stats, trace, conf)
         _debug_calc_coal_stats(results_data, comb_stats, comb_stats, conf)
@@ -55,9 +57,9 @@ def _clade_model_compare(conf: ConfigHandler):
     _clade_save_results(results_data, results_analysis, conf)
 
 
-def _calculate_comb_likelihoods(comb_stats, trace, conf: ConfigHandler):
+def _calculate_comb_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
-    results_data['ref_gene_likelihood'] = _calc_comb_ref_gene_likelihood(comb_stats, trace, conf)
+    results_data['ref_gene_likelihood'] = _calc_comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
@@ -74,21 +76,21 @@ def _calculate_clade_likelihoods(comb_stats, trace, conf):
     return results_data
 
 
-def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, populations, migration_bands = conf.get_reference_tree()
+def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+    comb, comb_leaves, populations, comb_mig_bands, _ = conf.get_comb_reference_tree()
 
     all_pops = [comb] + comb_leaves + populations
     thetas = _get_thetas(all_pops, trace, conf)
-    mig_rates = _get_migrates(migration_bands, trace, conf)
-    num_migs = _get_comb_num_migs(comb_stats, conf)
-    mig_stats = _get_comb_mig_stats(comb_stats, conf)
-    num_coal = _get_comb_num_coals(comb_stats, conf)
-    coal_stats = _get_comb_coal_stats(comb_stats, conf)
+    mig_rates = _get_migrates(comb_mig_bands, trace, conf)
+    num_migs = _get_comb_num_migs(comb_stats, hyp_stats, conf)
+    mig_stats = _get_comb_mig_stats(comb_stats, hyp_stats, conf)
+    num_coal = _get_comb_num_coals(comb_stats, hyp_stats, conf)
+    coal_stats = _get_comb_coal_stats(comb_stats, hyp_stats, conf)
 
     objects_to_sum = pd.DataFrame()
     for pop in all_pops:
         objects_to_sum[pop] = kingman_coalescent(thetas[pop], num_coal[pop], coal_stats[pop])
-    for mig in migration_bands:
+    for mig in comb_mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
     if conf.is_debug_enabled():
@@ -132,8 +134,8 @@ def _get_migrates(migration_bands, trace, conf: ConfigHandler):
     return mig_rates
 
 
-def _get_comb_mig_stats(comb_stats, conf: ConfigHandler):
-    comb, _, _, migration_bands = conf.get_reference_tree()
+def _get_comb_mig_stats(comb_stats, hyp_stats, conf: ConfigHandler):
+    comb, _, _, migration_bands, _ = conf.get_comb_reference_tree()
     comb_migband_num_migs_template, _ = conf.get_comb_migs_templates()
 
     mig_stats_columns = [comb_migband_num_migs_template.format(comb=comb, migband=mb) for mb in migration_bands]
@@ -162,13 +164,13 @@ def _get_hyp_mig_stats(clade_stats, conf: ConfigHandler):
     return mig_stats
 
 
-def _get_comb_num_migs(comb_stats, conf: ConfigHandler):
-    comb, _, _, migration_bands = conf.get_reference_tree()
+def _get_comb_num_migs(comb_stats, hyp_stats, conf: ConfigHandler):
+    comb, _, _, leaf_mig_bands, _ = conf.get_comb_reference_tree()
     _, comb_mig_stats_template = conf.get_comb_migs_templates()
 
-    num_migs_columns = [comb_mig_stats_template.format(comb=comb, migband=mb) for mb in migration_bands]
+    num_migs_columns = [comb_mig_stats_template.format(comb=comb, migband=mb) for mb in leaf_mig_bands]
     num_migs = comb_stats[num_migs_columns]
-    num_migs.columns = migration_bands  # TODO unify column renaming methods
+    num_migs.columns = leaf_mig_bands  # TODO unify column renaming methods
     return num_migs
 
 
@@ -196,8 +198,8 @@ def _get_all_hyp_mig_stats(hyp_stats, mig_bands, conf: ConfigHandler):
     return mig_stats, num_migs
 
 
-def _get_comb_coal_stats(comb_stats, conf: ConfigHandler):
-    comb, comb_leaves, populations, _ = conf.get_reference_tree()
+def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
+    comb, comb_leaves, populations, _, _ = conf.get_comb_reference_tree()
     comb_coal_stats_template, comb_leaf_coal_stats_template = conf.get_comb_coal_stats_templates()
     pop_coal_stats_template, _ = conf.get_hyp_coal_templates()
 
@@ -230,7 +232,7 @@ def _get_all_hyp_coal_stats(pops, hyp_stats, conf: ConfigHandler):
 
 
 def _get_comb_thetas(trace: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, populations, _ = conf.get_reference_tree()
+    comb, comb_leaves, populations, _, _ = conf.get_comb_reference_tree()
     pops = populations + [comb] + comb_leaves
     return _get_thetas(pops, trace, conf)
 
@@ -251,8 +253,8 @@ def _get_thetas(pops, trace, conf):
     return thetas
 
 
-def _get_comb_num_coals(comb_stats: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, populations, _ = conf.get_reference_tree()
+def _get_comb_num_coals(comb_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler):
+    comb, comb_leaves, populations, _, _ = conf.get_comb_reference_tree()
     comb_leaf_num_coals_template, comb_num_coals_template, pop_num_coals_template = conf.get_comb_num_coals_template()
 
     columns_map = {comb_num_coals_template.format(comb=comb): comb}
@@ -298,7 +300,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 
 
 def _debug_calc_coal_stats(results_data: pd.DataFrame, comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, ref_pops, _ = conf.get_reference_tree()
+    comb, comb_leaves, ref_pops, _, _ = conf.get_comb_reference_tree()
     hyp_pops, _ = conf.get_hypothesis_tree()
 
     pop_coal_stats_template, _ = conf.get_hyp_coal_templates()
@@ -359,11 +361,11 @@ def _clade_save_results(results_data: pd.DataFrame, results_stats: dict, conf: C
 
 
 def _summarize(results_stats: dict, conf: ConfigHandler):
-    comb, comb_leaves, populations, migration_bands = conf.get_reference_tree()
+    comb, comb_leaves, populations, comb_mig_bands, _ = conf.get_comb_reference_tree()
     simulation_name = conf.simulation.split('/')[-1]
     formatted_leaves = ','.join(comb_leaves)
     formatted_pops = ','.join(populations)
-    formatted_migbands = ','.join(migration_bands)
+    formatted_migbands = ','.join(comb_mig_bands)
     intro_template = "Summary:\n" + \
                      "Simulation: %s\n" % simulation_name + \
                      "Comb: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"

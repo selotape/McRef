@@ -22,6 +22,7 @@ class ConfigHandler:
         comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
         comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
         comb_stats = pd.read_csv(comb_stats_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
+        assert len(comb_stats) > 1, "comb_stats contained no data"
         logger.info("Loaded comb_stats data")
 
         return comb_stats
@@ -48,7 +49,7 @@ class ConfigHandler:
     def load_hyp_data(self):
         simulation_path = self.get_simulation_path()
         burn_in = self.get_burn_in()
-        hyp_file_name = self.config.get('Debug', 'hyp_stats_file_name')
+        hyp_file_name = self.config.get('Input', 'hyp_stats_file_name')
         hyp_path = simulation_path + '/' + hyp_file_name
         hyp_stats = pd.read_csv(hyp_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
         logger.info("Loaded trace data")
@@ -60,15 +61,16 @@ class ConfigHandler:
     def get_simulation_path(self):
         return self.simulation
 
-    def get_reference_tree(self):
+    def get_comb_reference_tree(self):
         comb = self.config.get('ReferenceModel', 'comb')
         comb_leaves = self.config.get('ReferenceModel', 'comb_leaves').split(',')
         pops = self.config.get('ReferenceModel', 'pops').split(',')
-        mig_bands = self.config.get('ReferenceModel', 'mig_bands').split(',')
+        comb_mig_bands = self.config.get('ReferenceModel', 'comb_mig_bands').split(',')
+        hyp_mig_bands = self.config.get('ReferenceModel', 'hyp_mig_bands').split(',')
 
-        comb_leaves, mig_bands, pops = remove_empty_strings(comb_leaves, mig_bands, pops)
+        comb_leaves, comb_mig_bands, pops = remove_empty_strings(comb_leaves, comb_mig_bands, pops)
 
-        return comb, comb_leaves, pops, mig_bands
+        return comb, comb_leaves, pops, comb_mig_bands, hyp_mig_bands
 
     def get_clade_reference_tree(self):
         clade = self.config.get('ReferenceModel', 'clade')
