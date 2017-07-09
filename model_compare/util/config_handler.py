@@ -10,11 +10,12 @@ logger = module_logger(__name__)
 
 
 class ConfigHandler:
-    def __init__(self, simulation):
+    def __init__(self, simulation, is_clade):
         self.simulation = simulation
         self.config = configparser.ConfigParser()
         # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
         self.config.read(['config.ini', 'model_compare/config.ini', '%s/config.ini' % simulation])
+        self.clade_enabled = is_clade
 
     def load_comb_data(self):
         simulation_path = self.get_simulation_path()
@@ -173,6 +174,9 @@ class ConfigHandler:
     def get_log_conf(self):
         return (self.config.get('Logging', 'level', fallback='INFO'),
                 self.config.get('Logging', 'file_name', fallback='model_compare.log'))
+
+    def is_clade_enabled(self):
+        return self.clade_enabled
 
 
 def remove_empty_strings(comb_leaves, mig_bands, pops):  # TODO - accept any number of args
