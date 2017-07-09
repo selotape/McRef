@@ -172,29 +172,6 @@ def _get_hyp_mig_stats(mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.DataFra
     return mig_stats, num_migs
 
 
-def _get_all_hyp_mig_stats(hyp_stats, mig_bands, conf: ConfigHandler):
-    hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
-
-    num_migs_columns = [hyp_num_migs_template.format(migband=mb) for mb in mig_bands]
-    num_migs = hyp_stats[num_migs_columns]
-    num_migs.columns = mig_bands
-
-    mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in mig_bands]
-    mig_stats = hyp_stats[mig_stats_columns]
-    mig_stats.columns = mig_bands
-
-    return mig_stats, num_migs
-
-
-def _get_all_hyp_coal_stats(pops, hyp_stats, conf: ConfigHandler):
-    pop_coal_stats_template, pop_num_coals_template = conf.get_hyp_coal_templates()
-    num_columns_map = {pop_num_coals_template.format(pop=p): p for p in pops}
-    num_coals = copy_then_rename_columns(hyp_stats, num_columns_map)
-    stats_columns_map = {pop_coal_stats_template.format(pop=p): p for p in pops}
-    coal_stats = copy_then_rename_columns(hyp_stats, stats_columns_map)
-    return coal_stats, num_coals
-
-
 def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
     comb, comb_leaves, hyp_pops, _, _ = conf.get_comb_reference_tree()
     comb_coal_stats_template, comb_leaf_coal_stats_template = conf.get_comb_coal_stats_templates()
@@ -245,8 +222,8 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 
     thetas = _get_thetas(pops, trace, conf)
     mig_rates = _get_migrates(mig_bands, trace, conf)
-    mig_stats, num_migs = _get_all_hyp_mig_stats(hyp_stats, mig_bands, conf)
-    num_coals, coal_stats = _get_all_hyp_coal_stats(pops, hyp_stats, conf)
+    mig_stats, num_migs = _get_hyp_mig_stats(mig_bands, hyp_stats, conf)
+    num_coals, coal_stats = _get_hyp_coal_stats(pops, hyp_stats, conf)
 
     objects_to_sum = pd.DataFrame()
     for pop in pops:
@@ -266,7 +243,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 def _debug_calc_coal_stats(results_data: pd.DataFrame, comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
     _, comb_coal_stats = _get_comb_coal_stats(comb_stats, hyp_stats, conf)
     hyp_pops, _ = conf.get_hypothesis_tree()
-    hyp_coal_stats, _ = _get_all_hyp_coal_stats(hyp_pops, hyp_stats, conf)
+    hyp_coal_stats, _ = _get_hyp_coal_stats(hyp_pops, hyp_stats, conf)
 
     results_data['hyp_coal_stats'] = hyp_coal_stats.sum(axis=1)
     results_data['ref_coal_stats'] = comb_coal_stats.sum(axis=1)
