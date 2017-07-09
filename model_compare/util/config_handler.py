@@ -52,7 +52,7 @@ class ConfigHandler:
         hyp_file_name = self.config.get('Input', 'hyp_stats_file_name')
         hyp_path = simulation_path + '/' + hyp_file_name
         hyp_stats = pd.read_csv(hyp_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
-        logger.info("Loaded trace data")
+        logger.info("Loaded hyp_stats data")
         return hyp_stats
 
     def get_burn_in(self):
@@ -110,23 +110,6 @@ class ConfigHandler:
         return (results_directory, debug_directory, results_path, likelihoods_plot_path, expectation_plot_path,
                 harmonic_mean_plot_path, summary_path)
 
-    def get_column_name_templates(self):
-
-        theta = self.config.get('Templates', 'theta', fallback='theta_{pop}')
-        mig_rate = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
-        pop_num_coals_template = self.config.get('Templates', 'pop_num_coals', fallback='P_{pop} nc')
-        pop_coal_stats_template = self.config.get('Templates', 'pop_coal_stats', fallback='P_{pop} cs')
-        comb_coal_stats_template = self.config.get('Templates', 'comb_coal_stats', fallback='C_{comb} cs')
-        comb_num_coals_template = self.config.get('Templates', 'comb_num_coals', fallback='C_{comb} nc')
-        comb_leaf_num_coals_template = self.config.get('Templates', 'comb_leaf_num_coals', fallback='C_{comb}_{leaf} nc')
-        comb_leaf_coal_stats_template = self.config.get('Templates', 'comb_leaf_coal_stats', fallback='C_{comb}_{leaf} cs')
-        comb_migband_mig_stats_template = self.config.get('Templates', 'comb_migband_mig_stats', fallback='C_{comb}_{migband} ms')
-        comb_migband_num_migs_template = self.config.get('Templates', 'comb_migband_num_migs', fallback='C_{comb}_{migband} nm')
-
-        return (theta, mig_rate, comb_num_coals_template, comb_leaf_num_coals_template, pop_num_coals_template,
-                comb_coal_stats_template, comb_leaf_coal_stats_template, pop_coal_stats_template,
-                comb_migband_mig_stats_template, comb_migband_num_migs_template)
-
     def get_print_factors(self):
         theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
         mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor', fallback=0.1)
@@ -142,6 +125,11 @@ class ConfigHandler:
         comb_num_coals_template = self.config.get('Templates', 'comb_num_coals', fallback='C_{comb} nc')
         return comb_leaf_num_coals_template, comb_num_coals_template
 
+    def get_comb_coal_stats_templates(self):
+        comb_coal_stats_template = self.config.get('Templates', 'comb_coal_stats', fallback='C_{comb} cs')
+        comb_leaf_coal_stats_template = self.config.get('Templates', 'comb_leaf_coal_stats', fallback='C_{comb}_{leaf} cs')
+        return comb_coal_stats_template, comb_leaf_coal_stats_template
+
     def get_clade_coal_templates(self):
         clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
@@ -151,15 +139,6 @@ class ConfigHandler:
         theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
         theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
         return theta_print_factor, theta_template
-
-    def get_comb_coal_stats_templates(self):
-        comb_coal_stats_template = self.config.get('Templates', 'comb_coal_stats', fallback='C_{comb} cs')
-        comb_leaf_coal_stats_template = self.config.get('Templates', 'comb_leaf_coal_stats', fallback='C_{comb}_{leaf} cs')
-        return comb_coal_stats_template, comb_leaf_coal_stats_template
-
-    def get_clade_coal_stats_templates(self):
-        clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
-        return clade_coal_stats_template, pop_coal_stats_template
 
     def get_hyp_coal_templates(self):
         pop_coal_stats_template = self.config.get('Templates', 'pop_coal_stats', fallback='P_{pop} cs')
