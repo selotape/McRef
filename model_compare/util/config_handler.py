@@ -109,8 +109,8 @@ class ConfigHandler:
         return comb_num_migs_template, comb_mig_stats_template
 
     def get_hyp_coal_templates(self):
-        pop_coal_stats_template = self.config.get('Templates', 'pop_coal_stats', fallback='P_{pop} cs')
-        pop_num_coals_template = self.config.get('Templates', 'pop_num_coals', fallback='P_{pop} nc')
+        pop_coal_stats_template = self.config.get('Templates', 'hyp_pop_coal_stats', fallback='P_{pop} cs')
+        pop_num_coals_template = self.config.get('Templates', 'hyp_pop_num_coals', fallback='P_{pop} nc')
         return pop_coal_stats_template, pop_num_coals_template
 
     def get_hyp_mig_templates(self):
