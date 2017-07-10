@@ -97,8 +97,7 @@ def _calc_clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace:
 
 
 def _get_migrates(mig_bands, trace, conf: ConfigHandler):
-    _, mig_rate_print_factor = conf.get_print_factors()
-    mig_rate_template = conf.get_migrate_template()
+    mig_rate_print_factor, mig_rate_template = conf.get_migrate_setup()
     mig_rate_columns = [mig_rate_template.format(migband=mb) for mb in mig_bands]
     mig_rates = trace[mig_rate_columns].divide(mig_rate_print_factor).copy()
     mig_rates.columns = mig_bands
