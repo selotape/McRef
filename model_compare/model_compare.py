@@ -13,63 +13,38 @@ def model_compare(simulation, is_clade):
 
     configure_logging(*conf.get_log_conf())
     try:
-        if is_clade:
-            _clade_model_compare(conf)
-        else:
-            _comb_model_compare(conf)
+        _model_compare(conf)
     except:
         log.exception("Failure during model_compare")
     log.info("===== Done! =====")
 
 
-def _comb_model_compare(conf: ConfigHandler):
-    comb_stats = conf.load_comb_data()
+def _model_compare(conf: ConfigHandler):
+    ref_stats = conf.load_ref_data()
     trace = conf.load_trace_data()
     hyp_stats = conf.load_hyp_data()
 
-    results_data = _calculate_comb_likelihoods(comb_stats, hyp_stats, trace, conf)
+    results_data = _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf)
 
     if conf.is_debug_enabled():
         _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
-        _debug_coal_stats(results_data, comb_stats, hyp_stats, conf)
+        _debug_coal_stats(results_data, ref_stats, hyp_stats, conf)
 
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
-    experiment_summary = _comb_summarize(results_analysis, conf)
+    experiment_summary = _summarize(results_analysis, conf)
     _save_results(results_data, experiment_summary, conf)
 
 
-def _clade_model_compare(conf: ConfigHandler):
-    clade_stats = conf.load_clade_data()
-    trace = conf.load_trace_data()
-    hyp_stats = conf.load_hyp_data()
-
-    results_data = _calculate_clade_likelihoods(clade_stats, hyp_stats, trace, conf)
-
-    if conf.is_debug_enabled():
-        _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
-        _debug_coal_stats(results_data, clade_stats, hyp_stats, conf)
-
-    results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
-    experiment_summary = _clade_summarize(results_analysis, conf)
-    _save_results(results_data, experiment_summary, conf)
-
-
-def _calculate_comb_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
+def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
-    results_data['ref_gene_likelihood'] = _calc_comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
+    if conf.is_clade_enabled():
+        results_data['ref_gene_likelihood'] = _calc_clade_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
+    else:
+        results_data['ref_gene_likelihood'] = _calc_comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
 
-    return results_data
-
-
-def _calculate_clade_likelihoods(clade_stats, hyp_stats, trace, conf):
-    results_data = pd.DataFrame()
-    results_data['ref_gene_likelihood'] = _calc_clade_ref_gene_likelihood(clade_stats, hyp_stats, trace, conf)
-    results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
-    results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
-    results_data['harmonic_mean'] = -trace['Data-ld-ln']
     return results_data
 
 
@@ -275,6 +250,13 @@ def _save_results(results_data: pd.DataFrame, experiment_summary: str, conf: Con
 
     if conf.should_save_results():
         results_data.to_csv(results_path)
+
+
+def _summarize(results_analysis, conf):
+    if conf.is_clade_enabled:
+        return _clade_summarize(results_analysis, conf)
+    else:
+        return _comb_summarize(results_analysis, conf)
 
 
 def _comb_summarize(results_analysis: dict, conf: ConfigHandler):

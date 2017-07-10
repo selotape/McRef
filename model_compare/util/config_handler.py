@@ -17,44 +17,29 @@ class ConfigHandler:
         self.config.read(['config.ini', 'model_compare/config.ini', '%s/config.ini' % simulation])
         self.clade_enabled = is_clade
 
-    def load_comb_data(self):
-        simulation_path = self.get_simulation_path()
-        burn_in = self.get_burn_in()
-        comb_stats_name = self.config.get('Input', 'comb_stats_file_name')
-        comb_stats_path = simulation_path + '/' + comb_stats_name  # TODO - use system fs separator
-        comb_stats = pd.read_csv(comb_stats_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
-        assert len(comb_stats) > 1, "comb_stats contained no data"
-        logger.info("Loaded comb_stats data")
-
-        return comb_stats
-
-    def load_clade_data(self):
-        simulation_path = self.get_simulation_path()
-        burn_in = self.get_burn_in()
-        clade_stats_name = self.config.get('Input', 'clade_stats_file_name')
-        clade_stats_path = simulation_path + '/' + clade_stats_name
-        clade_stats = pd.read_csv(clade_stats_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
-        logger.info("Loaded clade_stats data")
-
-        return clade_stats
+    def load_ref_data(self):
+        if self.is_clade_enabled():
+            ref_stats = self._load_input_file('clade_stats_file')
+        else:
+            ref_stats = self._load_input_file('comb_stats_file')
+        return ref_stats
 
     def load_trace_data(self):
-        simulation_path = self.get_simulation_path()
-        burn_in = self.get_burn_in()
-        trace_file_name = self.config.get('Input', 'trace_file_name')
-        trace_path = simulation_path + '/' + trace_file_name
-        trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='Sample')
-        logger.info("Loaded trace data")
+        trace = self._load_input_file('trace_file', index_col='Sample')
         return trace
 
     def load_hyp_data(self):
+        hyp_stats = self._load_input_file('hyp_stats_file')
+        return hyp_stats
+
+    def _load_input_file(self, config_key, index_col='iteration'):
         simulation_path = self.get_simulation_path()
         burn_in = self.get_burn_in()
-        hyp_file_name = self.config.get('Input', 'hyp_stats_file_name')
-        hyp_path = simulation_path + '/' + hyp_file_name
-        hyp_stats = pd.read_csv(hyp_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col='iteration')
-        logger.info("Loaded hyp_stats data")
-        return hyp_stats
+        trace_file_name = self.config.get('Input', config_key)
+        trace_path = simulation_path + '/' + trace_file_name
+        trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col=index_col)
+        logger.info("Loaded " + config_key)
+        return trace
 
     def get_burn_in(self):
         return self.config.getint('Data', 'skip_rows', fallback=0)
