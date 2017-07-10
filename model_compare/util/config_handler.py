@@ -90,7 +90,7 @@ class ConfigHandler:
         expectation_plot_path = results_directory + '/' + self.config.get('Output', 'expectation_plot_name', fallback='rbf_plot')
         harmonic_mean_plot_path = results_directory + '/' + self.config.get('Output', 'harmonic_mean_plot_name', fallback='harmonic_mean_plot')
 
-        return (results_directory, debug_directory, results_path, likelihoods_plot_path, expectation_plot_path,
+        return (debug_directory, results_path, likelihoods_plot_path, expectation_plot_path,
                 harmonic_mean_plot_path, summary_path)
 
     def get_comb_num_coals_templates(self):

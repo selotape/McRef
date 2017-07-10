@@ -28,7 +28,7 @@ def _model_compare(conf: ConfigHandler):
 
     if conf.is_debug_enabled():
         _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
-        _debug_coal_stats(results_data, ref_stats, hyp_stats, conf)
+        _calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
 
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     experiment_summary = _summarize(results_analysis, conf)
@@ -67,7 +67,7 @@ def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataF
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
     if conf.is_debug_enabled():
-        debug_dir = conf.get_results_paths()[1]
+        debug_dir = conf.get_results_paths()[0]
         save_plot(objects_to_sum, debug_dir + '/pop_ln_ld', 'Kingman coal & mig of Reference Model')
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
@@ -206,7 +206,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
     for mig in hyp_mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
-    debug_dir = conf.get_results_paths()[1]
+    debug_dir = conf.get_results_paths()[0]
     save_plot(objects_to_sum, debug_dir + '/hyp_ln_ld', 'Kingman coal & mig of Hypothesis Model')
 
     hyp_gene_likelihood = objects_to_sum.sum(axis=1)
@@ -215,7 +215,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
     results_data['debug_hyp_gene_likelihood'] = hyp_gene_likelihood
 
 
-def _debug_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
+def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
     if conf.is_clade_enabled():
         _, ref_coal_stats = _get_clade_coal_stats(ref_stats, hyp_stats, conf)
     else:
@@ -230,7 +230,7 @@ def _debug_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_s
 
 
 def _save_results(results_data: pd.DataFrame, experiment_summary: str, conf: ConfigHandler):
-    (results_directory, debug_directory, results_path, likelihoods_plot_path,
+    (debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.get_results_paths()
 
     sim_name = conf.simulation.split("/")[-1]
