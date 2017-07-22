@@ -252,7 +252,7 @@ def _save_results(results_data: pd.DataFrame, experiment_summary: str, conf: Con
 
 
 def _summarize(results_analysis, conf):
-    if conf.is_clade_enabled:
+    if conf.is_clade_enabled():
         return _clade_summarize(results_analysis, conf)
     else:
         return _comb_summarize(results_analysis, conf)
