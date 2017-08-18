@@ -11,7 +11,7 @@ log = module_logger(__name__)
 def model_compare(simulation, is_clade):
     conf = ConfigHandler(simulation, is_clade)
 
-    configure_logging(*conf.get_log_conf())
+    configure_logging(*conf.log_conf)
     try:
         _model_compare(conf)
     except:
@@ -26,7 +26,7 @@ def _model_compare(conf: ConfigHandler):
 
     results_data = _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf)
 
-    if conf.is_debug_enabled():
+    if conf.debug_enabled:
         _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
         _calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
 
@@ -37,7 +37,7 @@ def _model_compare(conf: ConfigHandler):
 
 def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
-    if conf.is_clade_enabled():
+    if conf.clade_enabled:
         results_data['ref_gene_likelihood'] = _calc_clade_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
     else:
         results_data['ref_gene_likelihood'] = _calc_comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
@@ -66,7 +66,7 @@ def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataF
     for mig in all_mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
-    if conf.is_debug_enabled():
+    if conf.debug_enabled:
         debug_dir = conf.get_results_paths()[0]
         save_plot(objects_to_sum, debug_dir + '/pop_ln_ld', 'Kingman coal & mig of Reference Model')
 
@@ -216,7 +216,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 
 
 def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
-    if conf.is_clade_enabled():
+    if conf.clade_enabled:
         _, ref_coal_stats = _get_clade_coal_stats(ref_stats, hyp_stats, conf)
     else:
         _, ref_coal_stats = _get_comb_coal_stats(ref_stats, hyp_stats, conf)
@@ -233,12 +233,12 @@ def _save_results(results_data: pd.DataFrame, experiment_summary: str, conf: Con
     (debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.get_results_paths()
 
-    sim_name = conf.simulation.split("/")[-1]
+    sim_name = conf.simulation_path.split("/")[-1]
     save_plot(results_data[['ref_gene_likelihood', 'hyp_gene_likelihood']], likelihoods_plot_path, sim_name)
     save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
     save_plot(results_data[['rbf_ratio']], expectation_plot_path, sim_name)
 
-    if conf.is_debug_enabled():
+    if conf.debug_enabled:
         save_plot(results_data[['ref_gene_likelihood', 'debug_hyp_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods',
                   sim_name)
         save_plot(results_data[['ref_coal_stats', 'hyp_coal_stats']], debug_directory + '/coal_stats', sim_name)
@@ -247,12 +247,12 @@ def _save_results(results_data: pd.DataFrame, experiment_summary: str, conf: Con
         log.info(experiment_summary)
         f.write(experiment_summary)
 
-    if conf.should_save_results():
+    if conf.should_save_results:
         results_data.to_csv(results_path)
 
 
-def _summarize(results_analysis, conf):
-    if conf.is_clade_enabled():
+def _summarize(results_analysis, conf: ConfigHandler):
+    if conf.clade_enabled:
         return _clade_summarize(results_analysis, conf)
     else:
         return _comb_summarize(results_analysis, conf)
@@ -260,7 +260,7 @@ def _summarize(results_analysis, conf):
 
 def _comb_summarize(results_analysis: dict, conf: ConfigHandler):
     comb, comb_leaves, populations, leaf_mig_bands, _ = conf.get_comb_reference_tree()
-    simulation_name = conf.simulation.split('/')[-1]
+    simulation_name = conf.simulation_path.split('/')[-1]
     formatted_leaves = ','.join(comb_leaves)
     formatted_pops = ','.join(populations)
     formatted_migbands = ','.join(leaf_mig_bands)
@@ -279,7 +279,7 @@ def _comb_summarize(results_analysis: dict, conf: ConfigHandler):
 
 def _clade_summarize(results_analysis: dict, conf: ConfigHandler):
     clade, populations, migration_bands = conf.get_clade_reference_tree()
-    simulation_name = conf.simulation.split('/')[-1]
+    simulation_name = conf.simulation_path.split('/')[-1]
     formatted_pops = ','.join(populations)
     formatted_migbands = ','.join(migration_bands)
     intro_template = "Summary:\n" + \

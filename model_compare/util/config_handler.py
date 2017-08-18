@@ -8,20 +8,23 @@ from model_compare.util.log import module_logger
 
 logger = module_logger(__name__)
 
+
 #   TODO - remove all references to actually not supported comb-mig-bands
 class ConfigHandler:
-    def __init__(self, simulation, is_clade):
-        self.simulation = simulation
+    def __init__(self, simulation_path, is_clade):
+        self.simulation_path = simulation_path
         self.config = configparser.ConfigParser()
         # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
-        self.config.read(['config.ini', 'model_compare/config.ini', '%s/config.ini' % simulation])
+        self.config.read(['config.ini', 'model_compare/config.ini', '%s/config.ini' % simulation_path])
         self.clade_enabled = is_clade
+        self.debug_enabled = self.config.getboolean('Debug', 'enabled', fallback=False)
+        self.should_save_results = self.config.getboolean("Output", "save_data", fallback=False)
+        self.skip_rows = self.config.getint('Data', 'skip_rows', fallback=0)
+        self.log_conf = (self.config.get('Logging', 'level', fallback='INFO'), self.config.get('Logging', 'file_name', fallback='model_compare.log'))
 
     def load_ref_data(self):
-        if self.is_clade_enabled():
-            ref_stats = self._load_input_file('clade_stats_file')
-        else:
-            ref_stats = self._load_input_file('comb_stats_file')
+        stats_file_config = 'clade_stats_file' if self.clade_enabled else 'comb_stats_file'
+        ref_stats = self._load_input_file(stats_file_config)
         return ref_stats
 
     def load_trace_data(self):
@@ -33,50 +36,38 @@ class ConfigHandler:
         return hyp_stats
 
     def _load_input_file(self, config_key, index_col='iteration'):
-        simulation_path = self.get_simulation_path()
-        burn_in = self.get_burn_in()
-        trace_file_name = self.config.get('Input', config_key)
-        trace_path = simulation_path + '/' + trace_file_name
-        trace = pd.read_csv(trace_path, sep='\t', skiprows=range(1, burn_in), header=0, index_col=index_col)
+        input_file_path = self.config.get('Input', config_key)
+        trace = pd.read_csv(input_file_path, sep='\t', skiprows=range(1, self.skip_rows), header=0, index_col=index_col)
         logger.info("Loaded " + config_key)
         return trace
 
-    def get_simulation_path(self):
-        return self.simulation
-
     def get_comb_reference_tree(self):
-        comb = self.config.get('ReferenceModel', 'comb')
-        comb_leaves = self.config.get('ReferenceModel', 'comb_leaves').split(',')
-        hyp_pops = self.config.get('ReferenceModel', 'hyp_pops').split(',')
-        comb_mig_bands = self.config.get('ReferenceModel', 'comb_mig_bands').split(',')
-        hyp_mig_bands = self.config.get('ReferenceModel', 'hyp_mig_bands').split(',')
-
-        for l in comb_leaves, comb_mig_bands, hyp_pops, hyp_mig_bands:
-            l[:] = [i.strip() for i in l if i]
+        comb = self.config.get('ReferenceModel', 'comb').strip()
+        comb_leaves = self._fetch_config_list('ReferenceModel', 'comb_leaves')
+        hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
+        comb_mig_bands = self._fetch_config_list('ReferenceModel', 'comb_mig_bands')
+        hyp_mig_bands = self._fetch_config_list('ReferenceModel', 'hyp_mig_bands')
 
         return comb, comb_leaves, hyp_pops, comb_mig_bands, hyp_mig_bands
 
     def get_clade_reference_tree(self):
-        clade = self.config.get('ReferenceModel', 'clade')
-        hyp_pops = self.config.get('ReferenceModel', 'hyp_pops').split(',')
-        hyp_mig_bands = self.config.get('ReferenceModel', 'hyp_mig_bands').split(',')
-
-        for l in hyp_pops, hyp_mig_bands:
-            l[:] = [i.strip() for i in l if i]
+        clade = self.config.get('ReferenceModel', 'clade').strip()
+        hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
+        hyp_mig_bands = self._fetch_config_list('ReferenceModel', 'hyp_mig_bands')
 
         return clade, hyp_pops, hyp_mig_bands
 
     def get_hypothesis_tree(self):
-        pops = self.config.get('Debug', 'hypothesis_pops').split(',')
-        migs = self.config.get('Debug', 'hypothesis_migbands').split(',')
-
-        pops = list(filter(None, pops))
-        migs = list(filter(None, migs))
+        pops = self._fetch_config_list('Debug', 'hypothesis_pops')
+        migs = self._fetch_config_list('Debug', 'hypothesis_migbands')
 
         return pops, migs
 
+    def _fetch_config_list(self, section, key):
+        return [v.strip() for v in self.config.get(section, key).split(',') if v]
+
     def get_results_paths(self):
-        simulation_path = self.get_simulation_path()
+        simulation_path = self.simulation_path
         timestamp = time.strftime('%Y%m%d_%H%M')
 
         results_directory = simulation_path + '/' + self.config.get('Output', 'results_directory', fallback='results') + '/' + timestamp
@@ -132,20 +123,3 @@ class ConfigHandler:
         mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor', fallback=0.1)
         mig_rate_template = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
         return mig_rate_print_factor, mig_rate_template
-
-    def get_burn_in(self):
-        return self.config.getint('Data', 'skip_rows', fallback=0)
-
-    def get_log_conf(self):
-        return (self.config.get('Logging', 'level', fallback='INFO'),
-                self.config.get('Logging', 'file_name', fallback='model_compare.log'))
-
-    def is_debug_enabled(self):
-        return self.config.getboolean('Debug', 'enabled', fallback=False)
-
-    def is_clade_enabled(self):
-        return self.clade_enabled
-
-    def should_save_results(self):
-        result = self.config.getboolean("Output", "save_data", fallback=False)
-        return result
