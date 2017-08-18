@@ -8,7 +8,7 @@ from model_compare.util.log import module_logger
 
 logger = module_logger(__name__)
 
-
+#   TODO - remove all references to actually not supported comb-mig-bands
 class ConfigHandler:
     def __init__(self, simulation, is_clade):
         self.simulation = simulation
