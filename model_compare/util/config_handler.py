@@ -22,6 +22,14 @@ class ConfigHandler:
         self.skip_rows = self.config.getint('Data', 'skip_rows', fallback=0)
         self.log_conf = (self.config.get('Logging', 'level', fallback='INFO'), self.config.get('Logging', 'file_name', fallback='model_compare.log'))
 
+        theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
+        theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
+        self.theta_setup = theta_print_factor, theta_template
+
+        mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor', fallback=0.1)
+        mig_rate_template = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
+        self.migrate_setup = mig_rate_print_factor, mig_rate_template
+
     def load_ref_data(self):
         stats_file_config = 'clade_stats_file' if self.clade_enabled else 'comb_stats_file'
         ref_stats = self._load_input_file(stats_file_config)
@@ -112,13 +120,3 @@ class ConfigHandler:
         clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_num_coals_template, clade_coal_stats_template
-
-    def get_theta_setup(self):
-        theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
-        theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
-        return theta_print_factor, theta_template
-
-    def get_migrate_setup(self):
-        mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor', fallback=0.1)
-        mig_rate_template = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
-        return mig_rate_print_factor, mig_rate_template

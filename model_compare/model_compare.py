@@ -96,15 +96,15 @@ def _calc_clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace:
 
 
 def _get_migrates(mig_bands, trace, conf: ConfigHandler):
-    mig_rate_print_factor, mig_rate_template = conf.get_migrate_setup()
+    mig_rate_print_factor, mig_rate_template = conf.migrate_setup
     mig_rate_columns = [mig_rate_template.format(migband=mb) for mb in mig_bands]
     mig_rates = trace[mig_rate_columns].divide(mig_rate_print_factor).copy()
     mig_rates.columns = mig_bands
     return mig_rates
 
 
-def _get_thetas(pops, trace, conf):
-    theta_print_factor, theta_template = conf.get_theta_setup()
+def _get_thetas(pops, trace, conf: ConfigHandler):
+    theta_print_factor, theta_template = conf.theta_setup
 
     theta_columns = [theta_template.format(pop=p) for p in pops]
     thetas = trace[theta_columns].divide(theta_print_factor).copy()  # type: pd.DataFrame
@@ -127,7 +127,7 @@ def _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.Dat
     return mig_stats, num_migs
 
 
-def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
+def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
     comb, comb_leaves, hyp_pops, _ = conf.get_comb_reference_tree()
     comb_coal_stats_template, comb_leaf_coal_stats_template = conf.get_comb_coal_stats_templates()
     comb_leaf_num_coals_template, comb_num_coals_template = conf.get_comb_num_coals_templates()
@@ -146,7 +146,7 @@ def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
     return num_coal, coal_stats
 
 
-def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler):
+def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
     clade, hyp_pops, _ = conf.get_clade_reference_tree()
     clade_num_coals_template, clade_coal_stats_template = conf.get_clade_coal_templates()
 
@@ -196,10 +196,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 
 
 def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
-    if conf.clade_enabled:
-        _, ref_coal_stats = _get_clade_coal_stats(ref_stats, hyp_stats, conf)
-    else:
-        _, ref_coal_stats = _get_comb_coal_stats(ref_stats, hyp_stats, conf)
+    _, ref_coal_stats = _get_clade_coal_stats(ref_stats, hyp_stats, conf) if conf.clade_enabled else _get_comb_coal_stats(ref_stats, hyp_stats, conf)
 
     hyp_pops, _ = conf.get_hypothesis_tree()
     hyp_coal_stats, _ = _get_hyp_coal_stats(hyp_stats, hyp_pops, conf)
