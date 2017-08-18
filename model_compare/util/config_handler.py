@@ -45,10 +45,9 @@ class ConfigHandler:
         comb = self.config.get('ReferenceModel', 'comb').strip()
         comb_leaves = self._fetch_config_list('ReferenceModel', 'comb_leaves')
         hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
-        comb_mig_bands = self._fetch_config_list('ReferenceModel', 'comb_mig_bands')
         hyp_mig_bands = self._fetch_config_list('ReferenceModel', 'hyp_mig_bands')
 
-        return comb, comb_leaves, hyp_pops, comb_mig_bands, hyp_mig_bands
+        return comb, comb_leaves, hyp_pops, hyp_mig_bands
 
     def get_clade_reference_tree(self):
         clade = self.config.get('ReferenceModel', 'clade').strip()

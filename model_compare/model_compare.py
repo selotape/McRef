@@ -49,21 +49,20 @@ def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler
 
 
 def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, hyp_pops, comb_mig_bands, hyp_mig_bands = conf.get_comb_reference_tree()
+    comb, comb_leaves, hyp_pops, hyp_mig_bands = conf.get_comb_reference_tree()
 
     all_pops = [comb] + comb_leaves + hyp_pops
-    all_mig_bands = comb_mig_bands + hyp_mig_bands
 
     thetas = _get_thetas(all_pops, trace, conf)
-    mig_rates = _get_migrates(all_mig_bands, trace, conf)
+    mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
 
-    num_migs, mig_stats = _get_comb_mig_stats(comb_stats, hyp_stats, conf)
+    num_migs, mig_stats = _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf)
     num_coal, coal_stats = _get_comb_coal_stats(comb_stats, hyp_stats, conf)
 
     objects_to_sum = pd.DataFrame()
     for pop in all_pops:
         objects_to_sum[pop] = kingman_coalescent(thetas[pop], num_coal[pop], coal_stats[pop])
-    for mig in all_mig_bands:
+    for mig in hyp_mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
     if conf.debug_enabled:
@@ -114,25 +113,6 @@ def _get_thetas(pops, trace, conf):
     return thetas
 
 
-def _get_comb_mig_stats(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
-    comb, _, _, comb_mig_bands, hyp_mig_bands = conf.get_comb_reference_tree()
-    comb_num_migs_template, comb_mig_stats_template = conf.get_comb_migs_templates()
-
-    hyp_mig_stats, hyp_num_migs = _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf)
-
-    comb_mig_stats_columns = [comb_mig_stats_template.format(comb=comb, migband=mb) for mb in comb_mig_bands]
-    comb_mig_stats = comb_stats[comb_mig_stats_columns]
-    comb_mig_stats.columns = comb_mig_bands
-    mig_stats = pd.concat([hyp_mig_stats, comb_mig_stats], join='inner', axis=1)
-
-    comb_num_migs_columns = [comb_num_migs_template.format(comb=comb, migband=mb) for mb in comb_mig_bands]
-    comb_num_migs = comb_stats[comb_num_migs_columns]
-    comb_num_migs.columns = comb_mig_bands
-    num_migs = pd.concat([comb_num_migs, hyp_num_migs], join='inner', axis=1)
-
-    return num_migs, mig_stats
-
-
 def _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
     hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
 
@@ -148,7 +128,7 @@ def _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.Dat
 
 
 def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler):
-    comb, comb_leaves, hyp_pops, _, _ = conf.get_comb_reference_tree()
+    comb, comb_leaves, hyp_pops, _ = conf.get_comb_reference_tree()
     comb_coal_stats_template, comb_leaf_coal_stats_template = conf.get_comb_coal_stats_templates()
     comb_leaf_num_coals_template, comb_num_coals_template = conf.get_comb_num_coals_templates()
     hyp_coal_stats, hyp_num_coal = _get_hyp_coal_stats(hyp_stats, hyp_pops, conf)
@@ -259,11 +239,11 @@ def _summarize(results_analysis, conf: ConfigHandler):
 
 
 def _comb_summarize(results_analysis: dict, conf: ConfigHandler):
-    comb, comb_leaves, populations, leaf_mig_bands, _ = conf.get_comb_reference_tree()
+    comb, comb_leaves, populations, hyp_mig_bands = conf.get_comb_reference_tree()
     simulation_name = conf.simulation_path.split('/')[-1]
     formatted_leaves = ','.join(comb_leaves)
     formatted_pops = ','.join(populations)
-    formatted_migbands = ','.join(leaf_mig_bands)
+    formatted_migbands = ','.join(hyp_mig_bands)
     intro_template = "Summary:\n" + \
                      "Simulation: %s\n" % simulation_name + \
                      "Comb: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"
