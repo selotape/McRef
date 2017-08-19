@@ -18,7 +18,7 @@ def _parse_args(args):
         simulation = args[0]
     if len(args) == 2:
         if args[1] != '--clade':
-            print_usage_and_exit(err_msg="'%s' is not a valid args" % args[1])
+            print_usage_and_exit(err_msg="'%s' is not a valid argument" % args[1])
         else:
             is_clade = True
 
