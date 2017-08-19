@@ -9,7 +9,6 @@ from model_compare.util.log import module_logger
 logger = module_logger(__name__)
 
 
-#   TODO - remove all references to actually not supported comb-mig-bands
 class ConfigHandler:
     def __init__(self, simulation_path, is_clade):
         self.simulation_path = simulation_path
@@ -29,6 +28,10 @@ class ConfigHandler:
         mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor', fallback=0.1)
         mig_rate_template = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
         self.migrate_setup = mig_rate_print_factor, mig_rate_template
+
+        self.results_paths = self._get_results_paths()
+
+        self.clade_coal_templates = self._get_clade_coal_templates()
 
     def load_ref_data(self):
         stats_file_config = 'clade_stats_file' if self.clade_enabled else 'comb_stats_file'
@@ -73,7 +76,7 @@ class ConfigHandler:
     def _fetch_config_list(self, section, key):
         return [v.strip() for v in self.config.get(section, key).split(',') if v]
 
-    def get_results_paths(self):
+    def _get_results_paths(self):
         simulation_path = self.simulation_path
         timestamp = time.strftime('%Y%m%d_%H%M')
 
@@ -116,7 +119,7 @@ class ConfigHandler:
         hyp_num_migs_template = self.config.get('Templates', 'hyp_migband_num_migs', fallback='MB_{migband} nm')
         return hyp_mig_stats_template, hyp_num_migs_template
 
-    def get_clade_coal_templates(self):
+    def _get_clade_coal_templates(self):
         clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_num_coals_template, clade_coal_stats_template
