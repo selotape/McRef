@@ -12,10 +12,7 @@ def model_compare(simulation, is_clade):
     conf = ConfigHandler(simulation, is_clade)
 
     configure_logging(*conf.log_conf)
-    try:
-        _model_compare(conf)
-    except:
-        log.exception("Failure during model_compare")
+    _model_compare(conf)
     log.info("===== Done! =====")
 
 
@@ -38,9 +35,9 @@ def _model_compare(conf: ConfigHandler):
 def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
     if conf.clade_enabled:
-        results_data['ref_gene_likelihood'] = _calc_clade_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
+        results_data['ref_gene_likelihood'] = _clade_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
     else:
-        results_data['ref_gene_likelihood'] = _calc_comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
+        results_data['ref_gene_likelihood'] = _comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
@@ -48,7 +45,7 @@ def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler
     return results_data
 
 
-def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
     comb, comb_leaves, hyp_pops, hyp_mig_bands = conf.get_comb_reference_tree()
 
     all_pops = [comb] + comb_leaves + hyp_pops
@@ -67,7 +64,7 @@ def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataF
 
     if conf.debug_enabled:
         debug_dir = conf.get_results_paths()[0]
-        save_plot(objects_to_sum, debug_dir + '/pop_ln_ld', 'Kingman coal & mig of Reference Model')
+        save_plot(objects_to_sum, debug_dir + '/ref_ln_ld', 'Kingman coal & mig of Reference Model')
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
     log.info("Calculated reference genealogy likelihood")
@@ -75,7 +72,7 @@ def _calc_comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataF
     return ref_gene_likelihood
 
 
-def _calc_clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.DataFrame, conf: ConfigHandler):
+def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.DataFrame, conf: ConfigHandler):
     clade, hyp_pops, hyp_mig_bands = conf.get_clade_reference_tree()
 
     thetas = _get_thetas(hyp_pops + [clade], trace, conf)
