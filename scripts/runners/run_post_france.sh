@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+cd ~/dev/modelcompare
+rm nohup.out
+
 for sim in migAC_1 migAC_0
 do
     echo "=== ${sim} ==="
@@ -12,8 +15,8 @@ do
 
     for job in `jobs -p`
     do
-    echo $job
-        wait $job
+    echo ${job}
+        wait ${job}
     done
-    echo "\n\n\n\n"
+    echo; echo; echo; echo
 done
