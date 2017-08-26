@@ -16,6 +16,8 @@ def main():
     parser.add_argument("simulations", nargs='+', help="space-delimited list of directories containing model_compare experiments")
     args = parser.parse_args()
 
+    configure_logging('DEBUG', 'model_compare.log')
+
     configured_compare_models = partial(compare_models, is_clade=args.clade)
 
     with ProcessPoolExecutor() as executor:
@@ -30,5 +32,4 @@ def _print_results(results):
 
 
 if __name__ == "__main__":
-    configure_logging('DEBUG', 'model_compare.log')
     main()
