@@ -37,3 +37,8 @@ def with_entry_log(l):
         return logged
 
     return wrapper
+
+
+def tee_log(log_method, message):
+    print(message)
+    log_method(message)

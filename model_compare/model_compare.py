@@ -1,3 +1,4 @@
+import os
 from collections import namedtuple
 
 import pandas as pd
@@ -7,29 +8,35 @@ from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import with_entry_log, module_logger
 from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
 
-log = module_logger(__name__)
+_log = module_logger(__name__)
 
 Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_mean', 'hm_bootstrap'))
 
 
-@with_entry_log(log)
+@with_entry_log(_log)
 def model_compare(simulation, is_clade) -> Result:
-    conf = ConfigHandler(simulation, is_clade)
+    if _is_valid_simulation(simulation):
+        return _model_compare(is_clade, simulation)
+    else:
+        _log.warning("simulation %s isn't valid directory" % simulation)
+        return Result(simulation, None, None, None, None)
 
+
+def _is_valid_simulation(sim):
+    return os.path.isfile(os.path.join(sim, 'config.ini'))
+
+
+def _model_compare(is_clade, simulation):
+    conf = ConfigHandler(simulation, is_clade)
     ref_stats = conf.load_ref_data()
     trace = conf.load_trace_data()
     hyp_stats = conf.load_hyp_data()
-
     results_data = _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf)
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
-    experiment_summary = _summarize(results_analysis, conf)
-
     if conf.debug_enabled:
         _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
         _calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
-
-    _save_results(results_data, experiment_summary, conf)
-
+    _save_results(results_data, conf)
     return _build_result(conf, results_analysis)
 
 
@@ -68,7 +75,7 @@ def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame,
         save_plot(objects_to_sum, debug_dir + '/ref_ln_ld', 'Kingman coal & mig of Reference Model')
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
-    log.info("Calculated reference genealogy likelihood")
+    _log.info("Calculated reference genealogy likelihood")
 
     return ref_gene_likelihood
 
@@ -88,7 +95,7 @@ def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.D
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
-    log.info("Calculated reference genealogy likelihood")
+    _log.info("Calculated reference genealogy likelihood")
 
     return ref_gene_likelihood
 
@@ -189,7 +196,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
     save_plot(objects_to_sum, debug_dir + '/hyp_ln_ld', 'Kingman coal & mig of Hypothesis Model')
 
     hyp_gene_likelihood = objects_to_sum.sum(axis=1)
-    log.info("Calculated hypothesis genealogy likelihood")
+    _log.info("Calculated hypothesis genealogy likelihood")
 
     results_data['debug_hyp_gene_likelihood'] = hyp_gene_likelihood
 
@@ -202,10 +209,10 @@ def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_st
 
     results_data['hyp_coal_stats'] = hyp_coal_stats.sum(axis=1)
     results_data['ref_coal_stats'] = ref_coal_stats.sum(axis=1)
-    log.info("Calculated DEBUG coal stats")
+    _log.info("Calculated DEBUG coal stats")
 
 
-def _save_results(results_data: pd.DataFrame, experiment_summary: str, conf: ConfigHandler):
+def _save_results(results_data: pd.DataFrame, conf: ConfigHandler) -> Result:
     (debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.results_paths
 
@@ -219,56 +226,8 @@ def _save_results(results_data: pd.DataFrame, experiment_summary: str, conf: Con
                   sim_name)
         save_plot(results_data[['ref_coal_stats', 'hyp_coal_stats']], debug_directory + '/coal_stats', sim_name)
 
-    with open(summary_path, 'w') as f:
-        log.info(experiment_summary)
-        f.write(experiment_summary)
-
     if conf.should_save_results:
         results_data.to_csv(results_path)
-
-
-def _summarize(results_analysis, conf: ConfigHandler):
-    if conf.clade_enabled:
-        return _clade_summarize(results_analysis, conf)
-    else:
-        return _comb_summarize(results_analysis, conf)
-
-
-def _comb_summarize(results_analysis: dict, conf: ConfigHandler):
-    comb, comb_leaves, populations, hyp_mig_bands = conf.get_comb_reference_tree()
-    simulation_name = conf.simulation_path.split('/')[-1]
-    formatted_leaves = ','.join(comb_leaves)
-    formatted_pops = ','.join(populations)
-    formatted_migbands = ','.join(hyp_mig_bands)
-    intro_template = "Summary:\n" + \
-                     "Simulation: %s\n" % simulation_name + \
-                     "Comb: {0} | Comb Leaves: {1} | Populations: {2} | Migration Bands: {3}\n"
-    intro = intro_template.format(comb, formatted_leaves, formatted_pops, formatted_migbands)
-
-    results_string = []
-    for column in sorted(list(results_analysis.keys())):
-        results_string.extend([column, ': ', str(results_analysis[column]), '\n'])
-    results_string = ''.join(results_string)
-
-    return intro + results_string
-
-
-def _clade_summarize(results_analysis: dict, conf: ConfigHandler):
-    clade, populations, migration_bands = conf.get_clade_reference_tree()
-    simulation_name = conf.simulation_path.split('/')[-1]
-    formatted_pops = ','.join(populations)
-    formatted_migbands = ','.join(migration_bands)
-    intro_template = "Summary:\n" + \
-                     "Simulation: %s\n" % simulation_name + \
-                     "Comb: {0} | Populations: {1} | Migration Bands: {2}\n"
-    intro = intro_template.format(clade, formatted_pops, formatted_migbands)
-
-    results_string = []
-    for column in sorted(list(results_analysis.keys())):
-        results_string.extend([column, ': ', str(results_analysis[column]), '\n'])
-    results_string = ''.join(results_string)
-
-    return intro + results_string
 
 
 def _build_result(conf, results_analysis):

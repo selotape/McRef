@@ -1,11 +1,12 @@
 import argparse
-import os
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 
 from model_compare import compare_models, Result
 from model_compare.util.general_purpose import timed
-from model_compare.util.log import configure_logging
+from model_compare.util.log import configure_logging, module_logger, tee_log
+
+log = module_logger(__name__)
 
 
 @timed
@@ -23,13 +24,9 @@ def main():
 
 
 def _print_results(results):
-    print(','.join(Result._fields))
+    tee_log(log.info, ','.join(Result._fields))
     for result in results:
-        print(','.join(str(f) for f in result))
-
-
-def is_valid_simulation(sim):
-    return os.path.isdir(sim) and os.path.isfile(sim + '/' + 'config.ini')
+        tee_log(log.info, ','.join(str(f) for f in result))
 
 
 if __name__ == "__main__":
