@@ -10,19 +10,13 @@ def module_logger(name):
     return logging.getLogger(name)
 
 
-def configure_logging(log_level, log_file):
+def configure_logging(log_level, log_file, fmt=DEFAULT_FORMAT):
     logger = logging.getLogger()  # root
     logger.setLevel(log_level)
-    formatter = logging.Formatter(fmt=DEFAULT_FORMAT)
-    if log_file:
-        file_handler = FileHandler(log_file)
-        file_handler.setFormatter(formatter)
-        logger.addHandler(file_handler)
-        print("See log in '%s'\n" % log_file)
-    else:
-        stdout_handler = StreamHandler(sys.stdout)
-        stdout_handler.setFormatter(formatter)
-        logger.addHandler(stdout_handler)
+    formatter = logging.Formatter(fmt=fmt)
+    handler = FileHandler(log_file) if log_file else StreamHandler(sys.stdout)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
 
 def with_entry_log(l):
@@ -42,5 +36,3 @@ def with_entry_log(l):
 def tee_log(log_method, message):
     print(message)
     log_method(message)
-
-
