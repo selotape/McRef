@@ -1,4 +1,5 @@
- sed 's/^\(.*\) Mref=\(.*\) timestamp.*$/Q\1Mref=\2/' | tr "\n" " " | tr "Q" "\n" | \
+#!/usr/bin/env bash
+sed 's/^\(.*\) Mref=\(.*\) timestamp.*$/Q\1Mref=\2/' | tr "\n" " " | tr "Q" "\n" | \
 	sed 's/^\([^[:space:]]*\)\ .*harmonic_mean/\1 harmonic_mean/' | \
 	tr "},{':" "  _"   | \
 	awk '{ \

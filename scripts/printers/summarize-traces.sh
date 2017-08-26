@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # summarize div traces
 # traces=`ls M3.divs/divAB_??/*/trace.tsv`
 
