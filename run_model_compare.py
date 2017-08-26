@@ -2,8 +2,10 @@ import os
 import sys
 
 from model_compare import compare_models
+from util.general_purpose import timed
 
 
+@timed
 def main(args):
     simulation, is_clade = _parse_args(args)
     compare_models(simulation, is_clade)
