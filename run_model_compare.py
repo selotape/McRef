@@ -2,7 +2,7 @@ import os
 import sys
 
 from model_compare import compare_models
-from util.general_purpose import timed
+from model_compare.util.general_purpose import timed
 
 
 @timed
