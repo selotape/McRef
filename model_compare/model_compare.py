@@ -3,7 +3,7 @@ import pandas as pd
 from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import configure_logging, module_logger
-from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot
+from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
 
 log = module_logger(__name__)
 
@@ -12,6 +12,7 @@ def model_compare(simulation, is_clade):
     conf = ConfigHandler(simulation, is_clade)
 
     configure_logging(*conf.log_conf)
+    log.info("===== Starting! =====")
     _model_compare(conf)
     log.info("===== Done! =====")
 
@@ -97,6 +98,7 @@ def _get_migrates(mig_bands, trace, conf: ConfigHandler):
     mig_rate_columns = [mig_rate_template.format(migband=mb) for mb in mig_bands]
     mig_rates = trace[mig_rate_columns].divide(mig_rate_print_factor).copy()
     mig_rates.columns = mig_bands
+    replace_zeroes_with_epsilon(mig_rates)
     return mig_rates
 
 

@@ -1,3 +1,5 @@
+from concurrent.futures import ProcessPoolExecutor
+
 from numpy import exp, sqrt, mean, random, log as ln
 from pandas import Series
 
@@ -5,28 +7,18 @@ from model_compare.util.log import module_logger
 
 log = module_logger(__name__)
 
+BOOTSTRAP_ITERATIONS = 1000
+
 
 def kingman_coalescent(theta, num_coal, coal_stats) -> Series:
-    result = num_coal * ln(2.0 / theta) - (coal_stats / theta)
-    return result
+    return num_coal * ln(2.0 / theta) - (coal_stats / theta)
 
 
 def kingman_migration(mig_rate, num_migs, mig_stats) -> Series:
-    result = num_migs * ln(mig_rate) - mig_stats * mig_rate
-    return result
+    return num_migs * ln(mig_rate) - mig_stats * mig_rate
 
 
-def analyze_columns(results_data, columns):
-    log.info("Starting analysis of columns {}".format(columns))
-    results_analysis = {
-        column: analyze(results_data[column])
-        for column in columns
-    }
-    log.info("Finished analysis of columns \'{}\'".format(columns))
-    return results_analysis
-
-
-def analyze(log_likelihoods) -> dict:
+def analyze(ln_likelihoods) -> dict:
     """Performs a set of statistical analyses on a series of ln-likelihoods"""
 
     def norm(x):
@@ -35,14 +27,20 @@ def analyze(log_likelihoods) -> dict:
     def metric(x, y):
         return (x - y) ** 2
 
-    bootstrap_iterations = 1000
-
-    analysis = {
-        'ln_mean': ln_mean(log_likelihoods),
-        'bootstrap': bootstrap(ln_mean, log_likelihoods, bootstrap_iterations, metric, norm)
+    return {
+        'ln_mean': ln_mean(ln_likelihoods),
+        'bootstrap': bootstrap(ln_mean, ln_likelihoods, BOOTSTRAP_ITERATIONS, metric, norm)
     }
 
-    return analysis
+
+def analyze_columns(results_data, columns):
+    log.info("Starting analysis of columns %r" % columns)
+
+    with ProcessPoolExecutor() as executor:
+        analyses = executor.map(analyze, (results_data[col] for col in columns))
+        results_analysis = dict(zip(columns, analyses))
+    log.info("Finished analysis of columns %r" % columns)
+    return results_analysis
 
 
 def ln_mean(ln_samples) -> Series:
