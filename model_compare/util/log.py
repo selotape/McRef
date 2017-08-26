@@ -3,7 +3,7 @@ import sys
 from functools import wraps
 from logging import FileHandler, StreamHandler
 
-DEFAULT_FORMAT = "[%(asctime)s][%(levelname)s][%(process)d][%(name)s] %(message)s"
+DEFAULT_FORMAT = "[%(asctime)s][pid:%(process)d][%(levelname)s][%(name)s] %(message)s"
 
 
 def module_logger(name):
@@ -29,9 +29,9 @@ def with_entry_log(l):
     def wrapper(f):
         @wraps(f)
         def logged(*args, **kwargs):
-            l.info("===== Starting! =====")
+            l.info("\n===== Starting! =====")
             result = f(*args, **kwargs)
-            l.info("===== Done! =====")
+            l.info("===== Done! =====\n")
             return result
 
         return logged
@@ -44,4 +44,3 @@ def tee_log(log_method, message):
     log_method(message)
 
 
-configure_logging('DEBUG', 'model_compare.log')
