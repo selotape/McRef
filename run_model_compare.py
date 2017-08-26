@@ -4,19 +4,14 @@ from functools import partial
 
 from model_compare import compare_models, Result
 from model_compare.util.general_purpose import timed
-from model_compare.util.log import configure_logging, module_logger, tee_log
+from model_compare.util.log import module_logger, tee_log
 
 log = module_logger(__name__)
 
 
 @timed
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--clade", help="enable clade reference model", action="store_true")
-    parser.add_argument("simulations", nargs='+', help="space-delimited list of directories containing model_compare experiments")
-    args = parser.parse_args()
-
-    configure_logging('DEBUG', 'model_compare.log')
+    args = parse_arguments()
 
     configured_compare_models = partial(compare_models, is_clade=args.clade)
 
@@ -25,11 +20,18 @@ def main():
         _print_results(results)
 
 
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--clade", help="enable clade reference model", action="store_true")
+    parser.add_argument("simulations", nargs='+', help="space-delimited list of directories containing model_compare experiments")
+    return parser.parse_args()
+
+
 def _print_results(results):
     header = ','.join(Result._fields)
 
-    tee_log(log.info, "Summary:")
-    tee_log(log.info, header)
+    print("Summary:")
+    print(header)
     for result in results:
         tee_log(log.info, ','.join(str(f) for f in result))
 

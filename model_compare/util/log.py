@@ -42,3 +42,6 @@ def with_entry_log(l):
 def tee_log(log_method, message):
     print(message)
     log_method(message)
+
+
+configure_logging('DEBUG', 'model_compare.log')
