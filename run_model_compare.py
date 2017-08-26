@@ -6,12 +6,12 @@ from model_compare import compare_models, Result
 from model_compare.util.general_purpose import timed
 from model_compare.util.log import module_logger, tee_log
 
-log = module_logger(__name__)
+_log = module_logger(__name__)
 
 
 @timed
 def main():
-    args = parse_arguments()
+    args = _parse_arguments()
 
     configured_compare_models = partial(compare_models, is_clade=args.clade)
 
@@ -20,7 +20,7 @@ def main():
         _print_results(results)
 
 
-def parse_arguments():
+def _parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--clade", help="enable clade reference model", action="store_true")
     parser.add_argument("simulations", nargs='+', help="space-delimited list of directories containing model_compare experiments")
@@ -33,7 +33,7 @@ def _print_results(results):
     print("Summary:")
     print(header)
     for result in results:
-        tee_log(log.info, ','.join(str(f) for f in result))
+        tee_log(_log.info, ','.join(str(f) for f in result))
 
 
 if __name__ == "__main__":
