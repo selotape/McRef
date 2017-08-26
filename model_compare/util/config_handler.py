@@ -21,11 +21,11 @@ class ConfigHandler:
         self.skip_rows = self.config.getint('Data', 'skip_rows', fallback=0)
         self.log_conf = (self.config.get('Logging', 'level', fallback='INFO'), self.config.get('Logging', 'file_name', fallback='model_compare.log'))
 
-        theta_print_factor = self.config.getfloat('Input', 'theta_print_factor', fallback=10000.0)
+        theta_print_factor = self.config.getfloat('Input', 'theta_print_factor')
         theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
         self.theta_setup = theta_print_factor, theta_template
 
-        mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor', fallback=0.1)
+        mig_rate_print_factor = self.config.getfloat('Input', 'mig_rate_print_factor')
         mig_rate_template = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
         self.migrate_setup = mig_rate_print_factor, mig_rate_template
 
