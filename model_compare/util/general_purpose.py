@@ -7,7 +7,7 @@ def timed(f):
         result = f(*args, **kw)
         te = time.time()
 
-        print('func:%r took: %2.4f sec' % (f.__name__, te - ts))
+        print("\n%r took: %2.4f seconds" % (f.__name__, te - ts))
         return result
 
     return timed_func

@@ -19,7 +19,7 @@ class ConfigHandler:
         self.debug_enabled = self.config.getboolean('Debug', 'enabled', fallback=False)
         self.should_save_results = self.config.getboolean("Output", "save_data", fallback=False)
         self.skip_rows = self.config.getint('Data', 'skip_rows', fallback=0)
-        self.log_conf = (self.config.get('Logging', 'level', fallback='INFO'), self.config.get('Logging', 'file_name', fallback='model_compare.log'))
+        self.log_conf = (self.config.get('Logging', 'level', fallback='INFO'), self.config.get('Logging', 'file_name', fallback=None))
 
         theta_print_factor = self.config.getfloat('Input', 'theta_print_factor')
         theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')

@@ -1,36 +1,36 @@
+from collections import namedtuple
+
 import pandas as pd
 
 from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
-from model_compare.util.log import configure_logging, module_logger
+from model_compare.util.log import with_entry_log, module_logger
 from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
 
 log = module_logger(__name__)
 
+Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_mean', 'hm_bootstrap'))
 
-def model_compare(simulation, is_clade):
+
+@with_entry_log(log)
+def model_compare(simulation, is_clade) -> Result:
     conf = ConfigHandler(simulation, is_clade)
 
-    configure_logging(*conf.log_conf)
-    log.info("===== Starting! =====")
-    _model_compare(conf)
-    log.info("===== Done! =====")
-
-
-def _model_compare(conf: ConfigHandler):
     ref_stats = conf.load_ref_data()
     trace = conf.load_trace_data()
     hyp_stats = conf.load_hyp_data()
 
     results_data = _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf)
+    results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
+    experiment_summary = _summarize(results_analysis, conf)
 
     if conf.debug_enabled:
         _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
         _calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
 
-    results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
-    experiment_summary = _summarize(results_analysis, conf)
     _save_results(results_data, experiment_summary, conf)
+
+    return _build_result(conf, results_analysis)
 
 
 def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
@@ -269,3 +269,9 @@ def _clade_summarize(results_analysis: dict, conf: ConfigHandler):
     results_string = ''.join(results_string)
 
     return intro + results_string
+
+
+def _build_result(conf, results_analysis):
+    return Result(conf.simulation_path,
+                  results_analysis['rbf_ratio']['ln_mean'], results_analysis['rbf_ratio']['bootstrap'],
+                  results_analysis['harmonic_mean']['ln_mean'], results_analysis['rbf_ratio']['bootstrap'], )
