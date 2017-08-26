@@ -26,7 +26,10 @@ def main():
 
 
 def _print_results(results):
-    tee_log(log.info, ','.join(Result._fields))
+    header = ','.join(Result._fields)
+
+    tee_log(log.info, "Summary:")
+    tee_log(log.info, header)
     for result in results:
         tee_log(log.info, ','.join(str(f) for f in result))
 
