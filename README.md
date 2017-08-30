@@ -30,7 +30,7 @@ python3 ./run_model_compare.py ./simulations/experiments/sample
 5. see results in directory */path/to/experiment/results/${time-stamp}* 
 
 ### Running GPhoCS with mcref enabled
-To make emit GPhoCS emit comb and clade statistics, add the following configurations to the gphocs control file:
+To make GPhoCS emit comb and clade statistics, add the following configurations to the gphocs control file:
 
 ```
 GENERAL-INFO-START
