@@ -23,7 +23,7 @@ python3 ./run_model_compare.py ./simulations/experiments/sample
 
 
 ### Common Experiment Setup
-1. Run G-PhocS with comb enabled (see [next section](#Running GPhoCS with comb enabled)). Save data in *"comb-trace.tsv"* and *"trace.tsv"* files. Put files in an *experiment directory*
+1. Run G-PhocS with comb enabled (see next section). Save data in *"hyp/comb/clade-trace.tsv"* and *"trace.tsv"* files. Put files in an *experiment directory*
 2. Create a *config.ini* file in the *experiment directory*. Set your reference model and any other non-default parameter you may require.
 3. run `python3 ./run_model_compare.py [/path/to/experiment1 ...]`
 4. ...
