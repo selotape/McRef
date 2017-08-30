@@ -11,7 +11,7 @@ The quickest, surest way to run McRef is:
 ```bash
 git clone https://github.com/selotape/Population-Model-Compare mcref
 cd ./mcref
-pip install -r requirements.txt
+pip3 install -r requirements.txt  # or better yet - create a virtual environment!
 python3 ./run_model_compare.py -h
 python3 ./run_model_compare.py ./simulations/experiments/sample
 ```
