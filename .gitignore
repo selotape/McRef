@@ -11,8 +11,8 @@ simulations/**/results
 *.tsv
 *.csv
 
-!simulations/experiments/sample/*.tsv
-!simulations/experiments/sample/config.ini
+!simulations/sample_experiment/*.tsv
+!simulations/sample_experiment/config.ini
 
 # Others
 *.swp
