@@ -155,7 +155,7 @@ def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHand
     return coal_stats, num_coals
 
 
-def _get_hyp_coal_stats(hyp_stats, hyp_pops, conf):
+def _get_hyp_coal_stats(hyp_stats, hyp_pops, conf) -> (pd.DataFrame, pd.DataFrame):
     pop_coal_stats_template, pop_num_coals_template = conf.get_hyp_coal_templates()
     hyp_nc_columns_map = {pop_num_coals_template.format(pop=p): p for p in hyp_pops}
     num_coals = copy_then_rename_columns(hyp_stats, hyp_nc_columns_map)
@@ -202,7 +202,8 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 
 
 def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
-    ref_coal_stats, _ = _get_clade_coal_stats(ref_stats, hyp_stats, conf) if conf.clade_enabled else _get_comb_coal_stats(ref_stats, hyp_stats, conf)
+    get_ref_coal_stats = _get_clade_coal_stats if conf.clade_enabled else _get_comb_coal_stats
+    ref_coal_stats, _ = get_ref_coal_stats(ref_stats, hyp_stats, conf)
 
     hyp_pops, _ = conf.get_hypothesis_tree()
     hyp_coal_stats, _ = _get_hyp_coal_stats(hyp_stats, hyp_pops, conf)
