@@ -5,7 +5,7 @@ import pandas as pd
 
 from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
-from model_compare.util.log import with_entry_log, module_logger
+from model_compare.util.log import with_entry_log, module_logger, tee_log
 from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
 
 _log = module_logger(__name__)
@@ -18,12 +18,14 @@ def model_compare(simulation, is_clade) -> Result:
     if _is_valid_simulation(simulation):
         return _model_compare(is_clade, simulation)
     else:
-        _log.warning("simulation %s isn't valid directory" % simulation)
+        tee_log(_log.error, "simulation %s isn't valid directory" % simulation)
         return Result(simulation, None, None, None, None)
 
 
 def _is_valid_simulation(sim):
-    return os.path.isfile(os.path.join(sim, 'config.ini'))
+    sim = os.path.abspath(sim)
+    configuration_path = os.path.join(sim, 'config.ini')
+    return os.path.isfile(configuration_path)
 
 
 def _model_compare(is_clade, simulation):
