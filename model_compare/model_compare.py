@@ -44,10 +44,8 @@ def _model_compare(is_clade, simulation):
 
 def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
-    if conf.clade_enabled:
-        results_data['ref_gene_likelihood'] = _clade_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
-    else:
-        results_data['ref_gene_likelihood'] = _comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
+    ref_gene_likelihood = _clade_ref_gene_likelihood if conf.clade_enabled else _comb_ref_gene_likelihood
+    results_data['ref_gene_likelihood'] = ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
