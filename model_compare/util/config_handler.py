@@ -10,12 +10,18 @@ logger = module_logger(__name__)
 
 
 class ConfigHandler:
-    def __init__(self, simulation_path, is_clade):
-        self.simulation_path = simulation_path
+    def __init__(self, simulation_path):
+
         self.config = configparser.ConfigParser()
+
         # look for configuration in cwd and in simulation dir. simulation-specific config overrides the one in cwd!
         self.config.read(['config.ini', 'model_compare/config.ini', '%s/config.ini' % simulation_path])
-        self.clade_enabled = is_clade
+
+        self.simulation_path = simulation_path
+
+        if (self.clade and self.comb) or (not self.clade and not self.comb):
+            raise ConfigurationError("Exactly one of 'clade' and 'comb' must be configured")
+
         self.debug_enabled = self.config.getboolean('Debug', 'enabled', fallback=False)
         self.should_save_results = self.config.getboolean("Output", "save_data", fallback=False)
         self.skip_rows = self.config.getint('Data', 'skip_rows', fallback=0)
@@ -33,8 +39,16 @@ class ConfigHandler:
 
         self.clade_coal_templates = self._get_clade_coal_templates()
 
+    @property
+    def clade(self):
+        return self.config.get('ReferenceModel', 'clade', fallback=None)
+
+    @property
+    def comb(self):
+        return self.config.get('ReferenceModel', 'comb', fallback=None)
+
     def load_ref_data(self):
-        stats_file_config = 'clade_stats_file' if self.clade_enabled else 'comb_stats_file'
+        stats_file_config = 'clade_stats_file' if self.clade else 'comb_stats_file'
         ref_stats = self._load_input_file(stats_file_config)
         return ref_stats
 
@@ -53,19 +67,17 @@ class ConfigHandler:
         return trace
 
     def get_comb_reference_tree(self):
-        comb = self.config.get('ReferenceModel', 'comb').strip()
         comb_leaves = self._fetch_config_list('ReferenceModel', 'comb_leaves')
         hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
         hyp_mig_bands = self._fetch_config_list('ReferenceModel', 'hyp_mig_bands')
 
-        return comb, comb_leaves, hyp_pops, hyp_mig_bands
+        return self.comb, comb_leaves, hyp_pops, hyp_mig_bands
 
     def get_clade_reference_tree(self):
-        clade = self.config.get('ReferenceModel', 'clade').strip()
         hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
         hyp_mig_bands = self._fetch_config_list('ReferenceModel', 'hyp_mig_bands')
 
-        return clade, hyp_pops, hyp_mig_bands
+        return self.clade, hyp_pops, hyp_mig_bands
 
     def get_hypothesis_tree(self):
         pops = self._fetch_config_list('Debug', 'hypothesis_pops')
@@ -123,3 +135,7 @@ class ConfigHandler:
         clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_num_coals_template, clade_coal_stats_template
+
+
+class ConfigurationError(Exception):
+    pass

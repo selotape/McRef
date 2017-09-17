@@ -14,9 +14,9 @@ Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_me
 
 
 @with_entry_log(_log)
-def model_compare(simulation, is_clade) -> Result:
+def model_compare(simulation) -> Result:
     if _is_valid_simulation(simulation):
-        return _model_compare(is_clade, simulation)
+        return _model_compare(simulation)
     else:
         tee_log(_log.error, "simulation %s isn't valid directory" % simulation)
         return Result(simulation, None, None, None, None)
@@ -28,8 +28,8 @@ def _is_valid_simulation(sim):
     return os.path.isfile(configuration_path)
 
 
-def _model_compare(is_clade, simulation):
-    conf = ConfigHandler(simulation, is_clade)
+def _model_compare(simulation):
+    conf = ConfigHandler(simulation)
     ref_stats = conf.load_ref_data()
     trace = conf.load_trace_data()
     hyp_stats = conf.load_hyp_data()
@@ -44,7 +44,7 @@ def _model_compare(is_clade, simulation):
 
 def _calculate_ref_likelihoods(comb_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
-    ref_gene_likelihood = _clade_ref_gene_likelihood if conf.clade_enabled else _comb_ref_gene_likelihood
+    ref_gene_likelihood = _clade_ref_gene_likelihood if conf.clade else _comb_ref_gene_likelihood
     results_data['ref_gene_likelihood'] = ref_gene_likelihood(comb_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
@@ -202,7 +202,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
 
 
 def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
-    get_ref_coal_stats = _get_clade_coal_stats if conf.clade_enabled else _get_comb_coal_stats
+    get_ref_coal_stats = _get_clade_coal_stats if conf.clade else _get_comb_coal_stats
     ref_coal_stats, _ = get_ref_coal_stats(ref_stats, hyp_stats, conf)
 
     hyp_pops, _ = conf.get_hypothesis_tree()

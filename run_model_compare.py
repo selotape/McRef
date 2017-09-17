@@ -1,6 +1,5 @@
 import argparse
 from concurrent.futures import ProcessPoolExecutor
-from functools import partial
 
 from tqdm import tqdm
 
@@ -15,10 +14,9 @@ _log = module_logger(__name__)
 def main():
     args = _parse_arguments()
 
-    configured_compare_models = partial(compare_models, is_clade=args.clade)
 
     with ProcessPoolExecutor(max_workers=args.max_workers) as executor:
-        results = executor.map(configured_compare_models, args.simulations)
+        results = executor.map(compare_models, args.simulations)
         _print_results(results, args.simulations)
 
 
