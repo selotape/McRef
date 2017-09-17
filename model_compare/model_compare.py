@@ -222,7 +222,7 @@ def _save_results(results_data: pd.DataFrame, conf: ConfigHandler) -> Result:
     save_plot(results_data[['harmonic_mean']], harmonic_mean_plot_path, sim_name)
     save_plot(results_data[['rbf_ratio']], expectation_plot_path, sim_name)
 
-    conf.save()
+    conf.store()
 
     if conf.debug_enabled:
         save_plot(results_data[['ref_gene_likelihood', 'debug_hyp_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods',

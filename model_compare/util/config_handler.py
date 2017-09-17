@@ -138,7 +138,7 @@ class ConfigHandler:
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_num_coals_template, clade_coal_stats_template
 
-    def save(self):
+    def store(self):
         out_path = os.path.join(self.results_directory, 'config.ini')
         out_file = open(out_path, mode='w')
         self.config.write(out_file)
