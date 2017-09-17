@@ -61,7 +61,9 @@ class ConfigHandler:
         return hyp_stats
 
     def _load_input_file(self, config_key, index_col='iteration'):
-        input_file_path = self.config.get('Input', config_key)
+        input_file = self.config.get('Input', config_key)
+        input_file_path = os.path.join(self.simulation_path, input_file)
+
         trace = pd.read_csv(input_file_path, sep='\t', skiprows=range(1, self.skip_rows), header=0, index_col=index_col)
         logger.info("Loaded " + config_key)
         return trace
