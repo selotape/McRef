@@ -23,7 +23,7 @@ class ConfigHandler:
             raise ConfigurationError("Exactly one of 'clade' and 'comb' must be configured")
 
         self.debug_enabled = self.config.getboolean('Debug', 'enabled', fallback=False)
-        self.should_save_results = self.config.getboolean("Output", "save_data", fallback=False)
+        self.should_save_raw_results = self.config.getboolean("Output", "save_data", fallback=False)
         self.skip_rows = self.config.getint('Data', 'skip_rows', fallback=0)
         self.log_conf = (self.config.get('Logging', 'level', fallback='INFO'), self.config.get('Logging', 'file_name', fallback=None))
 
@@ -94,16 +94,16 @@ class ConfigHandler:
         simulation_path = self.simulation_path
         timestamp = time.strftime('%Y%m%d_%H%M')
 
-        results_directory = simulation_path + '/' + self.config.get('Output', 'results_directory', fallback='results') + '/' + timestamp
-        debug_directory = results_directory + '/' + self.config.get('Output', 'debug_directory', fallback='debug')
-        for directory in results_directory, debug_directory:
+        self.results_directory = simulation_path + '/' + self.config.get('Output', 'results_directory', fallback='results') + '/' + timestamp
+        debug_directory = self.results_directory + '/' + self.config.get('Output', 'debug_directory', fallback='debug')
+        for directory in self.results_directory, debug_directory:
             if not os.path.exists(directory):
                 os.makedirs(directory)
-        results_path = results_directory + '/' + self.config.get('Output', 'results_name', fallback='results.csv')
-        summary_path = results_directory + '/' + self.config.get('Output', 'summary_name', fallback='summary.txt')
-        likelihoods_plot_path = results_directory + '/' + self.config.get('Output', 'likelihoods_plot_name', fallback='hyp_and_ref_plot')
-        expectation_plot_path = results_directory + '/' + self.config.get('Output', 'expectation_plot_name', fallback='rbf_plot')
-        harmonic_mean_plot_path = results_directory + '/' + self.config.get('Output', 'harmonic_mean_plot_name', fallback='harmonic_mean_plot')
+        results_path = self.results_directory + '/' + self.config.get('Output', 'results_name', fallback='results.csv')
+        summary_path = self.results_directory + '/' + self.config.get('Output', 'summary_name', fallback='summary.txt')
+        likelihoods_plot_path = self.results_directory + '/' + self.config.get('Output', 'likelihoods_plot_name', fallback='hyp_and_ref_plot')
+        expectation_plot_path = self.results_directory + '/' + self.config.get('Output', 'expectation_plot_name', fallback='rbf_plot')
+        harmonic_mean_plot_path = self.results_directory + '/' + self.config.get('Output', 'harmonic_mean_plot_name', fallback='harmonic_mean_plot')
 
         return (debug_directory, results_path, likelihoods_plot_path, expectation_plot_path,
                 harmonic_mean_plot_path, summary_path)
@@ -137,6 +137,11 @@ class ConfigHandler:
         clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
         clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
         return clade_num_coals_template, clade_coal_stats_template
+
+    def save(self):
+        out_path = os.path.join(self.results_directory, 'config.ini')
+        out_file = open(out_path, mode='w')
+        self.config.write(out_file)
 
 
 class ConfigurationError(Exception):
