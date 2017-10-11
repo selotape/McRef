@@ -47,12 +47,12 @@ def first_intersection(l1, l2):
 @attrs(hash=True)
 class Population:
     name = attrib(validator=instance_of(str))
-    father = attrib(default=None)  # type: Population
+    father = attrib(default=None, repr=False)  # type: Population
 
 
 @attrs
 class Event:
     time = attrib(validator=instance_of(float))
-    left = attrib(default=None)  # type: Event
-    right = attrib(default=None)  # type: Event
+    left = attrib(default=None, repr=False)  # type: Event
+    right = attrib(default=None, repr=False)  # type: Event
     lca_pop = attrib(validator=optional(instance_of(Population)), default=None)
