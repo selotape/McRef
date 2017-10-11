@@ -25,12 +25,6 @@ def _find_tau_bounds_rec(event, tau_bounds):
     tau_bounds[event.lca_pop] = min(tau_bounds[event.lca_pop], event.time)
 
 
-def ancestors(node):
-    while node is not None:
-        yield node
-        node = node.father
-
-
 def lca(left_node, right_node):
     if left_node is right_node:
         return left_node
@@ -38,11 +32,19 @@ def lca(left_node, right_node):
     left_ancestors = list(ancestors(left_node))
     right_ancestors = list(ancestors(right_node))
 
-    for node in left_ancestors:
-        if node in right_ancestors:
-            return node
+    return first_intersection(left_ancestors, right_ancestors)
 
-    raise BadTreeError("left and right nodes did not share a common ancestor")
+
+def ancestors(node):
+    while node is not None:
+        yield node
+        node = node.father
+
+
+def first_intersection(l1, l2):
+    for item in l1:
+        if item in l2:
+            return item
 
 
 @attrs(hash=True)
@@ -57,7 +59,3 @@ class Event:
     left = attrib(default=None)
     right = attrib(default=None)
     lca_pop = attrib(validator=optional(instance_of(Population)), default=None)
-
-
-class BadTreeError(Exception):
-    pass
