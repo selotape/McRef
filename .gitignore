@@ -44,3 +44,4 @@ var/
 # python binaries
 *.pyc
 __pycache__
+.cache
