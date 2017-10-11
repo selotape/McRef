@@ -7,18 +7,18 @@ from attr.validators import instance_of, optional
 def find_tau_bounds(root_event):
     tau_bounds = defaultdict(lambda: float('Inf'))
 
-    _find_bounds_rec(root_event, tau_bounds)
+    _find_tau_bounds_rec(root_event, tau_bounds)
 
     return tau_bounds
 
 
-def _find_bounds_rec(event, tau_bounds):
+def _find_tau_bounds_rec(event, tau_bounds):
     if event.lca_pop is not None:  # event is leaf
         tau_bounds[event.lca_pop] = event.time
         return
 
-    _find_bounds_rec(event.left, tau_bounds)
-    _find_bounds_rec(event.right, tau_bounds)
+    _find_tau_bounds_rec(event.left, tau_bounds)
+    _find_tau_bounds_rec(event.right, tau_bounds)
 
     event.lca_pop = lca(event.left.lca_pop, event.right.lca_pop)
 
