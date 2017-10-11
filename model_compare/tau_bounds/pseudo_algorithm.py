@@ -26,9 +26,6 @@ def _find_tau_bounds_rec(event, tau_bounds):
 
 
 def lca(left_node, right_node):
-    if left_node is right_node:
-        return left_node
-
     left_ancestors = list(ancestors(left_node))
     right_ancestors = list(ancestors(right_node))
 
@@ -50,12 +47,12 @@ def first_intersection(l1, l2):
 @attrs(hash=True)
 class Population:
     name = attrib(validator=instance_of(str))
-    father = attrib(default=None)
+    father = attrib(default=None)  # type: Population
 
 
 @attrs
 class Event:
     time = attrib(validator=instance_of(float))
-    left = attrib(default=None)
-    right = attrib(default=None)
+    left = attrib(default=None)  # type: Event
+    right = attrib(default=None)  # type: Event
     lca_pop = attrib(validator=optional(instance_of(Population)), default=None)
