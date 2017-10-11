@@ -13,7 +13,7 @@ def find_tau_bounds(root_event):
 
 
 def _find_tau_bounds_rec(event, tau_bounds):
-    if event.lca_pop is not None:  # event is leaf
+    if event.lca_pop is not None:  # event is a leaf
         tau_bounds[event.lca_pop] = event.time
         return
 
