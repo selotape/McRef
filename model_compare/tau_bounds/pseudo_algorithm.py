@@ -22,7 +22,8 @@ def _find_tau_bounds_rec(event, tau_bounds):
 
     event.lca_pop = lca(event.left.lca_pop, event.right.lca_pop)
 
-    tau_bounds[event.lca_pop] = min(tau_bounds[event.lca_pop], event.time)
+    for pop in descendants(event.lca_pop):
+        tau_bounds[pop] = min(tau_bounds[pop], event.time)
 
 
 def lca(left_node, right_node):
@@ -38,6 +39,13 @@ def ancestors(node):
         node = node.father
 
 
+def descendants(node):
+    if node is not None:
+        yield from descendants(node.left)
+        yield from descendants(node.right)
+        yield node
+
+
 def first_intersection(l1, l2):
     for item in l1:
         if item in l2:
@@ -47,12 +55,13 @@ def first_intersection(l1, l2):
 @attrs(hash=True)
 class Population:
     name = attrib(validator=instance_of(str))
-    father = attrib(default=None, repr=False)  # type: Population
-
+    father = attrib(default=None, repr=False, hash=False)  # type: Population
+    left = attrib(default=None, repr=False, hash=False)  # type: Population
+    right = attrib(default=None, repr=False, hash=False)  # type: Population
 
 @attrs
 class Event:
     time = attrib(validator=instance_of(float))
     left = attrib(default=None, repr=False)  # type: Event
     right = attrib(default=None, repr=False)  # type: Event
-    lca_pop = attrib(validator=optional(instance_of(Population)), default=None)
+    lca_pop = attrib(validator=optional(instance_of(Population)), default=None, repr=False)

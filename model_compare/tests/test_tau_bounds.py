@@ -2,7 +2,7 @@ from math import isclose
 
 import pytest
 
-from tau_bounds.pseudo_algorithm import ancestors, lca, find_tau_bounds, Population, Event
+from tau_bounds.pseudo_algorithm import ancestors, lca, find_tau_bounds, Population, Event, descendants
 
 
 def test_ancestors():
@@ -11,6 +11,17 @@ def test_ancestors():
     a = Population(name='a', father=b)
 
     assert list(ancestors(a)) == [a, b, c]
+
+
+def test_descendants():
+    a = Population(name='a')
+    b = Population(name='b')
+    c = Population(name='c')
+    ab = Population(name='ab', left=a, right=b)
+    abc = Population(name='abc', left=ab, right=c)
+
+    assert set(descendants(ab)) == {a, b, ab}
+    assert set(descendants(abc)) == {a, b, c, ab, abc}
 
 
 def test_lca():
@@ -33,7 +44,7 @@ def test_tau_bounds_sanity():
     assert isclose(tau_bounds[ROOT], 1.0)
 
 
-def test_tau_bounds():
+def test_large_pop_tree():
     ROOT = Population(name='ROOT')
 
     AB = Population(name='AB', father=ROOT)
@@ -60,7 +71,7 @@ def test_tau_bounds():
         assert isclose(tau_bounds[pop], event.time)
 
 
-def test_tau_bounds_multiple_bounders():
+def test_multiple_bounders():
     AB = Population(name='AB')
     A = Population(name='A', father=AB)
     B = Population(name='B', father=AB)
@@ -76,6 +87,25 @@ def test_tau_bounds_multiple_bounders():
     tau_bounds = find_tau_bounds(abcd)
 
     assert isclose(tau_bounds[AB], ab.time)
+
+
+def test_bounder_bounds_multiple_pops():
+    ABC = Population(name='ABC')
+    AB = Population(name='AB', father=ABC)
+    C = Population(name='C', father=ABC)
+    A = Population(name='A', father=AB)
+    B = Population(name='B', father=AB)
+    AB.left, AB.right = A, B
+    ABC.left, ABC.right = AB, C
+
+    a = Event(time=0.0, lca_pop=A)
+    c = Event(time=0.0, lca_pop=C)
+    ac = Event(time=0.5, left=a, right=c)
+
+    tau_bounds = find_tau_bounds(ac)
+
+    assert isclose(tau_bounds[AB], ac.time)
+    assert isclose(tau_bounds[ABC], ac.time)
 
 
 if __name__ == '__main__':
