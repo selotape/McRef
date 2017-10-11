@@ -26,11 +26,11 @@ def _find_tau_bounds_rec(event, tau_bounds):
         tau_bounds[pop] = min(tau_bounds[pop], event.time)
 
 
-def lca(left_node, right_node):
-    left_ancestors = list(ancestors(left_node))
-    right_ancestors = list(ancestors(right_node))
+def lca(node1, node2):
+    ancestors1 = list(ancestors(node1))
+    ancestors2 = list(ancestors(node2))
 
-    return first_intersection(left_ancestors, right_ancestors)
+    return first_intersection(ancestors1, ancestors2)
 
 
 def ancestors(node):
@@ -47,9 +47,7 @@ def descendants(node):
 
 
 def first_intersection(l1, l2):
-    for item in l1:
-        if item in l2:
-            return item
+    return next((item for item in l1 if item in l2), None)
 
 
 @attrs(hash=True)
@@ -65,4 +63,4 @@ class Event:
     time = attrib(validator=instance_of(float))
     left = attrib(default=None, repr=False)  # type: Event
     right = attrib(default=None, repr=False)  # type: Event
-    lca_pop = attrib(validator=optional(instance_of(Population)), default=None, repr=False)
+    lca_pop = attrib(validator=optional(instance_of(Population)), default=None, repr=False)  # type: Population
