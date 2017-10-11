@@ -59,6 +59,7 @@ class Population:
     left = attrib(default=None, repr=False, hash=False)  # type: Population
     right = attrib(default=None, repr=False, hash=False)  # type: Population
 
+
 @attrs
 class Event:
     time = attrib(validator=instance_of(float))
