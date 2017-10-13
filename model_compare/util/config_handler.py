@@ -39,6 +39,9 @@ class ConfigHandler:
 
         self.clade_coal_templates = self._get_clade_coal_templates()
 
+        self.tau_bounds = self.load_tau_bounds()
+        self.tau_bounds_enabled = (self.tau_bounds is not None)
+
     @property
     def clade(self):
         return self.config.get('ReferenceModel', 'clade', fallback=None)
@@ -46,6 +49,11 @@ class ConfigHandler:
     @property
     def comb(self):
         return self.config.get('ReferenceModel', 'comb', fallback=None)
+
+    def load_tau_bounds(self):
+        tau_bounds_file = 'tau_bounds_file'
+        if self.config.get('Input', tau_bounds_file, fallback=None):
+            return self._load_input_file(tau_bounds_file)
 
     def load_ref_data(self):
         stats_file_config = 'clade_stats_file' if self.clade else 'comb_stats_file'
@@ -142,6 +150,9 @@ class ConfigHandler:
         out_path = os.path.join(self.results_directory, 'config.ini')
         out_file = open(out_path, mode='w')
         self.config.write(out_file)
+
+    def _load_tau_bounds_data(self):
+        pass
 
 
 class ConfigurationError(Exception):

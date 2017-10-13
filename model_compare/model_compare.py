@@ -7,6 +7,7 @@ from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import with_entry_log, module_logger, tee_log
 from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
+from model_compare.util.general_purpose import partition
 
 _log = module_logger(__name__)
 
@@ -42,12 +43,23 @@ def _model_compare(simulation):
     return _build_result(conf, results_analysis)
 
 
+def tau_priors(tau_bounds: pd.DataFrame, results_data):
+    objects_to_sum = pd.DataFrame()
+    tau_columns, bound_columns = partition(tau_bounds.columns, lambda col: 'tau' in col)
+    taus, bounds = tau_bounds[list(tau_columns)], tau_bounds[list(bound_columns)]
+    print(taus.columns)
+
+
+
+
 def _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
     ref_gene_likelihood = _clade_ref_gene_likelihood if conf.clade else _comb_ref_gene_likelihood
     results_data['ref_gene_likelihood'] = ref_gene_likelihood(ref_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
+    if conf.tau_bounds_enabled:
+        tau_priors(conf.tau_bounds, results_data)
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
 
     return results_data
