@@ -39,8 +39,10 @@ class ConfigHandler:
 
         self.clade_coal_templates = self._get_clade_coal_templates()
 
-        self.tau_bounds = self.load_tau_bounds()
-        self.tau_bounds_enabled = (self.tau_bounds is not None)
+        if self.tau_bounds_enabled():
+            self.tau_bounds = self.load_tau_bounds()
+            self.gamma_alpha = self.config.getfloat('Input', 'tau-theta-alpha')
+            self.gamma_beta = self.config.getfloat('Input', 'tau-theta-beta')
 
     @property
     def clade(self):
@@ -51,9 +53,10 @@ class ConfigHandler:
         return self.config.get('ReferenceModel', 'comb', fallback=None)
 
     def load_tau_bounds(self):
-        tau_bounds_file = 'tau_bounds_file'
-        if self.config.get('Input', tau_bounds_file, fallback=None):
-            return self._load_input_file(tau_bounds_file)
+        return self._load_input_file('tau_bounds_file')
+
+    def tau_bounds_enabled(self):
+        return bool(self.config.get('Input', 'tau_bounds_file', fallback=None))
 
     def load_ref_data(self):
         stats_file_config = 'clade_stats_file' if self.clade else 'comb_stats_file'
@@ -107,6 +110,10 @@ class ConfigHandler:
         for directory in self.results_directory, debug_directory:
             if not os.path.exists(directory):
                 os.makedirs(directory)
+        if self.tau_bounds_enabled():
+            tau_bounds_directory = debug_directory + '/' + 'tau_bounds'
+            if not os.path.exists(tau_bounds_directory):
+                os.makedirs(tau_bounds_directory)
         results_path = self.results_directory + '/' + self.config.get('Output', 'results_name', fallback='results.csv')
         summary_path = self.results_directory + '/' + self.config.get('Output', 'summary_name', fallback='summary.txt')
         likelihoods_plot_path = self.results_directory + '/' + self.config.get('Output', 'likelihoods_plot_name', fallback='hyp_and_ref_plot')

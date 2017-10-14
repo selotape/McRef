@@ -13,5 +13,5 @@ def timed(f):
     return timed_func
 
 
-def partition(seq, func):
-    return (item for item in seq if func(item)), (item for item in seq if not func(item))
+def partition(seq, pred):
+    return (item for item in seq if pred(item)), (item for item in seq if not pred(item))

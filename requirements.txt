@@ -4,3 +4,4 @@ pandas
 tqdm
 attrs
 pytest
+scipy

@@ -1,13 +1,14 @@
 import os
 from collections import namedtuple
+from functools import partial
 
+import numpy as np
 import pandas as pd
 
 from model_compare.probability_functions import *
 from model_compare.util.config_handler import ConfigHandler
 from model_compare.util.log import with_entry_log, module_logger, tee_log
 from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
-from model_compare.util.general_purpose import partition
 
 _log = module_logger(__name__)
 
@@ -43,23 +44,15 @@ def _model_compare(simulation):
     return _build_result(conf, results_analysis)
 
 
-def tau_priors(tau_bounds: pd.DataFrame, results_data):
-    objects_to_sum = pd.DataFrame()
-    tau_columns, bound_columns = partition(tau_bounds.columns, lambda col: 'tau' in col)
-    taus, bounds = tau_bounds[list(tau_columns)], tau_bounds[list(bound_columns)]
-    print(taus.columns)
-
-
-
-
 def _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf: ConfigHandler):
     results_data = pd.DataFrame()
     ref_gene_likelihood = _clade_ref_gene_likelihood if conf.clade else _comb_ref_gene_likelihood
     results_data['ref_gene_likelihood'] = ref_gene_likelihood(ref_stats, hyp_stats, trace, conf)
     results_data['hyp_gene_likelihood'] = trace['Gene-ld-ln']
     results_data['rbf_ratio'] = results_data['ref_gene_likelihood'] - results_data['hyp_gene_likelihood']
-    if conf.tau_bounds_enabled:
-        tau_priors(conf.tau_bounds, results_data)
+    if conf.tau_bounds_enabled():
+        _calculate_tau_priors(conf.tau_bounds, results_data, conf)
+        results_data['rbf_ratio'] += results_data['ref_tau_prior'] - results_data['hyp_tau_prior']
     results_data['harmonic_mean'] = -trace['Data-ld-ln']
 
     return results_data
@@ -110,6 +103,31 @@ def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.D
     _log.info("Calculated reference genealogy likelihood")
 
     return ref_gene_likelihood
+
+
+def _calculate_tau_priors(tau_bounds_trace: pd.DataFrame, results_data: pd.DataFrame, conf: ConfigHandler):
+
+
+    bound_columns = (col for col in tau_bounds_trace.columns if 'bound' in col)
+    bounds = tau_bounds_trace[list(bound_columns)]
+    ref_tau_priors = bounds.applymap(PDF.uniform)
+    log_ref_tau_priors = ref_tau_priors.applymap(np.log)
+    results_data['ref_tau_prior'] = log_ref_tau_priors.sum(axis=1)
+
+    tau_columns = (col for col in tau_bounds_trace.columns if 'tau' in col)
+    taus = tau_bounds_trace[list(tau_columns)]
+    hyp_tau_priors = taus.applymap(partial(PDF.gamma, alpha=0.001, beta=0.002))
+    log_hyp_tau_priors = hyp_tau_priors.applymap(np.log)
+    results_data['hyp_tau_prior'] = log_hyp_tau_priors.sum(axis=1)
+
+    if conf.debug_enabled:
+        debug_dir = conf.results_paths[0]
+        tau_bounds_dir = debug_dir + '/tau_bounds'
+        save_plot(hyp_tau_priors, tau_bounds_dir + '/hyp_tau_priors', 'Hypothesis Tau priors')
+        save_plot(log_hyp_tau_priors, tau_bounds_dir + '/log_hyp_tau_priors', 'Log Hypothesis Tau priors')
+        save_plot(ref_tau_priors, tau_bounds_dir + '/ref_tau_priors', 'Reference Tau priors')
+        save_plot(log_ref_tau_priors, tau_bounds_dir + '/log_ref_tau_priors', 'Log Reference Tau priors')
+        save_plot(results_data[['ref_tau_prior', 'hyp_tau_prior']], tau_bounds_dir + '/log_hyp_n_ref_sum_tau_priors', 'Sum of Log of Tau priors')
 
 
 def _get_migrates(mig_bands, trace, conf: ConfigHandler):

@@ -4,7 +4,7 @@ from numpy import exp, sqrt, mean, random, log as ln
 from pandas import Series
 
 from model_compare.util.log import module_logger
-
+from scipy.stats import gamma
 log = module_logger(__name__)
 
 BOOTSTRAP_ITERATIONS = 1000
@@ -68,3 +68,21 @@ def _single_bootstrap(statistic, samples):
     rand_samples = random.choice(samples, len(samples), replace=True)
     estimate = statistic(rand_samples)
     return estimate
+
+
+class PDF:
+
+    @staticmethod
+    def uniform(length):
+        return 1.0/length
+
+    @staticmethod
+    def gamma(sample, alpha, beta):
+        """
+        https://en.wikipedia.org/wiki/Gamma_distribution#Parameterizations
+        https://stackoverflow.com/a/16964743/3052112
+        """
+        x = sample
+        k = alpha
+        theta = 1.0/beta
+        return gamma.pdf(x, a=k, scale=theta)
