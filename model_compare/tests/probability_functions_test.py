@@ -70,10 +70,10 @@ class ProbabilityFunctionsTest(TestCase):
     def test_gamma_pdf(self):
         k_theta_params = [(1.0, 2.0), (2.0, 2.0), (3.0, 2.0), (5.0, 1.0), (9.0, 0.5), (7.5, 1.0), (0.5, 1.0)]
 
-        def name(k, th):
-            return 'k = %.1f, θ = %.1f' % (k, th)
+        fmt = 'k = %.1f, θ = %.1f'
 
-        data = {name(k, th): list(PDF.gamma(x, k, 1.0 / th) for x in frange(0, 20, 0.1)) for k, th in k_theta_params}
+        data = {fmt % (k, th): list(PDF.gamma(x, k, 1.0 / th) for x in frange(0, 20, 0.1)) for k, th in k_theta_params}
+
         df = pd.DataFrame(data)
 
         df.plot()
