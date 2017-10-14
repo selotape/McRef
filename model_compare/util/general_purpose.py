@@ -15,3 +15,9 @@ def timed(f):
 
 def partition(seq, pred):
     return (item for item in seq if pred(item)), (item for item in seq if not pred(item))
+
+
+def frange(from_, to_, step):
+    while from_ < to_:
+        yield from_
+        from_ += step

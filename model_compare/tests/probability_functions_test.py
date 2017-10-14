@@ -1,11 +1,15 @@
 import operator
-from unittest import TestCase
+from unittest import TestCase, skip
 
+import matplotlib as plt
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot
 
 from model_compare.probability_functions import *
 from model_compare.probability_functions import ln_mean
+from probability_functions import PDF
+from util.general_purpose import frange
 
 
 class ProbabilityFunctionsTest(TestCase):
@@ -61,3 +65,16 @@ class ProbabilityFunctionsTest(TestCase):
 
         for i in range(len(expected)):
             self.assertAlmostEqual(expected[i], actual[i], delta=self.precision)
+
+    @skip("Plz run manually and assert plot matches https://en.wikipedia.org/wiki/Gamma_distribution#/media/File:Gamma_distribution_pdf.svg")
+    def test_gamma_pdf(self):
+        k_theta_params = [(1.0, 2.0), (2.0, 2.0), (3.0, 2.0), (5.0, 1.0), (9.0, 0.5), (7.5, 1.0), (0.5, 1.0)]
+
+        def name(k, th):
+            return 'k = %.1f, θ = %.1f' % (k, th)
+
+        data = {name(k, th): list(PDF.gamma(x, k, 1.0 / th) for x in frange(0, 20, 0.1)) for k, th in k_theta_params}
+        df = pd.DataFrame(data)
+
+        df.plot()
+        plt.pyplot.show()
