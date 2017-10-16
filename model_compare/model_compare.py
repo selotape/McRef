@@ -121,9 +121,7 @@ def _calculate_tau_priors(tau_bounds_trace: pd.DataFrame, results_data: pd.DataF
     if conf.debug_enabled:
         debug_dir = conf.results_paths[0]
         tau_bounds_dir = debug_dir + '/tau_bounds'
-        save_plot(hyp_tau_priors, tau_bounds_dir + '/hyp_tau_priors', 'Hypothesis Tau priors')
         save_plot(log_hyp_tau_priors, tau_bounds_dir + '/log_hyp_tau_priors', 'Log Hypothesis Tau priors')
-        save_plot(ref_tau_priors, tau_bounds_dir + '/ref_tau_priors', 'Reference Tau priors')
         save_plot(log_ref_tau_priors, tau_bounds_dir + '/log_ref_tau_priors', 'Log Reference Tau priors')
         save_plot(results_data[['ref_tau_prior', 'hyp_tau_prior']], tau_bounds_dir + '/log_hyp_n_ref_sum_tau_priors', 'Sum of Log of Tau priors')
 
