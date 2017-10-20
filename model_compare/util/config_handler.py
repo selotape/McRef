@@ -19,8 +19,7 @@ class ConfigHandler:
 
         self.simulation_path = simulation_path
 
-        if (self.clade and self.comb) or (not self.clade and not self.comb):
-            raise ConfigurationError("Exactly one of 'clade' and 'comb' must be configured")
+        assert bool(self.clade) ^ bool(self.comb), "Exactly one of 'clade' and 'comb' must be configured"
 
         self.debug_enabled = self.config.getboolean('Debug', 'enabled', fallback=False)
         self.should_save_raw_results = self.config.getboolean("Output", "save_data", fallback=False)
