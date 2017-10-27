@@ -4,10 +4,10 @@ from attr import attrs, attrib
 from attr.validators import instance_of, optional
 
 
-def find_tau_bounds(root_event):
+def find_tau_bounds(genealogy_root):
     tau_bounds = defaultdict(lambda: float('Inf'))
 
-    _find_tau_bounds_rec(root_event, tau_bounds)
+    _find_tau_bounds_rec(genealogy_root, tau_bounds)
 
     return tau_bounds
 
