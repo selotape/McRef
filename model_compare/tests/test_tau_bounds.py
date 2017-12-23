@@ -2,7 +2,7 @@ from math import isclose
 
 import pytest
 
-from thesis_pseudo_code.tau_bounds.algorithm import ancestors, lca, find_tau_bounds, Population, Event, descendants
+from thesis_pseudo_code.tau_bounds import ancestors, lca, find_tau_bounds, Population, Event, descendants
 
 
 def test_ancestors():
