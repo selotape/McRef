@@ -2,7 +2,7 @@ from itertools import chain
 
 from thesis_pseudo_code.phylogenetic_tree import is_leaf
 
-num_coals_from_gphocs = intervals_from_gphocs = calculate_coal_stats = emit = lambda x: x
+num_coals_from_gphocs = intervals_from_gphocs = calculate_coal_stats = store = lambda x: x
 
 
 def merge_sort(*sequences):
@@ -22,7 +22,7 @@ def recursive_coal_stats(pop):
     clade_intervals = merged_intervals.append(pop_intervals)
 
     clade_coal_stats = calculate_coal_stats(clade_intervals)
-    emit(clade_coal_stats)
+    store(clade_coal_stats)
 
     return clade_intervals
 
@@ -37,6 +37,6 @@ def recursive_num_coals(pop):
     right_num_coals = recursive_num_coals(pop.right)
 
     current_num_coals = pop_num_coals + left_num_coals + right_num_coals
-    emit(current_num_coals)
+    store(current_num_coals)
 
     return current_num_coals
