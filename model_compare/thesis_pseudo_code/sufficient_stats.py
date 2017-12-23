@@ -9,7 +9,24 @@ def merge_sort(*sequences):
     return sorted(list(chain(*sequences)))
 
 
+def recursive_num_coals(pop):
+    """TODO - document"""
+    pop_num_coals = num_coals_from_gphocs(pop)
+
+    if is_leaf(pop):
+        return pop_num_coals
+
+    left_num_coals = recursive_num_coals(pop.left)
+    right_num_coals = recursive_num_coals(pop.right)
+
+    current_num_coals = pop_num_coals + left_num_coals + right_num_coals
+    store(current_num_coals)
+
+    return current_num_coals
+
+
 def recursive_coal_stats(pop):
+    """TODO - document"""
     pop_intervals = intervals_from_gphocs(pop)
 
     if is_leaf(pop):
@@ -25,18 +42,3 @@ def recursive_coal_stats(pop):
     store(clade_coal_stats)
 
     return clade_intervals
-
-
-def recursive_num_coals(pop):
-    pop_num_coals = num_coals_from_gphocs(pop)
-
-    if is_leaf(pop):
-        return pop_num_coals
-
-    left_num_coals = recursive_num_coals(pop.left)
-    right_num_coals = recursive_num_coals(pop.right)
-
-    current_num_coals = pop_num_coals + left_num_coals + right_num_coals
-    store(current_num_coals)
-
-    return current_num_coals
