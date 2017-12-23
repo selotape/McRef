@@ -2,7 +2,8 @@ from math import isclose
 
 import pytest
 
-from thesis_pseudo_code.tau_bounds import ancestors, lca, find_tau_bounds, Population, Event, descendants
+from thesis_pseudo_code.tau_bounds import find_tau_bounds
+from thesis_pseudo_code.phylogenetic_tree import Population, Event, lca, ancestors, descendants
 
 
 def test_ancestors():
