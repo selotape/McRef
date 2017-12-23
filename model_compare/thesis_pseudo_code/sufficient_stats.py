@@ -2,7 +2,7 @@ from itertools import chain
 
 from thesis_pseudo_code.phylogenetic_tree import is_leaf
 
-num_coals_from_gphocs = intervals_from_gphocs = calculate_coal_stats = store = lambda x: x
+num_coals_from_gphocs = sorted_intervals_from_gphocs = calculate_coal_stats = store = lambda x: x
 
 
 def merge_sort(*sequences):
@@ -10,7 +10,9 @@ def merge_sort(*sequences):
 
 
 def recursive_num_coals(pop):
-    """TODO - document"""
+    """recursively calculate and store num of coalescence
+    events in clade(pop) as well as all descendant clades"""
+
     pop_num_coals = num_coals_from_gphocs(pop)
 
     if is_leaf(pop):
@@ -26,8 +28,10 @@ def recursive_num_coals(pop):
 
 
 def recursive_coal_stats(pop):
-    """TODO - document"""
-    pop_intervals = intervals_from_gphocs(pop)
+    """recursively calculate and store coalescence stats
+    of clade(pop) as well as all descendant clades"""
+
+    pop_intervals = sorted_intervals_from_gphocs(pop)
 
     if is_leaf(pop):
         return pop_intervals
