@@ -6,9 +6,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot
 
-from model_compare.probability_functions import *
-from model_compare.probability_functions import ln_mean
-from model_compare.probability_functions import PDF
+from model_compare.probability_functions import PDF, bootstrap, ln_mean, kingman_coalescent, kingman_migration
 from model_compare.util.general_purpose import frange
 
 
@@ -18,10 +16,10 @@ class ProbabilityFunctionsTest(TestCase):
     def test_ln_mean(self):  # Test ln_mean by using a different but equal calculation
         pass
 
-    def test_bootstrapping(self):
-        bootstrap_input = pd.Series(i for i in range(100))
+    def test_bootstrapping(self, iterations=50000):
+        bootstrap_input = pd.Series(np.arange(100))
         expected = 0.0
-        actual = bootstrap(np.mean, bootstrap_input, 100000, operator.sub, np.mean)
+        actual = bootstrap(np.mean, bootstrap_input, iterations, operator.sub, np.mean)
         self.assertAlmostEqual(expected, actual, delta=0.1)
 
     def test_log_expectation(self):

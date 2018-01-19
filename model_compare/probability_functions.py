@@ -1,28 +1,29 @@
 from concurrent.futures import ProcessPoolExecutor
 
-from numpy import exp, sqrt, mean, random, log as ln
-from pandas import Series
+import numpy as np
+import pandas as pd
+from scipy.stats import gamma
 
 from model_compare.util.log import module_logger
-from scipy.stats import gamma
+
 log = module_logger(__name__)
 
 BOOTSTRAP_ITERATIONS = 1000
 
 
-def kingman_coalescent(theta, num_coal, coal_stats) -> Series:
-    return num_coal * ln(2.0 / theta) - (coal_stats / theta)
+def kingman_coalescent(theta, num_coal, coal_stats) -> pd.Series:
+    return num_coal * np.log(2.0 / theta) - (coal_stats / theta)
 
 
-def kingman_migration(mig_rate, num_migs, mig_stats) -> Series:
-    return num_migs * ln(mig_rate) - mig_stats * mig_rate
+def kingman_migration(mig_rate, num_migs, mig_stats) -> pd.Series:
+    return num_migs * np.log(mig_rate) - mig_stats * mig_rate
 
 
 def analyze(ln_likelihoods) -> dict:
     """Performs a set of statistical analyses on a series of ln-likelihoods"""
 
     def norm(x):
-        return sqrt(mean(x))
+        return np.sqrt(np.mean(x))
 
     def metric(x, y):
         return (x - y) ** 2
@@ -43,14 +44,14 @@ def analyze_columns(results_data, columns):
     return results_analysis
 
 
-def ln_mean(ln_samples) -> Series:
+def ln_mean(ln_samples) -> pd.Series:
     """
     :param ln_samples: a series of tiny probabilities, with ln applied to them
     :return: ln of mean of probabilities
     """
     ln_c = max(ln_samples)
     n = len(ln_samples)
-    ln_meany = ln_c + ln(sum(exp(ln_samples - ln_c))) - ln(n)
+    ln_meany = ln_c + np.log(sum(np.exp(ln_samples - ln_c))) - np.log(n)
     return ln_meany
 
 
@@ -58,14 +59,14 @@ def bootstrap(statistic, samples, num_iterations, metric, norm):
     truth = statistic(samples)
 
     estimates = (_single_bootstrap(statistic, samples) for _ in range(num_iterations))
-    distance_vector = Series(metric(estimate, truth) for estimate in estimates)
+    distance_vector = pd.Series(metric(estimate, truth) for estimate in estimates)
     result = norm(distance_vector)
 
     return result
 
 
 def _single_bootstrap(statistic, samples):
-    rand_samples = random.choice(samples, len(samples), replace=True)
+    rand_samples = np.random.choice(samples, len(samples), replace=True)
     estimate = statistic(rand_samples)
     return estimate
 
@@ -74,7 +75,7 @@ class PDF:
 
     @staticmethod
     def uniform(length):
-        return 1.0/length
+        return 1.0 / length
 
     @staticmethod
     def gamma(sample, alpha, beta):
@@ -84,5 +85,5 @@ class PDF:
         """
         x = sample
         k = alpha
-        theta = 1.0/beta
+        theta = 1.0 / beta
         return gamma.pdf(x, a=k, scale=theta)
