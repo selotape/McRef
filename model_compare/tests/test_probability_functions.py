@@ -19,11 +19,10 @@ class ProbabilityFunctionsTest(TestCase):
         pass
 
     def test_bootstrapping(self):
-
         bootstrap_input = pd.Series(i for i in range(100))
         expected = 0.0
         actual = bootstrap(np.mean, bootstrap_input, 100000, operator.sub, np.mean)
-        self.assertAlmostEqual(expected, actual, delta=0.01)
+        self.assertAlmostEqual(expected, actual, delta=0.1)
 
     def test_log_expectation(self):
 
