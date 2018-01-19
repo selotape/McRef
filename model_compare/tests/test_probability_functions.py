@@ -8,8 +8,8 @@ from matplotlib import pyplot
 
 from model_compare.probability_functions import *
 from model_compare.probability_functions import ln_mean
-from probability_functions import PDF
-from util.general_purpose import frange
+from model_compare.probability_functions import PDF
+from model_compare.util.general_purpose import frange
 
 
 class ProbabilityFunctionsTest(TestCase):
@@ -22,7 +22,7 @@ class ProbabilityFunctionsTest(TestCase):
 
         bootstrap_input = pd.Series(i for i in range(100))
         expected = 0.0
-        actual = bootstrap(np.mean, bootstrap_input, 50000, operator.sub, np.mean)
+        actual = bootstrap(np.mean, bootstrap_input, 100000, operator.sub, np.mean)
         self.assertAlmostEqual(expected, actual, delta=0.01)
 
     def test_log_expectation(self):

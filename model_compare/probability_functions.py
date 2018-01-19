@@ -57,7 +57,7 @@ def ln_mean(ln_samples) -> Series:
 def bootstrap(statistic, samples, num_iterations, metric, norm):
     truth = statistic(samples)
 
-    estimates = [_single_bootstrap(statistic, samples) for _ in range(num_iterations)]
+    estimates = (_single_bootstrap(statistic, samples) for _ in range(num_iterations))
     distance_vector = Series(metric(estimate, truth) for estimate in estimates)
     result = norm(distance_vector)
 
