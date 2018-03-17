@@ -14,7 +14,6 @@ _log = module_logger(__name__)
 def main():
     args = _parse_arguments()
 
-
     with ProcessPoolExecutor(max_workers=args.max_workers) as executor:
         results = executor.map(compare_models, args.simulations)
         _print_results(results, args.simulations)
@@ -29,8 +28,7 @@ def _parse_arguments():
 
 
 def _print_results(results, simulations):
-    simulation_results = [ret for ret in tqdm(results, total=len(simulations))]
-
+    simulation_results = list(tqdm(results, total=len(simulations)))
     header = ','.join(Result._fields)
     print("Summary:")
     print(header)
