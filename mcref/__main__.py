@@ -3,9 +3,9 @@ from concurrent.futures import ProcessPoolExecutor
 
 from tqdm import tqdm
 
-from model_compare import compare_models, Result
-from model_compare.util.general_purpose import timed
-from model_compare.util.log import module_logger, tee_log
+from mcref.model_compare import run_simulation, Result
+from mcref.util.general_purpose import timed
+from mcref.util.log import module_logger, tee_log
 
 _log = module_logger(__name__)
 
@@ -15,7 +15,7 @@ def main():
     args = _parse_arguments()
 
     with ProcessPoolExecutor(max_workers=args.max_workers) as executor:
-        results = executor.map(compare_models, args.simulations)
+        results = executor.map(run_simulation, args.simulations)
         _print_results(results, args.simulations)
 
 

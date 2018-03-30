@@ -2,13 +2,10 @@ import os
 from collections import namedtuple
 from functools import partial
 
-import numpy as np
-import pandas as pd
-
-from model_compare.probability_functions import *
-from model_compare.util.config_handler import ConfigHandler
-from model_compare.util.log import with_entry_log, module_logger, tee_log
-from model_compare.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
+from mcref.probability_functions import *
+from mcref.util.config_handler import ConfigHandler
+from mcref.util.log import with_entry_log, module_logger, tee_log
+from mcref.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
 
 _log = module_logger(__name__)
 
@@ -16,7 +13,7 @@ Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_me
 
 
 @with_entry_log(_log)
-def model_compare(simulation) -> Result:
+def run_simulation(simulation) -> Result:
     if _is_valid_simulation(simulation):
         return _model_compare(simulation)
     else:

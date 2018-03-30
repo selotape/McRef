@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import gamma
 
-from model_compare.util.log import module_logger
+from mcref.util.log import module_logger
 
 log = module_logger(__name__)
 

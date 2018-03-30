@@ -1,7 +1,7 @@
 import matplotlib
 import pandas as pd
 
-from model_compare.util.log import module_logger
+from mcref.util.log import module_logger
 
 log = module_logger(__name__)
 

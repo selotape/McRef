@@ -4,7 +4,7 @@ import time
 
 import pandas as pd
 
-from model_compare.util.log import module_logger
+from mcref.util.log import module_logger
 
 logger = module_logger(__name__)
 

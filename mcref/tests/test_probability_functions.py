@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot
 
-from model_compare.probability_functions import PDF, bootstrap, ln_mean, kingman_coalescent, kingman_migration
-from model_compare.util.general_purpose import frange
+from mcref.probability_functions import PDF, bootstrap, ln_mean, kingman_coalescent, kingman_migration
+from mcref.util.general_purpose import frange
 
 
 class ProbabilityFunctionsTest(TestCase):
