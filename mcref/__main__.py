@@ -2,6 +2,7 @@ import argparse
 import os
 import sys
 from concurrent.futures import ProcessPoolExecutor
+from multiprocessing import cpu_count
 
 from tqdm import tqdm
 
@@ -18,7 +19,7 @@ _log = module_logger(__name__)
 def main():
     args = _parse_arguments()
 
-    with ProcessPoolExecutor(max_workers=args.max_workers) as executor:
+    with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
         results = executor.map(run_simulation, args.simulations)
         _print_results(results, args.simulations)
 
