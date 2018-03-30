@@ -25,8 +25,6 @@ def main():
 
 def _parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--clade", help="enable clade reference model", action="store_true")
-    parser.add_argument("--max-workers", help="maximum number of processes to spawn. Default is #available-cpu", type=int, default=None)
     parser.add_argument("simulations", nargs='+', help="space-delimited list of directories containing model_compare experiments")
     return parser.parse_args()
 
