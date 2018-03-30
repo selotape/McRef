@@ -38,6 +38,7 @@ GENERAL-INFO-START
     comb-stats-file     out/comb-trace.tsv
     clade-stats-file    out/clade-trace.tsv
     hyp-stats-file      out/hyp-trace.tsv
+    tau-bounds-file      out/tau-bounds.tsv
 ...
 ```
 For a full explanation on G-PhoCS configuration and execution, see  [G-PhoCS Homepage](http://compgen.cshl.edu/GPhoCS/) and [G-PhoCS Manual](http://compgen.cshl.edu/GPhoCS/GPhoCS_Manual.pdf)
