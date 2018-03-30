@@ -1,7 +1,11 @@
 import argparse
+import os
+import sys
 from concurrent.futures import ProcessPoolExecutor
 
 from tqdm import tqdm
+
+sys.path.append(os.getcwd())
 
 from mcref.model_compare import run_simulation, Result
 from mcref.util.general_purpose import timed
