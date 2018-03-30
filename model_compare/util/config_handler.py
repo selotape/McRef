@@ -159,7 +159,3 @@ class ConfigHandler:
 
     def _load_tau_bounds_data(self):
         pass
-
-
-class ConfigurationError(Exception):
-    pass
