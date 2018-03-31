@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-IFS=$'\n\t'
 
 DIR=`dirname "$0"`
-
+python_venv="/home/ron/.virtualenvs/modelcompare"
 
 configs_dir="${DIR}/../config_files"
 data_root="/home/ron/Desktop/data_sets"
