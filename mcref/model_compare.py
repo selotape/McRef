@@ -237,7 +237,7 @@ def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_st
     _log.info("Calculated DEBUG coal stats")
 
 
-def _save_results(results_data: pd.DataFrame, conf: ConfigHandler) -> Result:
+def _save_results(results_data: pd.DataFrame, conf: ConfigHandler):
     (debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.results_paths
 
