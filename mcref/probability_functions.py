@@ -19,6 +19,29 @@ def kingman_migration(mig_rate, num_migs, mig_stats) -> pd.Series:
     return num_migs * np.log(mig_rate) - mig_stats * mig_rate
 
 
+def analyze_columns(results_data, columns):
+    log.info("Starting analysis of columns %r" % columns)
+
+    results_analysis = {}
+
+    for col in columns:
+        data = results_data[col]
+        result = analyze(data)
+        results_analysis[col] = result
+
+    log.info("Finished analysis of columns %r" % columns)
+    return results_analysis
+#
+# def analyze_columns(results_data, columns):
+#     log.info("Starting analysis of columns %s" % columns)
+#
+#     with ProcessPoolExecutor() as executor:
+#         analyses = executor.map(analyze, (results_data[col] for col in columns))
+#         results_analysis = dict(zip(columns, analyses))
+#     log.info("Finished analysis of columns %r" % columns)
+#     return results_analysis
+
+
 def analyze(ln_likelihoods) -> dict:
     """Performs a set of statistical analyses on a series of ln-likelihoods"""
 
@@ -34,24 +57,14 @@ def analyze(ln_likelihoods) -> dict:
     }
 
 
-def analyze_columns(results_data, columns):
-    log.info("Starting analysis of columns %r" % columns)
-
-    with ProcessPoolExecutor() as executor:
-        analyses = executor.map(analyze, (results_data[col] for col in columns))
-        results_analysis = dict(zip(columns, analyses))
-    log.info("Finished analysis of columns %r" % columns)
-    return results_analysis
-
-
-def ln_mean(ln_samples) -> pd.Series:
+def ln_mean(ln_samples: pd.Series) -> pd.Series:
     """
     :param ln_samples: a series of tiny probabilities, with ln applied to them
     :return: ln of mean of probabilities
     """
-    ln_c = max(ln_samples)
+    ln_c = ln_samples.max()
     n = len(ln_samples)
-    ln_meany = ln_c + np.log(sum(np.exp(ln_samples - ln_c))) - np.log(n)
+    ln_meany = (ln_c + np.log(np.exp(ln_samples - ln_c).sum())) - np.log(n)
     return ln_meany
 
 
