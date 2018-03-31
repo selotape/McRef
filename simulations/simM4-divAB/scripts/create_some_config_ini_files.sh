@@ -2,7 +2,7 @@
 DIR=`dirname "$0"`
 source "${DIR}/env.sh"
 
-ABC_COMB_ini="${configs_dir}/ABC_COMB_config.ini"
+original_config_ini="${configs_dir}/ABC_COMB_config.ini"
 
 
 for div in "18" "24" "30" ; do
@@ -14,7 +14,7 @@ for div in "18" "24" "30" ; do
         data_dir="${data_root}/${data_set}"
         results_dir="${data_dir}/results/${hyp}/seed_${seed}"
 
-        cp "${ABC_COMB_ini}" "${results_dir}/config.ini"
+        cp "${original_config_ini}" "${results_dir}/config.ini"
 
       done
     done
