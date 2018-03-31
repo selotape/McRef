@@ -30,13 +30,8 @@ class ConfigHandler:
         theta_template = self.config.get('Templates', 'theta', fallback='theta_{pop}')
         self.theta_setup = theta_print_factor, theta_template
 
-        mig_rate_print_factor = self.config.getfloat('Input', 'mig-rate-print')
-        mig_rate_template = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
-        self.migrate_setup = mig_rate_print_factor, mig_rate_template
-
         self.results_paths = self._get_results_paths()
 
-        self.clade_coal_templates = self._get_clade_coal_templates()
 
         if self.tau_bounds_enabled():
             self.tau_bounds = self.load_tau_bounds()
@@ -50,6 +45,18 @@ class ConfigHandler:
     @property
     def comb(self):
         return self.config.get('ReferenceModel', 'comb', fallback=None)
+
+    @property
+    def migrate_setup(self):
+        mig_rate_print_factor = self.config.getfloat('Input', 'mig-rate-print')
+        mig_rate_template = self.config.get('Templates', 'mig_rate', fallback='m_{migband}')
+        return mig_rate_print_factor, mig_rate_template
+
+    @property
+    def clade_coal_templates(self):
+        clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
+        clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
+        return clade_num_coals_template, clade_coal_stats_template
 
     def load_tau_bounds(self):
         return self._load_input_file('tau_bounds_file')
@@ -147,10 +154,6 @@ class ConfigHandler:
         hyp_num_migs_template = self.config.get('Templates', 'hyp_migband_num_migs', fallback='MB_{migband} nm')
         return hyp_mig_stats_template, hyp_num_migs_template
 
-    def _get_clade_coal_templates(self):
-        clade_num_coals_template = self.config.get('Templates', 'clade_num_coals', fallback='{clade}_num_coals_total')
-        clade_coal_stats_template = self.config.get('Templates', 'clade_coal_stats', fallback='{clade}_coal_stats_total')
-        return clade_num_coals_template, clade_coal_stats_template
 
     def store(self):
         out_path = os.path.join(self.results_directory, 'config.ini')
