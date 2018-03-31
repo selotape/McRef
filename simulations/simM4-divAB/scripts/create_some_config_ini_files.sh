@@ -2,7 +2,7 @@
 DIR=`dirname "$0"`
 source "${DIR}/env.sh"
 
-original_config_ini="${configs_dir}/ABC_COMB_config.ini"
+original_config_ini="${configs_dir}/ROOT_COMB_config.ini"
 
 
 for div in "18" "24" "30" ; do
