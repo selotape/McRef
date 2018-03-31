@@ -5,7 +5,6 @@ IFS=$'\n\t'
 DIR=`dirname "$0"`
 
 
-#root_dir="/home/ron/Desktop/data_sets"
 configs_dir="${DIR}/../config_files"
 data_root="/home/ron/Desktop/data_sets"
 template_ctl="${configs_dir}/template.ctl"
