@@ -4,7 +4,7 @@ from functools import partial
 
 from mcref.probability_functions import *
 from mcref.util.config_handler import ConfigHandler
-from mcref.util.log import with_entry_log, module_logger, tee_log
+from mcref.util.log import with_entry_log, module_logger
 from mcref.util.panda_helpers import copy_then_rename_columns, save_plot, replace_zeroes_with_epsilon
 
 _log = module_logger(__name__)
@@ -14,20 +14,21 @@ Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_me
 
 @with_entry_log(_log)
 def run_simulation(simulation) -> Result:
-    if _is_valid_simulation(simulation):
-        return _model_compare(simulation)
-    else:
-        tee_log(_log.error, "simulation %s isn't valid directory" % simulation)
-        return Result(simulation, None, None, None, None)
+    _validate_simulation(simulation)
+    return _run_simulation(simulation)
 
 
-def _is_valid_simulation(sim):
-    sim = os.path.abspath(sim)
-    configuration_path = os.path.join(sim, 'config.ini')
-    return os.path.isfile(configuration_path)
+def _validate_simulation(sim):
+    try:
+        sim = os.path.abspath(sim)
+        configuration_path = os.path.join(sim, 'config.ini')
+        assert os.path.isfile(configuration_path)
+    except AssertionError:
+        _log.error("simulation %s isn't valid directory" % sim)
+        raise FileNotFoundError("Could not locate 'config.ini' in simulation dir '%s'" % sim)
 
 
-def _model_compare(simulation):
+def _run_simulation(simulation):
     conf = ConfigHandler(simulation)
     ref_stats = conf.load_ref_data()
     trace = conf.load_trace_data()
