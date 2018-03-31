@@ -2,6 +2,8 @@
 DIR=`dirname "$0"`
 source "${DIR}/env.sh"
 
+template_ctl="${configs_dir}/template.ctl"
+
 for div in  "15" "18" "21" "24" "27" "30" ; do 
   for i in "1" "2" ; do
     data_set="M4.divAB_${div}-${i}"

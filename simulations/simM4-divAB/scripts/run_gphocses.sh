@@ -2,8 +2,6 @@
 DIR=`dirname "$0"`
 source "${DIR}/env.sh"
 
-echo "I'm disabled!" && exit
-
 core=""
 
 while test $# != 0
