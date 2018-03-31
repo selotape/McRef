@@ -14,8 +14,11 @@ Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_me
 
 @with_entry_log(_log)
 def run_simulation(simulation) -> Result:
-    _validate_simulation(simulation)
-    return _run_simulation(simulation)
+    try:
+        _validate_simulation(simulation)
+        return _run_simulation(simulation)
+    except Exception as e:
+        raise McRefException("Failed running simulation %s" % simulation) from e
 
 
 def _validate_simulation(sim):
@@ -36,8 +39,11 @@ def _run_simulation(simulation):
     results_data = _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf)
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     if conf.debug_enabled:
-        _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
-        _calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
+        try:
+            _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
+            _calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
+        except:
+            _log.error("Failed calculating debug stats")
     _save_results(results_data, conf)
     return _build_result(conf, results_analysis)
 
@@ -248,10 +254,13 @@ def _save_results(results_data: pd.DataFrame, conf: ConfigHandler):
 
     conf.store()
 
-    if conf.debug_enabled:
-        save_plot(results_data[['ref_gene_likelihood', 'debug_hyp_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods',
-                  sim_name)
-        save_plot(results_data[['ref_coal_stats', 'hyp_coal_stats']], debug_directory + '/coal_stats', sim_name)
+    try:
+        if conf.debug_enabled:
+            save_plot(results_data[['ref_gene_likelihood', 'debug_hyp_gene_likelihood', 'hyp_gene_likelihood']], debug_directory + '/gene_likelihoods',
+                      sim_name)
+            save_plot(results_data[['ref_coal_stats', 'hyp_coal_stats']], debug_directory + '/coal_stats', sim_name)
+    except:
+        pass
 
     if conf.should_save_raw_results:
         results_data.to_csv(results_path)
@@ -261,3 +270,7 @@ def _build_result(conf, results_analysis):
     return Result(conf.simulation_path,
                   results_analysis['rbf_ratio']['ln_mean'], results_analysis['rbf_ratio']['bootstrap'],
                   results_analysis['harmonic_mean']['ln_mean'], results_analysis['harmonic_mean']['bootstrap'])
+
+
+class McRefException(Exception):
+    pass
