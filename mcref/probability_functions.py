@@ -78,8 +78,8 @@ def bootstrap(statistic, samples, num_iterations, metric, norm):
     return result
 
 
-def _single_bootstrap(statistic, samples):
-    rand_samples = np.random.choice(samples, len(samples), replace=True)
+def _single_bootstrap(statistic, samples: pd.Series):
+    rand_samples = samples.sample(len(samples), replace=True)
     estimate = statistic(rand_samples)
     return estimate
 

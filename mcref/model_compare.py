@@ -110,14 +110,16 @@ def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.D
 
 
 def _calculate_tau_priors(tau_bounds_trace: pd.DataFrame, results_data: pd.DataFrame, conf: ConfigHandler):
-    bound_columns = (col for col in tau_bounds_trace.columns if 'bound' in col)
-    bounds = tau_bounds_trace[list(bound_columns)]
+    bound_columns = [col for col in tau_bounds_trace.columns if 'bound' in col]
+    bounds = tau_bounds_trace[bound_columns].copy()
+    non_zero_min = bounds[bounds > 0.0].min()
+    bounds.replace(to_replace=0.0, value=non_zero_min, inplace=True)
     ref_tau_priors = bounds.applymap(PDF.uniform)
     log_ref_tau_priors = ref_tau_priors.applymap(np.log)
     results_data['ref_tau_prior'] = log_ref_tau_priors.sum(axis=1)
 
-    tau_columns = (col for col in tau_bounds_trace.columns if 'tau' in col)
-    taus = tau_bounds_trace[list(tau_columns)]
+    tau_columns = [col for col in tau_bounds_trace.columns if 'tau' in col]
+    taus = tau_bounds_trace[tau_columns]
     hyp_tau_priors = taus.applymap(partial(PDF.gamma, alpha=conf.gamma_alpha, beta=conf.gamma_beta))
     log_hyp_tau_priors = hyp_tau_priors.applymap(np.log)
     results_data['hyp_tau_prior'] = log_hyp_tau_priors.sum(axis=1)
