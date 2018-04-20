@@ -2,8 +2,7 @@
 DIR=`dirname "$0"`
 source "${DIR}/env.sh"
 
-original_config_ini="${configs_dir}/ROOT_COMB_config.ini"
-
+echo "=== Creating config.ini files based on ${original_config_ini} ==="
 
 for div in "18" "24" "30" ; do
   for i in "1" "2" ; do

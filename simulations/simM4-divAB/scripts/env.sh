@@ -10,4 +10,3 @@ template_ctl="${configs_dir}/template.ctl"
 
 seed1="12345"
 seed2="54321"
-
