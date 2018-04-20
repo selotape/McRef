@@ -26,9 +26,9 @@ def _validate_simulation(sim):
         sim = os.path.abspath(sim)
         configuration_path = os.path.join(sim, 'config.ini')
         assert os.path.isfile(configuration_path)
-    except AssertionError:
+    except AssertionError as e:
         _log.error("simulation %s isn't valid directory" % sim)
-        raise FileNotFoundError("Could not locate 'config.ini' in simulation dir '%s'" % sim)
+        raise FileNotFoundError("Could not locate 'config.ini' in simulation dir '%s'" % sim) from e
 
 
 def _run_simulation(simulation):
