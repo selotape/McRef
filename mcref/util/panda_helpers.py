@@ -1,6 +1,5 @@
 import matplotlib
 import pandas as pd
-
 from mcref.util.log import module_logger
 
 log = module_logger(__name__)

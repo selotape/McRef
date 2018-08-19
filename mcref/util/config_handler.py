@@ -81,7 +81,7 @@ class ConfigHandler:
         input_file = self.config.get('Input', config_key)
         input_file_path = os.path.join(self.simulation_path, input_file)
 
-        trace = pd.read_csv(input_file_path, sep='\t', skiprows=range(1, self.skip_rows), header=0, index_col=index_col)
+        trace = pd.read_table(input_file_path, skiprows=range(1, self.skip_rows), header=0, index_col=index_col)
         logger.info("Loaded {} rows from file {}".format(len(trace), input_file_path))
         return trace
 
