@@ -8,7 +8,7 @@ from typing import List
 from tabulate import tabulate
 from tqdm import tqdm
 
-sys.path.append(os.getcwd())
+sys.path.append(os.getcwd())  # TODO - add comment why this code is here :(
 
 from mcref.model_compare import run_simulation, Result
 from mcref.util.general_purpose import timed
