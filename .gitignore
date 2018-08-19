@@ -17,6 +17,7 @@ simulations/**/results
 # Others
 *.swp
 *.log
+*.log.*
 
 
 
