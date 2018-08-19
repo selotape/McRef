@@ -114,7 +114,8 @@ def _calculate_tau_priors(tau_bounds_trace: pd.DataFrame, results_data: pd.DataF
     bounds = tau_bounds_trace[bound_columns].copy()
     non_zero_min = bounds[bounds > 0.0].min()
     bounds.replace(to_replace=0.0, value=non_zero_min, inplace=True)
-    ref_tau_priors = bounds.applymap(PDF.uniform)
+    bound_intervals = calc_bound_intervals(bounds)
+    ref_tau_priors = bound_intervals.applymap(PDF.uniform)
     log_ref_tau_priors = ref_tau_priors.applymap(np.log)
     results_data['ref_tau_prior'] = log_ref_tau_priors.sum(axis=1)
 
@@ -130,6 +131,16 @@ def _calculate_tau_priors(tau_bounds_trace: pd.DataFrame, results_data: pd.DataF
         save_plot(log_hyp_tau_priors, tau_bounds_dir + '/log_hyp_tau_priors', 'Log Hypothesis Tau priors')
         save_plot(log_ref_tau_priors, tau_bounds_dir + '/log_ref_tau_priors', 'Log Reference Tau priors')
         save_plot(results_data[['ref_tau_prior', 'hyp_tau_prior']], tau_bounds_dir + '/log_hyp_n_ref_sum_tau_priors', 'Sum of Log of Tau priors')
+
+
+def calc_bound_intervals(bounds: pd.DataFrame):
+    tau_intervals = pd.DataFrame()
+    ubound_columns = [col for col in bounds.columns.values if 'ubound' in col]
+    for ubound_col in ubound_columns:
+        pop = ubound_col.split('_')[0]
+        lbound_col, interval_col = f'{pop}_lbound', f'{pop}_interval'
+        tau_intervals[interval_col] = bounds[ubound_col] - bounds[lbound_col]
+    return tau_intervals
 
 
 def _get_migrates(mig_bands, trace, conf: ConfigHandler):
