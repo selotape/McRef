@@ -14,11 +14,8 @@ Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_me
 
 @with_entry_log(_log)
 def run_simulation(simulation) -> Result:
-    try:
-        _validate_simulation(simulation)
-        return _run_simulation(simulation)
-    except Exception as e:
-        raise McRefException("Failed running simulation %s" % simulation) from e
+    _validate_simulation(simulation)
+    return _run_simulation(simulation)
 
 
 def _validate_simulation(sim):
