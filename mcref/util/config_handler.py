@@ -69,6 +69,9 @@ class ConfigHandler:
     def load_ref_data(self):
         stats_file_config = 'clade_stats_file' if self.clade else 'comb_stats_file'
         ref_stats = self._load_input_file(stats_file_config)
+        mig_ref_stats: pd.DataFrame = self._load_input_file('ref_mig_stats_file')
+        for col in mig_ref_stats.columns:
+            ref_stats[col] = mig_ref_stats[col]
         return ref_stats
 
     def load_trace_data(self):
