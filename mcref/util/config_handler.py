@@ -161,6 +161,3 @@ class ConfigHandler:
         out_path = os.path.join(self.results_directory, 'config.ini')
         out_file = open(out_path, mode='w')
         self.config.write(out_file)
-
-    def _load_tau_bounds_data(self):
-        pass
