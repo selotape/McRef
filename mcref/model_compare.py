@@ -37,8 +37,8 @@ def _run_simulation(simulation):
     results_analysis = analyze_columns(results_data, ['rbf_ratio', 'harmonic_mean'])
     if conf.debug_enabled:
         try:
-            _calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
-            _calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
+            _debug_calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf)
+            _debug_calc_coal_stats(results_data, ref_stats, hyp_stats, conf)
         except:
             _log.error("Failed calculating debug stats")
     _save_results(results_data, conf)
@@ -218,7 +218,7 @@ def _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.Dat
     return mig_stats, num_migs
 
 
-def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+def _debug_calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
     hyp_pops, hyp_mig_bands = conf.get_hypothesis_tree()
 
     thetas = _get_thetas(hyp_pops, trace, conf)
@@ -241,7 +241,7 @@ def _calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFram
     results_data['debug_hyp_gene_likelihood'] = hyp_gene_likelihood
 
 
-def _calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
+def _debug_calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
     get_ref_coal_stats = _get_clade_coal_stats if conf.clade else _get_comb_coal_stats
     ref_coal_stats, _ = get_ref_coal_stats(ref_stats, hyp_stats, conf)
 
