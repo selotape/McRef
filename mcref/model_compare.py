@@ -280,7 +280,3 @@ def _build_result(conf, results_analysis):
     return Result(conf.simulation_path,
                   results_analysis['rbf_ratio']['ln_mean'], results_analysis['rbf_ratio']['bootstrap'],
                   results_analysis['harmonic_mean']['ln_mean'], results_analysis['harmonic_mean']['bootstrap'])
-
-
-class McRefException(Exception):
-    pass
