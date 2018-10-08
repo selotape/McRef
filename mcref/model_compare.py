@@ -87,18 +87,21 @@ def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame,
 
 
 def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.DataFrame, conf: ConfigHandler):
-    clade, hyp_pops, hyp_mig_bands = conf.get_clade_reference_tree()
+    clade, clade_mig_bands, hyp_pops, hyp_mig_bands = conf.get_clade_reference_tree()
 
     thetas = _get_thetas(hyp_pops + [clade], trace, conf)
     mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
-    mig_stats, num_migs = _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf)
+    hyp_mig_stats, hyp_num_migs = _get_mig_stats(hyp_mig_bands, hyp_stats, conf)
+    clade_mig_stats, clade_num_migs = _get_mig_stats(clade_mig_bands, clade_stats, conf)
     coal_stats, num_coal = _get_clade_coal_stats(clade_stats, hyp_stats, conf)
 
     objects_to_sum = pd.DataFrame()
     for pop in hyp_pops + [clade]:
         objects_to_sum[pop] = kingman_coalescent(thetas[pop], num_coal[pop], coal_stats[pop])
     for mig in hyp_mig_bands:
-        objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
+        objects_to_sum[mig] = kingman_migration(mig_rates[mig], hyp_num_migs[mig], hyp_mig_stats[mig])
+    for mig in clade_mig_bands:
+        objects_to_sum[mig] = kingman_migration(mig_rates[mig], clade_num_migs[mig], clade_mig_stats[mig])
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
     _log.info("Calculated reference genealogy likelihood")
@@ -179,7 +182,7 @@ def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler) -> (pd.Data
 
 
 def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
-    clade, hyp_pops, _ = conf.get_clade_reference_tree()
+    clade, _, hyp_pops, _ = conf.get_clade_reference_tree()
     clade_num_coals_template, clade_coal_stats_template = conf.clade_coal_templates
 
     hyp_coal_stats, hyp_num_coal = _get_hyp_coal_stats(hyp_stats, hyp_pops, conf)
@@ -204,7 +207,7 @@ def _get_hyp_coal_stats(hyp_stats, hyp_pops, conf) -> (pd.DataFrame, pd.DataFram
     return coal_stats, num_coals
 
 
-def _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
+def _get_mig_stats(hyp_mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
     hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
 
     mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in hyp_mig_bands]
@@ -223,7 +226,7 @@ def _debug_calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.Da
 
     thetas = _get_thetas(hyp_pops, trace, conf)
     mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
-    mig_stats, num_migs = _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf)
+    mig_stats, num_migs = _get_mig_stats(hyp_mig_bands, hyp_stats, conf)
     coal_stats, num_coals = _get_hyp_coal_stats(hyp_stats, hyp_pops, conf)
 
     objects_to_sum = pd.DataFrame()

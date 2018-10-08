@@ -9,8 +9,6 @@ from mcref.util.log import module_logger
 logger = module_logger(__name__)
 
 
-
-
 class ConfigHandler:
     def __init__(self, simulation_path):
 
@@ -100,8 +98,9 @@ class ConfigHandler:
     def get_clade_reference_tree(self):
         hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
         hyp_mig_bands = self._fetch_config_list('ReferenceModel', 'hyp_mig_bands')
+        clade_mig_bands = self._fetch_config_list('ReferenceModel', 'clade_mig_bands')
 
-        return self.clade, hyp_pops, hyp_mig_bands
+        return self.clade, clade_mig_bands, hyp_pops, hyp_mig_bands,
 
     def get_hypothesis_tree(self):
         pops = self._fetch_config_list('Debug', 'hypothesis_pops')
