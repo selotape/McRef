@@ -210,16 +210,16 @@ def _get_hyp_coal_stats(hyp_stats, hyp_pops, conf) -> (pd.DataFrame, pd.DataFram
     return coal_stats, num_coals
 
 
-def _get_mig_stats(hyp_mig_bands, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
+def _get_mig_stats(mig_bands, stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
     hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
 
-    mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in hyp_mig_bands]
-    mig_stats = hyp_stats[mig_stats_columns]
-    mig_stats.columns = hyp_mig_bands
+    mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in mig_bands]
+    mig_stats = stats[mig_stats_columns]
+    mig_stats.columns = mig_bands
 
-    num_migs_columns = [hyp_num_migs_template.format(migband=mb) for mb in hyp_mig_bands]
-    num_migs = hyp_stats[num_migs_columns]
-    num_migs.columns = hyp_mig_bands
+    num_migs_columns = [hyp_num_migs_template.format(migband=mb) for mb in mig_bands]
+    num_migs = stats[num_migs_columns]
+    num_migs.columns = mig_bands
 
     return mig_stats, num_migs
 
