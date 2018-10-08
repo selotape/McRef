@@ -60,21 +60,24 @@ def _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf: ConfigHandler)
 
 
 def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
-    comb, comb_leaves, hyp_pops, hyp_mig_bands = conf.get_comb_reference_tree()
+    comb, comb_leaves, comb_mig_bands, hyp_pops, hyp_mig_bands = conf.get_comb_reference_tree()
 
     all_pops = [comb] + comb_leaves + hyp_pops
 
     thetas = _get_thetas(all_pops, trace, conf)
     mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
 
-    mig_stats, num_migs = _get_hyp_mig_stats(hyp_mig_bands, hyp_stats, conf)
+    hyp_mig_stats, hyp_num_migs = _get_mig_stats(hyp_mig_bands, hyp_stats, conf)
+    comb_mig_stats, comb_num_migs = _get_mig_stats(comb_mig_bands, comb_stats, conf)
     coal_stats, num_coal = _get_comb_coal_stats(comb_stats, hyp_stats, conf)
 
     objects_to_sum = pd.DataFrame()
     for pop in all_pops:
         objects_to_sum[pop] = kingman_coalescent(thetas[pop], num_coal[pop], coal_stats[pop])
     for mig in hyp_mig_bands:
-        objects_to_sum[mig] = kingman_migration(mig_rates[mig], num_migs[mig], mig_stats[mig])
+        objects_to_sum[mig] = kingman_migration(mig_rates[mig], hyp_num_migs[mig], hyp_mig_stats[mig])
+    for mig in comb_mig_bands:
+        objects_to_sum[mig] = kingman_migration(mig_rates[mig], comb_num_migs[mig], comb_mig_stats[mig])
 
     if conf.debug_enabled:
         debug_dir = conf.results_paths[0]
@@ -163,7 +166,7 @@ def _get_thetas(pops, trace, conf: ConfigHandler):
 
 
 def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
-    comb, comb_leaves, hyp_pops, _ = conf.get_comb_reference_tree()
+    comb, comb_leaves, _, hyp_pops, _ = conf.get_comb_reference_tree()
     comb_coal_stats_template, comb_leaf_coal_stats_template = conf.get_comb_coal_stats_templates()
     comb_leaf_num_coals_template, comb_num_coals_template = conf.get_comb_num_coals_templates()
     hyp_coal_stats, hyp_num_coal = _get_hyp_coal_stats(hyp_stats, hyp_pops, conf)

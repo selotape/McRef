@@ -67,9 +67,10 @@ class ConfigHandler:
     def load_ref_data(self):
         stats_file_config = 'clade_stats_file' if self.clade else 'comb_stats_file'
         ref_stats = self._load_input_file(stats_file_config)
-        mig_ref_stats: pd.DataFrame = self._load_input_file('ref_mig_stats_file')
-        for col in mig_ref_stats.columns:
-            ref_stats[col] = mig_ref_stats[col]
+        if self.clade:  # TODO - support comb mig ref data and remove this if-statement
+            mig_ref_stats: pd.DataFrame = self._load_input_file('ref_mig_stats_file')
+            for col in mig_ref_stats.columns:
+                ref_stats[col] = mig_ref_stats[col]
         return ref_stats
 
     def load_trace_data(self):
@@ -90,10 +91,11 @@ class ConfigHandler:
 
     def get_comb_reference_tree(self):
         comb_leaves = self._fetch_config_list('ReferenceModel', 'comb_leaves')
+        comb_mig_bands = []  # TODO - support comb mig ref stats and add configuration code for comb_mig_bands
         hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
         hyp_mig_bands = self._fetch_config_list('ReferenceModel', 'hyp_mig_bands')
 
-        return self.comb, comb_leaves, hyp_pops, hyp_mig_bands
+        return self.comb, comb_leaves, comb_mig_bands, hyp_pops, hyp_mig_bands
 
     def get_clade_reference_tree(self):
         hyp_pops = self._fetch_config_list('ReferenceModel', 'hyp_pops')
