@@ -63,10 +63,10 @@ def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame,
     comb, comb_leaves, comb_mig_bands, hyp_pops, hyp_mig_bands = conf.get_comb_reference_tree()
 
     all_pops = [comb] + comb_leaves + hyp_pops
+    all_mig_bands = comb_mig_bands + hyp_mig_bands
 
     thetas = _get_thetas(all_pops, trace, conf)
-    mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
-
+    mig_rates = _get_migrates(all_mig_bands, trace, conf)
     hyp_mig_stats, hyp_num_migs = _get_mig_stats(hyp_mig_bands, hyp_stats, conf)
     comb_mig_stats, comb_num_migs = _get_mig_stats(comb_mig_bands, comb_stats, conf)
     coal_stats, num_coal = _get_comb_coal_stats(comb_stats, hyp_stats, conf)
@@ -92,8 +92,11 @@ def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame,
 def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.DataFrame, conf: ConfigHandler):
     clade, clade_mig_bands, hyp_pops, hyp_mig_bands = conf.get_clade_reference_tree()
 
-    thetas = _get_thetas(hyp_pops + [clade], trace, conf)
-    mig_rates = _get_migrates(hyp_mig_bands, trace, conf)
+    all_mig_bands = clade_mig_bands + hyp_mig_bands
+    all_pops = hyp_pops + [clade]
+
+    thetas = _get_thetas(all_pops, trace, conf)
+    mig_rates = _get_migrates(all_mig_bands, trace, conf)
     hyp_mig_stats, hyp_num_migs = _get_mig_stats(hyp_mig_bands, hyp_stats, conf)
     clade_mig_stats, clade_num_migs = _get_mig_stats(clade_mig_bands, clade_stats, conf)
     coal_stats, num_coal = _get_clade_coal_stats(clade_stats, hyp_stats, conf)
@@ -105,6 +108,10 @@ def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.D
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], hyp_num_migs[mig], hyp_mig_stats[mig])
     for mig in clade_mig_bands:
         objects_to_sum[mig] = kingman_migration(mig_rates[mig], clade_num_migs[mig], clade_mig_stats[mig])
+
+    if conf.debug_enabled:
+        debug_dir = conf.results_paths[0]
+        save_plot(objects_to_sum, debug_dir + '/ref_ln_ld', 'Kingman coal & mig of Reference Model')
 
     ref_gene_likelihood = objects_to_sum.sum(axis=1)
     _log.info("Calculated reference genealogy likelihood")
