@@ -148,7 +148,7 @@ def calc_bound_intervals(bounds: pd.DataFrame):
     ubound_columns = [col for col in bounds.columns.values if 'ubound' in col]
     for ubound_col in ubound_columns:
         pop = ubound_col.split('_')[0]
-        lbound_col, interval_col = f'{pop}_lbound', f'{pop}_interval'
+        lbound_col, interval_col = pop+'_lbound', pop+'_interval'
         tau_intervals[interval_col] = bounds[ubound_col] - bounds[lbound_col]
     return tau_intervals
 
