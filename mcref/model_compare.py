@@ -13,7 +13,7 @@ Result = namedtuple('Result', ('simulation', 'rbf_mean', 'rbf_bootstrap', 'hm_me
 
 
 @with_entry_log(_log)
-def run_simulation(simulation) -> Result:
+def run_simulation(simulation):
     _validate_simulation(simulation)
     return _run_simulation(simulation)
 
@@ -45,7 +45,7 @@ def _run_simulation(simulation):
     return _build_result(conf, results_analysis)
 
 
-def _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf: ConfigHandler):
+def _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf):
     results_data = pd.DataFrame()
     ref_gene_likelihood = _clade_ref_gene_likelihood if conf.clade else _comb_ref_gene_likelihood
     results_data['ref_gene_likelihood'] = ref_gene_likelihood(ref_stats, hyp_stats, trace, conf)
@@ -59,7 +59,7 @@ def _calculate_ref_likelihoods(ref_stats, hyp_stats, trace, conf: ConfigHandler)
     return results_data
 
 
-def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+def _comb_ref_gene_likelihood(comb_stats, hyp_stats, trace, conf):
     comb, comb_leaves, comb_mig_bands, hyp_pops, hyp_mig_bands = conf.get_comb_reference_tree()
 
     all_pops = [comb] + comb_leaves + hyp_pops
@@ -89,7 +89,7 @@ def _comb_ref_gene_likelihood(comb_stats: pd.DataFrame, hyp_stats: pd.DataFrame,
     return ref_gene_likelihood
 
 
-def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.DataFrame, conf: ConfigHandler):
+def _clade_ref_gene_likelihood(clade_stats, hyp_stats, trace, conf):
     clade, clade_mig_bands, hyp_pops, hyp_mig_bands = conf.get_clade_reference_tree()
 
     all_mig_bands = clade_mig_bands + hyp_mig_bands
@@ -119,7 +119,7 @@ def _clade_ref_gene_likelihood(clade_stats: pd.DataFrame, hyp_stats, trace: pd.D
     return ref_gene_likelihood
 
 
-def _calculate_tau_priors(tau_bounds_trace: pd.DataFrame, results_data: pd.DataFrame, conf: ConfigHandler):
+def _calculate_tau_priors(tau_bounds_trace, results_data, conf):
     bound_columns = [col for col in tau_bounds_trace.columns if 'bound' in col]
     bounds = tau_bounds_trace[bound_columns].copy()
     non_zero_min = bounds[bounds > 0.0].min()
@@ -143,7 +143,7 @@ def _calculate_tau_priors(tau_bounds_trace: pd.DataFrame, results_data: pd.DataF
         save_plot(results_data[['ref_tau_prior', 'hyp_tau_prior']], tau_bounds_dir + '/log_hyp_n_ref_sum_tau_priors', 'Sum of Log of Tau priors')
 
 
-def calc_bound_intervals(bounds: pd.DataFrame):
+def calc_bound_intervals(bounds):
     tau_intervals = pd.DataFrame()
     ubound_columns = [col for col in bounds.columns.values if 'ubound' in col]
     for ubound_col in ubound_columns:
@@ -153,7 +153,7 @@ def calc_bound_intervals(bounds: pd.DataFrame):
     return tau_intervals
 
 
-def _get_migrates(mig_bands, trace, conf: ConfigHandler):
+def _get_migrates(mig_bands, trace, conf):
     mig_rate_print_factor, mig_rate_template = conf.migrate_setup
     mig_rate_columns = [mig_rate_template.format(migband=mb) for mb in mig_bands]
     mig_rates = trace[mig_rate_columns].divide(mig_rate_print_factor).copy()
@@ -162,17 +162,17 @@ def _get_migrates(mig_bands, trace, conf: ConfigHandler):
     return mig_rates
 
 
-def _get_thetas(pops, trace, conf: ConfigHandler):
+def _get_thetas(pops, trace, conf):
     theta_print_factor, theta_template = conf.theta_setup
 
     theta_columns = [theta_template.format(pop=p) for p in pops]
-    thetas = trace[theta_columns].divide(theta_print_factor).copy()  # type: pd.DataFrame
+    thetas = trace[theta_columns].divide(theta_print_factor).copy()
     columns_map = {theta_template.format(pop=p): p for p in pops}
     thetas.rename(columns=columns_map, inplace=True)
     return thetas
 
 
-def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
+def _get_comb_coal_stats(comb_stats, hyp_stats, conf):
     comb, comb_leaves, _, hyp_pops, _ = conf.get_comb_reference_tree()
     comb_coal_stats_template, comb_leaf_coal_stats_template = conf.get_comb_coal_stats_templates()
     comb_leaf_num_coals_template, comb_num_coals_template = conf.get_comb_num_coals_templates()
@@ -191,7 +191,7 @@ def _get_comb_coal_stats(comb_stats, hyp_stats, conf: ConfigHandler) -> (pd.Data
     return coal_stats, num_coals
 
 
-def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
+def _get_clade_coal_stats(clade_stats, hyp_stats, conf):
     clade, _, hyp_pops, _ = conf.get_clade_reference_tree()
     clade_num_coals_template, clade_coal_stats_template = conf.clade_coal_templates
 
@@ -208,7 +208,7 @@ def _get_clade_coal_stats(clade_stats: pd.DataFrame, hyp_stats, conf: ConfigHand
     return coal_stats, num_coals
 
 
-def _get_hyp_coal_stats(hyp_stats, hyp_pops, conf) -> (pd.DataFrame, pd.DataFrame):
+def _get_hyp_coal_stats(hyp_stats, hyp_pops, conf):
     pop_coal_stats_template, pop_num_coals_template = conf.get_hyp_coal_templates()
     hyp_nc_columns_map = {pop_num_coals_template.format(pop=p): p for p in hyp_pops}
     num_coals = copy_then_rename_columns(hyp_stats, hyp_nc_columns_map)
@@ -217,7 +217,7 @@ def _get_hyp_coal_stats(hyp_stats, hyp_pops, conf) -> (pd.DataFrame, pd.DataFram
     return coal_stats, num_coals
 
 
-def _get_mig_stats(mig_bands, stats, conf: ConfigHandler) -> (pd.DataFrame, pd.DataFrame):
+def _get_mig_stats(mig_bands, stats, conf):
     hyp_mig_stats_template, hyp_num_migs_template = conf.get_hyp_mig_templates()
 
     mig_stats_columns = [hyp_mig_stats_template.format(migband=mb) for mb in mig_bands]
@@ -231,7 +231,7 @@ def _get_mig_stats(mig_bands, stats, conf: ConfigHandler) -> (pd.DataFrame, pd.D
     return mig_stats, num_migs
 
 
-def _debug_calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.DataFrame, trace: pd.DataFrame, conf: ConfigHandler):
+def _debug_calc_hyp_gene_likelihood(results_data, hyp_stats, trace, conf):
     hyp_pops, hyp_mig_bands = conf.get_hypothesis_tree()
 
     thetas = _get_thetas(hyp_pops, trace, conf)
@@ -254,7 +254,7 @@ def _debug_calc_hyp_gene_likelihood(results_data: pd.DataFrame, hyp_stats: pd.Da
     results_data['debug_hyp_gene_likelihood'] = hyp_gene_likelihood
 
 
-def _debug_calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, hyp_stats: pd.DataFrame, conf: ConfigHandler):
+def _debug_calc_coal_stats(results_data, ref_stats, hyp_stats, conf):
     get_ref_coal_stats = _get_clade_coal_stats if conf.clade else _get_comb_coal_stats
     ref_coal_stats, _ = get_ref_coal_stats(ref_stats, hyp_stats, conf)
 
@@ -266,7 +266,7 @@ def _debug_calc_coal_stats(results_data: pd.DataFrame, ref_stats: pd.DataFrame, 
     _log.info("Calculated DEBUG coal stats")
 
 
-def _save_results(results_data: pd.DataFrame, conf: ConfigHandler):
+def _save_results(results_data, conf):
     (debug_directory, results_path, likelihoods_plot_path,
      expectation_plot_path, harmonic_mean_plot_path, summary_path) = conf.results_paths
 

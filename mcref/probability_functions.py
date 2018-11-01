@@ -23,7 +23,7 @@ def analyze_columns(results_data, columns):
     return results_analysis
 
 
-def analyze(ln_likelihoods) -> dict:
+def analyze(ln_likelihoods):
     """Performs a set of statistical analyses on a series of ln-likelihoods"""
 
     def norm(x):
@@ -38,15 +38,15 @@ def analyze(ln_likelihoods) -> dict:
     }
 
 
-def kingman_coalescent(theta, num_coal, coal_stats) -> pd.Series:
+def kingman_coalescent(theta, num_coal, coal_stats):
     return num_coal * np.log(2.0 / theta) - (coal_stats / theta)
 
 
-def kingman_migration(mig_rate, num_migs, mig_stats) -> pd.Series:
+def kingman_migration(mig_rate, num_migs, mig_stats):
     return num_migs * np.log(mig_rate) - mig_stats * mig_rate
 
 
-def ln_mean(ln_samples: pd.Series) -> pd.Series:
+def ln_mean(ln_samples):
     """
     :param ln_samples: a series of tiny probabilities, with ln applied to them
     :return: ln of mean of probabilities
@@ -67,7 +67,7 @@ def bootstrap(statistic, samples, num_iterations, metric, norm):
     return result
 
 
-def _single_bootstrap(statistic, samples: pd.Series):
+def _single_bootstrap(statistic, samples):
     rand_samples = samples.sample(len(samples), replace=True)
     estimate = statistic(rand_samples)
     return estimate
