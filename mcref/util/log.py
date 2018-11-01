@@ -8,7 +8,7 @@ from logging.handlers import RotatingFileHandler
 DEFAULT_FORMAT = "[%(asctime)s][pid:%(process)d][%(levelname)s][%(name)s] %(message)s"
 
 
-def module_logger(name):
+def module_logger(name: str) -> Logger:
     return logging.getLogger(name)
 
 

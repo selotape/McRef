@@ -45,7 +45,7 @@ def _purge_results(sim):
     shutil.rmtree(results_dir, ignore_errors=True)
 
 
-def _print_results(results):
+def _print_results(results: List[Result]):
     results_table = tabulate(results, headers=Result._fields)
     tee_log(_log.info, '\n' + results_table)
 
